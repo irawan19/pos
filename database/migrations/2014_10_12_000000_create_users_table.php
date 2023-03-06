@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('level_sistems_id')->references('id_level_sistems')->on('master_level_sistems')->onUpdate('set null')->onDelete('set null');
             $table->integer('tokos_id')->unsigned()->index()->nullable();
             $table->foreign('tokos_id')->references('id_tokos')->on('master_tokos')->onUpdate('set null')->onDelete('set null');
+            $table->string('username');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

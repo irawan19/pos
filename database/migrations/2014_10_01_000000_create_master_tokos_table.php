@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id_tokos');
             $table->string('nama_tokos');
             $table->string('logo_tokos');
+            $table->longtext('alamat_tokos');
             $table->timestamps();
             $table->softDeletes();
         });
