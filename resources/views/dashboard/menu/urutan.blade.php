@@ -12,7 +12,7 @@
 						<div class="card-body">
 							<ul class="handles list sortable" id="urutan_halaman" style="cursor:pointer;">
 		                        @foreach($lihat_urutans as $urutans)
-		                            @php(printf('<li id="menu_%s" class="btn btn-primary btn-block"><span>:: '.$urutans->nama_menus.'</li></span>', $urutans->id_menus, $urutans->nama_menus))
+		                            @php(printf('<li id="menu_%s" class="btn btn-primary btn-block btn-ordering"><span>:: '.$urutans->nama_menus.'</li></span>', $urutans->id_menus, $urutans->nama_menus))
 		                        @endforeach
 		                    </ul>
 						</div>

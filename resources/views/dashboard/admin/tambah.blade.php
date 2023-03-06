@@ -16,20 +16,31 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="form-col-form-label" for="userfile_foto_user">Foto</label>
+									<label class="form-col-form-label" for="userfile_foto_user">Foto (256 x 256px)</label>
 									<br/>
 			                        <input id="userfile_foto_user" type="file" name="userfile_foto_user">
 			                    </div>
 								<div class="form-group">
+									<label class="form-col-form-label" for="tokos_id">Toko <b style="color:red">*</b></label>
+				                    <select class="form-control select2" id="tokos_id" name="tokos_id">
+				                    	<option value="">Semua Toko</option>
+				                    	@foreach($tambah_tokos as $tokos)
+										    <option value="{{$tokos->id_tokos}}" {{ Request::old('tokos_id') == $tokos->id_tokos ? $select='selected' : $select='' }}>{{$tokos->nama_tokos}}</option>
+				                    	@endforeach
+				                    </select>
+		                      	</div>
+								<div class="form-group">
 									<label class="form-col-form-label" for="name">Nama <b style="color:red">*</b></label>
 									<input class="form-control {{ General::validForm($errors->first('name')) }}" id="name" type="text" name="name" value="{{Request::old('name')}}">
-									{{General::pesanErorForm($errors->first('name'))}}
+									{{General::pesanErrorForm($errors->first('name'))}}
 								</div>
 								<div class="form-group">
 									<label class="form-col-form-label" for="username">Username <b style="color:red">*</b></label>
 									<input class="form-control {{ General::validForm($errors->first('username')) }}" id="username" type="text" name="username" value="{{Request::old('username')}}">
-									{{General::pesanErorForm($errors->first('username'))}}
+									{{General::pesanErrorForm($errors->first('username'))}}
 								</div>
+							</div>
+							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="form-col-form-label" for="level_sistems_id">Level Sistem <b style="color:red">*</b></label>
 				                    <select class="form-control select2" id="level_sistems_id" name="level_sistems_id">
@@ -38,22 +49,20 @@
 				                    	@endforeach
 				                    </select>
 		                      	</div>
-							</div>
-							<div class="col-sm-6">
 								<div class="form-group">
 									<label class="form-col-form-label" for="email">Email <b style="color:red">*</b></label>
 									<input class="form-control {{ General::validForm($errors->first('email')) }}" id="email" type="email" name="email" value="{{Request::old('email')}}">
-									{{General::pesanErorForm($errors->first('email'))}}
+									{{General::pesanErrorForm($errors->first('email'))}}
 								</div>
 								<div class="form-group">
 									<label class="form-col-form-label" for="password">Password <b style="color:red">*</b></label>
 									<input class="form-control {{ General::validForm($errors->first('password')) }}" id="password" type="password" name="password" value="{{Request::old('password')}}">
-									{{General::pesanErorForm($errors->first('password'))}}
+									{{General::pesanErrorForm($errors->first('password'))}}
 								</div>
 								<div class="form-group">
 									<label class="form-col-form-label" for="password_confirmation">Konfirmasi Password <b style="color:red">*</b></label>
 									<input class="form-control {{ General::validForm($errors->first('password_confirmation')) }}" id="password_confirmation" type="password" name="password_confirmation" value="{{Request::old('password_confirmation')}}">
-									{{General::pesanErorForm($errors->first('password_confirmation'))}}
+									{{General::pesanErrorForm($errors->first('password_confirmation'))}}
 								</div>
 								<div class="form-group">
 									<label>

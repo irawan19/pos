@@ -9,10 +9,10 @@ use App\Http\Controllers\BerandaController as Beranda;
 use App\Http\Controllers\Dashboard\DashboardController as Dashboard;
 
 //Konfigurasi Profil
-use App\Http\Controllers\Dashboard\KonfigurasiProfilController as KonfigurasiProfil;
+use App\Http\Controllers\Dashboard\KonfigurasiProfilController as DashboardKonfigurasiProfil;
 
 //Konfigurasi Akun
-use App\Http\Controllers\Dashboard\KonfigurasiAkunController as KonfigurasiAkun;
+use App\Http\Controllers\Dashboard\KonfigurasiAkunController as DashboardKonfigurasiAkun;
 
 //Konfigurasi Aplikasi
 use App\Http\Controllers\Dashboard\MenuController as DashboardMenu;

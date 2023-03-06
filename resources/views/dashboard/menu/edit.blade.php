@@ -31,7 +31,7 @@
 						<div class="form-group">
 							<label class="form-col-form-label" for="nama_menus">Nama <b style="color:red">*</b></label>
 							<input class="form-control {{ General::validForm($errors->first('nama_menus')) }}" id="nama_menus" type="text" name="nama_menus" value="{{Request::old('nama_menus') == '' ? $edit_menus->nama_menus : Request::old('nama_menus')}}">
-							{{General::pesanErorForm($errors->first('nama_menus'))}}
+							{{General::pesanErrorForm($errors->first('nama_menus'))}}
 						</div>
 					</div>
 			        <div class="card-footer right-align">

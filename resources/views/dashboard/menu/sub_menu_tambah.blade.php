@@ -24,12 +24,12 @@
 						<div class="form-group">
 							<label class="form-col-form-label" for="nama_menus">Nama <b style="color:red">*</b></label>
 							<input class="form-control {{ General::validForm($errors->first('nama_menus')) }}" id="nama_menus" type="text" name="nama_menus" value="{{Request::old('nama_menus')}}">
-							{{General::pesanErorForm($errors->first('nama_menus'))}}
+							{{General::pesanErrorForm($errors->first('nama_menus'))}}
 						</div>
 						<div class="form-group">
 							<label class="form-col-form-label" for="link_menus">Link <b style="color:red">*</b></label>
 							<input class="form-control {{ General::validForm($errors->first('link_menus')) }}" id="link_menus" type="text" name="link_menus" value="{{Request::old('link_menus')}}">
-							{{General::pesanErorForm($errors->first('link_menus'))}}
+							{{General::pesanErrorForm($errors->first('link_menus'))}}
 						</div>
 						<table class="table table-responsive-sm table-bordered table-striped table-sm">
 							<tr>
@@ -73,7 +73,7 @@
 								</td>
 							</tr>
 						</table>
-	                    {{ General::pesanErorForm($errors->first('nama_fiturs')) }}
+	                    {{ General::pesanErrorForm($errors->first('nama_fiturs')) }}
 					</div>
 			        <div class="card-footer right-align">
 						{{General::simpan()}}

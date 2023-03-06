@@ -207,20 +207,7 @@ class General
 		{
 			if (General::hakAkses($link_menus, 'lihat') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-secondary">
-							<svg class="c-icon" style="margin-right:5px;">
-		                      	<use xlink:href="' . URL::asset('template/assets/icons/coreui/free.svg#cil-list-numbered') . '"></use>
-		                    </svg> Urutan
-						</a>';
-			}
-		}
-
-		public static function subKategori($link_menus = '', $link = '')
-		{
-			if (General::hakAkses($link_menus, 'lihat') == 'true') {
-				echo 	'<a class="dropdown-item" href="' . URL($link) . '" style="color:green">
-							<svg class="c-icon" style="margin-right:5px;margin-top:-3px">
-		                      	<use xlink:href="' . URL::asset('template/assets/icons/coreui/free.svg#cil-menu') . '"></use>
-		                    </svg> Sub Kategori
+							<i class="fas fa-list-ol" aria-hidden="true"></i>&nbsp;&nbsp;Urutan
 						</a>';
 			}
 		}
@@ -229,9 +216,7 @@ class General
 		{
 			if (General::hakAkses($link_menus, 'lihat') == 'true') {
 				echo 	'<a class="dropdown-item" href="' . URL($link) . '" style="color:green">
-							<svg class="c-icon" style="margin-right:5px;margin-top:-3px">
-		                      	<use xlink:href="' . URL::asset('template/assets/icons/coreui/free.svg#cil-menu') . '"></use>
-		                    </svg> Sub Menu
+							<i class="fas fa-list-alt" aria-hidden="true"></i>&nbsp;&nbsp;Sub Menu
 						</a>';
 			}
 		}
@@ -240,7 +225,7 @@ class General
 		{
 			if (General::hakAkses($link_menus, 'baca') == 'true') {
 				echo 	'<a class="dropdown-item" href="' . URL($link) . '" style="color:orange">
-							<i class="fas fa-folder-open" aria-hidden="true"></i>&nbsp;&nbsp;Edit
+							<i class="fas fa-folder-open" aria-hidden="true"></i>&nbsp;&nbsp;Baca
 						</a>';
 			}
 		}

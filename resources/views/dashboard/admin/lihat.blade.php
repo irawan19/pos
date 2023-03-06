@@ -35,6 +35,7 @@
 					    				<th class="nowrap" width="5px"></th>
 					    			@endif
 				    				<th class="nowrap" width="50px">No</th>
+				    				<th class="nowrap">Toko</th>
 				    				<th class="nowrap">Level Sistem</th>
 				    				<th class="nowrap">Nama</th>
 				    				<th class="nowrap">Username</th>
@@ -61,6 +62,13 @@
 											    </td>
 									    	@endif
 								    		<td class="nowrap">{{$no}}</td>
+								    		<td class="nowrap">
+												@if($admins->tokos_id != null)
+													{{$admins->nama_tokos}}
+												@else
+													Semua Toko
+												@endif
+											</td>
 								    		<td class="nowrap">{{$admins->nama_level_sistems}}</td>
 								    		<td class="nowrap">{{$admins->name}}</td>
 								    		<td class="nowrap">{{$admins->username}}</td>
@@ -75,14 +83,16 @@
 								@else
 									<tr>
 										@if(General::totalHakAkses($link_admin) != 0)
-											<td colspan="6" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="7" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="5" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="6" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>

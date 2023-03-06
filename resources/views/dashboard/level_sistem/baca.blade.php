@@ -2,7 +2,7 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-sm-6">
+		<div class="col-sm-8">
 			<div class="card">
 				<div class="card-header">
 					<strong>Baca Level Sistem</strong>
@@ -78,11 +78,11 @@
 									@php($id_sub_menus = $sub_menus->id_menus)
 									@php($tambah_fiturs = \App\Models\Master_fitur::where('menus_id',$id_sub_menus)->get())
 									<tr>
-										<td>
+								    	<td style="text-align:left">
 											<b style="color:#cc0000">
-												<svg class="c-sidebar-nav-icon" style="width: 50px;">
+								    			<svg class="c-sidebar-nav-icon" style="width:20px; height:20px">
 										          	<use xlink:href="{{URL::asset('template/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
-										        </svg>{{ $sub_menus->nama_menus }}
+										        </svg>&nbsp; {{ $sub_menus->nama_menus }}
 										    </b>
 									    </td>
 										<td class="center-align">
@@ -227,7 +227,7 @@
 			</div>
 		</div>
 
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<div class="card">
 				<div class="card-header">
 					<strong>Baca Admin List</strong>

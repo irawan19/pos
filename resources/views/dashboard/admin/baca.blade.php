@@ -40,6 +40,17 @@
 							<th>:</th>
 							<td>{{$baca_admins->name}}</td>
 						</tr>
+						<tr>
+							<th>Tooko</th>
+							<th>:</th>
+							<td>
+								@if($baca_admins->tokos_id != null)
+									{{$baca_admins->nama_tokos}}
+								@else
+									Semua Toko
+								@endif
+							</td>
+						</tr>
 					</table>
 				</div>
 			</div>
@@ -122,9 +133,9 @@
 									@php($tambah_fiturs = \App\Models\Master_fitur::where('menus_id',$id_sub_menus)->get())
 									<tr>
 										<td>
-											<svg class="c-sidebar-nav-icon" style="width: 50px;">
+								    		<svg class="c-sidebar-nav-icon" style="width:20px; height:20px;">
 											  	<use xlink:href="{{URL::asset('template/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
-											</svg>{{ $sub_menus->nama_menus }}
+											</svg>&nbsp; {{ $sub_menus->nama_menus }}
 										</td>
 										<td class="center-align">
 											@foreach($tambah_fiturs as $fiturs_lihat)

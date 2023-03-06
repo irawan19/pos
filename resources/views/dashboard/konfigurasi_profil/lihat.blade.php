@@ -28,22 +28,22 @@
 								@endif
 							</div>
 				            <input id="userfile_foto_user" type="file" name="userfile_foto_user">
-							{{General::pesanErorForm($errors->first('userfile_foto_user'))}}
+							{{General::pesanErrorForm($errors->first('userfile_foto_user'))}}
 				        </div>
 						<div class="form-group">
 							<label class="form-col-form-label" for="nama_level_sistems">Level Sistem</label>
 							<input class="form-control {{ General::validForm($errors->first('nama_level_sistems')) }}" id="nama_level_sistems" type="text" name="nama_level_sistems" value="{{$lihat_level_sistems->nama_level_sistems}}" readonly>
-							{{General::pesanErorForm($errors->first('nama_level_sistems'))}}
+							{{General::pesanErrorForm($errors->first('nama_level_sistems'))}}
 						</div>
 						<div class="form-group">
 							<label class="form-col-form-label" for="nama_status_users">Status <b style="color:red">*</b></label>
 							<input readonly class="form-control {{ General::validForm($errors->first('nama_status_users')) }}" id="nama_status_users" type="text" name="nama_status_users" value="{{Request::old('nama_status_users') == '' ? $lihat_status_users->nama_status_users : Request::old('nama_status_users')}}">
-							{{General::pesanErorForm($errors->first('nama_status_users'))}}
+							{{General::pesanErrorForm($errors->first('nama_status_users'))}}
 						</div>
 						<div class="form-group">
 							<label class="form-col-form-label" for="name">Nama <b style="color:red">*</b></label>
 							<input class="form-control {{ General::validForm($errors->first('name')) }}" id="name" type="text" name="name" value="{{Request::old('name') == '' ? Auth::user()->nama : Request::old('name')}}">
-							{{General::pesanErorForm($errors->first('name'))}}
+							{{General::pesanErrorForm($errors->first('name'))}}
 						</div>
 					</div>
 				    <div class="card-footer right-align">

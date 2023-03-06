@@ -1,4 +1,5 @@
-@php($tanggal_sekarang				= date('Y-m-d'))
+@php($tanggal_sekarang		= date('Y-m-d'))
+@php($ambil_menus 			= \App\Models\Master_menu::where('link_menus',Request::segment(2))->first())
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
   	<div class="container-fluid py-1 px-3">
 		<nav aria-label="breadcrumb">
@@ -6,74 +7,14 @@
 				<li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="#">Halaman</a></li>
 				@if(Request::segment(2) == '' || Request::segment(2) == 'dashboard')
 					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
-				@elseif(Request::segment(2) == 'konfigurasi_akun')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Konfigurasi Akun</li>
-				@elseif(Request::segment(2) == 'regional')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Regional</li>
-				@elseif(Request::segment(2) == 'kategori_menu')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Kategori Menu</li>
-				@elseif(Request::segment(2) == 'satuan')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Satuan</li>
-				@elseif(Request::segment(2) == 'tipe_pembayaran')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tipe Pembayaran</li>
-				@elseif(Request::segment(2) == 'kategori_pembayaran')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Kategori Pembayaran</li>
-				@elseif(Request::segment(2) == 'pembayaran')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Pembayaran</li>
-				@elseif(Request::segment(2) == 'verifikasi_mitra')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Verifikasi Mitra</li>
-				@elseif(Request::segment(2) == 'mitra')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Mitra</li>
-				@elseif(Request::segment(2) == 'customer')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Customer</li>
-				@elseif(Request::segment(2) == 'promo')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Promo</li>
-				@elseif(Request::segment(2) == 'laporan_penjualan')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Laporan Penjualan</li>
-				@elseif(Request::segment(2) == 'push_notifikasi')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Push Notifikasi</li>
-				@elseif(Request::segment(2) == 'admin')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Admin</li>
-				@elseif(Request::segment(2) == 'konfigurasi_aplikasi')
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Konfigurasi Aplikasi</li>
 				@else
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page"></li>
+					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">{{$ambil_menus->nama_menus}}</li>
 				@endif
 			</ol>
 			@if(Request::segment(2) == '' || Request::segment(2) == 'dashboard')
 				<h6 class="font-weight-bolder mb-0">Dashboard</h6>
-			@elseif(Request::segment(2) == 'konfigurasi_akun')
-				<h6 class="font-weight-bolder mb-0">Konfigurasi Akun</h6>
-			@elseif(Request::segment(2) == 'regional')
-				<h6 class="font-weight-bolder mb-0">Regional</h6>
-			@elseif(Request::segment(2) == 'kategori_menu')
-				<h6 class="font-weight-bolder mb-0">Kategori Menu</h6>
-			@elseif(Request::segment(2) == 'satuan')
-				<h6 class="font-weight-bolder mb-0">Satuan</h6>
-			@elseif(Request::segment(2) == 'tipe_pembayaran')
-				<h6 class="font-weight-bolder mb-0">Tipe Pembayaran</h6>
-			@elseif(Request::segment(2) == 'kategori_pembayaran')
-				<h6 class="font-weight-bolder mb-0">Kategori Pembayaran</h6>
-			@elseif(Request::segment(2) == 'pembayaran')
-				<h6 class="font-weight-bolder mb-0">Pembayaran</h6>
-			@elseif(Request::segment(2) == 'verifikasi_mitra')
-				<h6 class="font-weight-bolder mb-0">Verifikasi Mitra</h6>
-			@elseif(Request::segment(2) == 'mitra')
-				<h6 class="font-weight-bolder mb-0">Mitra</h6>
-			@elseif(Request::segment(2) == 'customer')
-				<h6 class="font-weight-bolder mb-0">Customer</h6>
-			@elseif(Request::segment(2) == 'promo')
-				<h6 class="font-weight-bolder mb-0">Promo</h6>
-			@elseif(Request::segment(2) == 'laporan_penjualan')
-				<h6 class="font-weight-bolder mb-0">Laporan Penjualan</h6>
-			@elseif(Request::segment(2) == 'push_notifikasi')
-				<h6 class="font-weight-bolder mb-0">Push Notifikasi</h6>
-			@elseif(Request::segment(2) == 'admin')
-				<h6 class="font-weight-bolder mb-0">Admin</h6>
-			@elseif(Request::segment(2) == 'konfigurasi_aplikasi')
-				<h6 class="font-weight-bolder mb-0">Konfigurasi Aplikasi</h6>
 			@else
-				<h6 class="font-weight-bolder mb-0"></h6>
+				<h6 class="font-weight-bolder mb-0">{{$ambil_menus->nama_menus}}</h6>
 			@endif
 		</nav>
 		<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">

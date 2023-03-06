@@ -47,8 +47,8 @@
 								    	<tr>
 					    					@if(General::totalHakAkses($link_menu) != 0)
 					    						<td class="nowrap">
-											      	<div class="dropdown">
-										            	<button class="btn btn-sm btn-success dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+													<div class="dropdown">
+														<button class="btn btn-sm bg-gradient-success mb-0 dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
 										            	<div class="dropdown-menu" aria-labelledby="dropdownMenu2" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
 										            		{{General::subMenu($link_menu,'dashboard/menu/submenu/'.$menus->id_menus)}}
 										            		<div class="dropdown-divider"></div>
@@ -62,8 +62,8 @@
 											    </td>
 									    	@endif
 								    		<td class="nowrap">{{$no}}</td>
-								    		<td class="nowrap">
-								    			<svg class="c-sidebar-nav-icon">
+								    		<td style="text-align:center">
+								    			<svg class="c-sidebar-nav-icon" style="width:20px; height:20px;">
 										          	<use xlink:href="{{URL::asset('template/assets/icons/coreui/free.svg#'.$menus->icon_menus)}}"></use>
 										        </svg>
 								    		</td>

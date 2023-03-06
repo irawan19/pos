@@ -46,7 +46,7 @@
 					    					@if(General::totalHakAkses($link_level_sistem) != 0)
 					    						<td class="nowrap">
 											      	<div class="dropdown">
-										            	<button class="btn btn-sm btn-success dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+													  <button class="btn btn-sm bg-gradient-success mb-0 dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
 										            	<div class="dropdown-menu" aria-labelledby="dropdownMenu2" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
 										            		{{General::baca($link_level_sistem,'dashboard/level_sistem/baca/'.$level_sistems->id_level_sistems)}}
 										            		<div class="dropdown-divider"></div>

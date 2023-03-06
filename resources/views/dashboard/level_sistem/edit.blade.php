@@ -13,7 +13,7 @@
 						<div class="form-group">
 							<label class="form-col-form-label" for="nama_level_sistems">Nama <b style="color:red">*</b></label>
 							<input class="form-control {{ General::validForm($errors->first('nama_level_sistems')) }}" id="nama_level_sistems" type="text" name="nama_level_sistems" value="{{Request::old('nama_level_sistems') == '' ? $edit_level_sistems->nama_level_sistems : Request::old('nama_level_sistems')}}">
-							{{General::pesanErorForm($errors->first('nama_level_sistems'))}}
+							{{General::pesanErrorForm($errors->first('nama_level_sistems'))}}
 						</div>
 						<hr/>
 						<table class="table table-responsive-sm table-bordered table-striped table-sm">
@@ -80,9 +80,9 @@
 									<tr>
 										<td>
 											<b style="color:#cc0000">
-												<svg class="c-sidebar-nav-icon" style="width: 50px;">
+												<svg class="c-sidebar-nav-icon" style="width:20px; height:20px">
 										          	<use xlink:href="{{URL::asset('template/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
-										        </svg>{{ $sub_menus->nama_menus }}
+										        </svg>&nbsp; {{ $sub_menus->nama_menus }}
 										    </b>
 										</td>
 										<td class="center-align">

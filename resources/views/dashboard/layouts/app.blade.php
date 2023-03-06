@@ -135,6 +135,10 @@
 		.daterangepicker .ranges .range_inputs>div:nth-child(2){
 			padding-left:0 !important;
 		}
+		.btn-ordering{
+			width:100%;
+			text-align:left;
+		}
 	</style>
     <script type="text/javascript">
         jQuery(document).ready(function () {

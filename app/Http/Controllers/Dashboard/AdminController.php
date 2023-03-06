@@ -16,6 +16,7 @@ class AdminController extends AdminCoreController
             $data['hasil_kata']         = '';
             $url_sekarang               = $request->fullUrl();
         	$data['lihat_admins']    	= \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
+                                                            ->leftJoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                             ->orderBy('nama_level_sistems','asc')
                                                             ->paginate(10);
             session()->forget('halaman');
@@ -37,6 +38,9 @@ class AdminController extends AdminCoreController
             $hasil_kata                 = $request->cari_kata;
             $data['hasil_kata']         = $hasil_kata;
             $data['lihat_admins']       = \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
+                                                            ->leftJoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                            ->where('nama_level_sistems', 'LIKE', '%'.$hasil_kata.'%')
+                											->orWhere('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
                                                             ->where('nama_level_sistems', 'LIKE', '%'.$hasil_kata.'%')
                 											->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
                 											->orWhere('username', 'LIKE', '%'.$hasil_kata.'%')
@@ -56,6 +60,8 @@ class AdminController extends AdminCoreController
         $link_admin = 'admin';
         if(General::hakAkses($link_admin,'tambah') == 'true')
         {
+            $data['tambah_tokos']               = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                            ->get();
             $data['tambah_level_sistems']       = \App\Models\Master_level_sistem::orderBy('nama_level_sistems')
                                                       					->get();
             return view('dashboard.admin.tambah',$data);
@@ -97,8 +103,14 @@ class AdminController extends AdminCoreController
                     base_path() . '/public/uploads/user/', $nama_foto_user
                 );
 
+                $tokos_id = null;
+                if(!empty($request->tokos_id))
+                    $tokos_id = $request->tokos_id;
+
                 $data = [
                     'profile_photo_path' 	=> $path_foto_user.$nama_foto_user,
+                    'tokos_id'              => $tokos_id,
+                    'level_sistems_id'   	=> $request->level_sistems_id,
                     'name'               	=> $request->name,
                     'username'              => $request->username,
                     'email'              	=> $request->email,
@@ -106,7 +118,6 @@ class AdminController extends AdminCoreController
                     'updated_at'         	=> date('Y-m-d H:i:s'),
                     'password'           	=> bcrypt($request->password),
                     'remember_token'     	=> str_random(100),
-                    'level_sistems_id'   	=> $request->level_sistems_id,
                     'no_telp'               => '',
                     'alamat'                => '',
                 ];
@@ -130,7 +141,13 @@ class AdminController extends AdminCoreController
                 ];
                 $this->validate($request, $aturan, $error_pesan);
 
+                $tokos_id = null;
+                if(!empty($request->tokos_id))
+                    $tokos_id = $request->tokos_id;
+
                 $data = [
+                    'tokos_id'              => $tokos_id,
+                    'level_sistems_id'   	=> $request->level_sistems_id,
                     'profile_photo_path' 	=> null,
                     'name'               	=> $request->name,
                     'username'              => $request->username,
@@ -139,7 +156,6 @@ class AdminController extends AdminCoreController
                     'updated_at'         	=> date('Y-m-d H:i:s'),
                     'password'           	=> bcrypt($request->password),
                     'remember_token'     	=> str_random(100),
-                    'level_sistems_id'   	=> $request->level_sistems_id,
                     'no_telp'               => '',
                     'alamat'                => '',
                 ];
@@ -179,6 +195,7 @@ class AdminController extends AdminCoreController
             if(!empty($cek_admins))
             {
             	$ambil_admin 					= \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
+                                                                    ->leftJoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                     ->where('id',$id_admins)
         		                                                    ->first();
             	$data['baca_level_sistems']		= \App\Models\Master_level_sistem::where('id_level_sistems',$ambil_admin->id_level_sistems)->first();
@@ -203,6 +220,8 @@ class AdminController extends AdminCoreController
             $cek_admins = \App\Models\User::where('id',$id_admins)->count();
             if($cek_admins != 0)
             {
+                $data['edit_tokos']             = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                            ->get();
                 $data['edit_level_sistems']     = \App\Models\Master_level_sistem::orderBy('nama_level_sistems')
                                                           					->get();
                 $data['edit_admins']			= \App\Models\User::where('id',$id_admins)
@@ -258,8 +277,13 @@ class AdminController extends AdminCoreController
                             base_path() . '/public/uploads/user/', $nama_foto_user
                         );
 
+                        $tokos_id = null;
+                        if(!empty($request->tokos_id))
+                            $tokos_id = $request->tokos_id;
+
                         $data = [
                             'foto_user'             => $path_foto_user.$nama_foto_user,
+                            'tokos_id'              => $tokos_id,
                             'name'                  => $request->name,
                             'username'              => $request->username, 
                             'email'                 => $request->email,
@@ -287,7 +311,12 @@ class AdminController extends AdminCoreController
                         ];
                         $this->validate($request, $aturan, $error_pesan);
 
+                        $tokos_id = null;
+                        if(!empty($request->tokos_id))
+                            $tokos_id = $request->tokos_id;
+
                 	    $data = [
+                            'tokos_id'              => $tokos_id,
                 	        'name' 			        => $request->name,
                             'username'              => $request->username,
                 	        'email'			        => $request->email,
@@ -329,7 +358,12 @@ class AdminController extends AdminCoreController
                             base_path() . '/public/uploads/user/', $nama_foto_user
                         );
 
+                        $tokos_id = null;
+                        if(!empty($request->tokos_id))
+                            $tokos_id = $request->tokos_id;
+
                         $data = [
+                            'tokos_id'              => $request->tokos_id,
                             'username'              => $request->username,
                             'name'                  => $request->name,
                             'email'                 => $request->email,
@@ -354,8 +388,13 @@ class AdminController extends AdminCoreController
                             'email.unique'                  => 'Email Sudah Terdaftar, Silahkan Gunakan Email Lain.',
                         ];
                         $this->validate($request, $aturan, $error_pesan);
+
+                        $tokos_id = null;
+                        if(!empty($request->tokos_id))
+                            $tokos_id = $request->tokos_id;
                         
                 	    $data = [
+                            'tokos_id'              => $tokos_id,
                             'username'              => $request->username,
                 	        'nama' 			     	=> $request->nama,
                 	        'email'			     	=> $request->email,
