@@ -174,9 +174,7 @@ class General
 		{
 			if (General::hakAkses($link_menus, 'cetak') == 'true') {
 				echo 	'<a target="_blank" href="' . URL($link) . '" class="btn btn-sm btn-success">
-							<svg class="c-icon" style="margin-right:5px;">
-		                      	<use xlink:href="' . URL::asset('template/assets/icons/coreui/free.svg#cil-print') . '"></use>
-		                    </svg> Cetak
+							<i class="fas fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Cetak
 						</a>';
 			}
 		}
@@ -185,9 +183,7 @@ class General
 		{
 			if (General::hakAkses($link_menus, 'cetak') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-success">
-							<svg class="c-icon" style="margin-right:5px;">
-		                      	<use xlink:href="' . URL::asset('template/assets/icons/coreui/free.svg#cil-cloud-download') . '"></use>
-		                    </svg> Cetak Excel
+							<i class="fas fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Cetak Excel
 						</a>';
 			}
 		}
@@ -196,9 +192,7 @@ class General
 		{
 			if (General::hakAkses($link_menus, 'cetak') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-success">
-							<svg class="c-icon" style="margin-right:5px;">
-		                      	<use xlink:href="' . URL::asset('template/assets/icons/coreui/free.svg#cil-print') . '"></use>
-		                    </svg> Cetak
+							<i class="fas fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Cetak
 						</a>';
 			}
 		}
@@ -234,10 +228,8 @@ class General
 		{
 			if (General::hakAkses($link_menus, 'cetak') == 'true') {
 				echo 	'<a class="dropdown-item" href="' . URL($link) . '" style="color:green">
-								<svg class="c-icon" style="margin-right:5px;margin-top:-3px">
-		                          	<use xlink:href="' . URL::asset('template/assets/icons/coreui/free.svg#cil-print') . '"></use>
-		                        </svg> Cetak
-							</a>';
+							<i class="fas fa-folder-open" aria-hidden="true"></i>&nbsp;&nbsp;Cetak
+						</a>';
 			}
 		}
 
@@ -254,9 +246,7 @@ class General
 		{
 			if (General::hakAkses($link_menus, 'edit') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-success">
-							<svg class="c-icon" style="margin-right:5px;">
-		                      	<use xlink:href="' . URL::asset('template/assets/icons/coreui/free.svg#cil-check') . '"></use>
-		                    </svg> Aktif
+							<i class="fas fa-check" aria-hidden="true"></i>&nbsp;&nbsp;Edit
 						</a>';
 			}
 		}
@@ -265,10 +255,8 @@ class General
 		{
 			if (General::hakAkses($link_menus, 'edit') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-danger">
-								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/assets/icons/coreui/free.svg#cil-ban') . '"></use>
-		                        </svg> Non Aktif
-							</a>';
+							<i class="fas fa-ban" aria-hidden="true"></i>&nbsp;&nbsp;Edit
+						</a>';
 			}
 		}
 
