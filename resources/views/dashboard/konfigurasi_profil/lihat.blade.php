@@ -14,7 +14,7 @@
 				        	{{ General::pesanSuksesForm(Session::get('setelah_simpan.text')) }}
 				        @endif
 						<div class="form-group">
-							<label class="form-col-form-label" for="userfile_foto_user">Foto <b style="color:red">*</b></label>
+							<label class="form-col-form-label" for="userfile_foto_user">Foto (128 x 128px) <b style="color:red">*</b></label>
 							<br/>
 							<div class="form-group center-align">
 								@if(Auth::user()->profile_photo_path != null)
@@ -34,11 +34,6 @@
 							<label class="form-col-form-label" for="nama_level_sistems">Level Sistem</label>
 							<input class="form-control {{ General::validForm($errors->first('nama_level_sistems')) }}" id="nama_level_sistems" type="text" name="nama_level_sistems" value="{{$lihat_level_sistems->nama_level_sistems}}" readonly>
 							{{General::pesanErrorForm($errors->first('nama_level_sistems'))}}
-						</div>
-						<div class="form-group">
-							<label class="form-col-form-label" for="nama_status_users">Status <b style="color:red">*</b></label>
-							<input readonly class="form-control {{ General::validForm($errors->first('nama_status_users')) }}" id="nama_status_users" type="text" name="nama_status_users" value="{{Request::old('nama_status_users') == '' ? $lihat_status_users->nama_status_users : Request::old('nama_status_users')}}">
-							{{General::pesanErrorForm($errors->first('nama_status_users'))}}
 						</div>
 						<div class="form-group">
 							<label class="form-col-form-label" for="name">Nama <b style="color:red">*</b></label>
