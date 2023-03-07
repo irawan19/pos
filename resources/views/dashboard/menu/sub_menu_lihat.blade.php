@@ -21,9 +21,7 @@
 						@csrf
 	                	<div class="input-group">
 	                		<input class="form-control" id="input2-group2" type="text" name="cari_kata" placeholder="Cari" value="{{$hasil_kata2}}">
-	                		<span class="input-group-append">
-	                		  	<button class="btn btn-primary" type="submit"> Cari</button>
-	                		</span>
+	                		<button class="btn btn-primary" type="submit"> Cari</button>
 	                	</div>
 	                </form>
 	            	<br/>

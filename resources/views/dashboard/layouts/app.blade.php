@@ -139,6 +139,10 @@
 			width:100%;
 			text-align:left;
 		}
+
+		input[type=file]::file-selector-button:hover {
+			background: #F57328;
+		}
 	</style>
     <script type="text/javascript">
         jQuery(document).ready(function () {
