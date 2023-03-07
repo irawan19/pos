@@ -30,7 +30,7 @@
 									<td>{{ $baca_menus->nama_menus }}</td>
 								    <td style="text-align:center">
 								    	<svg class="c-sidebar-nav-icon" style="width:20px; height:20px;">
-										  	<use xlink:href="{{URL::asset('template/assets/icons/coreui/free.svg#'.$baca_menus->icon_menus)}}"></use>
+										  	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$baca_menus->icon_menus)}}"></use>
 										</svg>
 									</td>
 									<td></td>
@@ -41,7 +41,7 @@
 										<td></td>
 								    	<td style="text-align:center">
 								    		<svg class="c-sidebar-nav-icon" style="width:20px; height:20px;">
-									          	<use xlink:href="{{URL::asset('template/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
+									          	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
 									        </svg>
 										</td>
 										<td>{{ $no++ }} {{ $sub_menus->nama_menus }}</td>
@@ -63,7 +63,7 @@
 									<td>{{ $baca_menus->nama_menus }}</td>
 									<td>
 										<svg class="c-sidebar-nav-icon">
-										  	<use xlink:href="{{URL::asset('template/assets/icons/coreui/free.svg#'.$baca_menus->icon_menus)}}"></use>
+										  	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$baca_menus->icon_menus)}}"></use>
 										</svg>
 									</td>
 									<td></td>

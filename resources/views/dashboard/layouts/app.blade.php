@@ -13,30 +13,30 @@
 	<title>{{$ambil_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}</title>
 	<link rel="icon" type="image/png" href="{{URL::asset($ambil_konfigurasi_aplikasis->icon_konfigurasi_aplikasis)}}" sizes="any" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-    <link href="{{URL::asset('template/css/nucleo-icons.css')}}" rel="stylesheet" />
-    <link href="{{URL::asset('template/css/nucleo-svg.css')}}" rel="stylesheet" />
-    <script src="{{URL::asset('template/js/42d5adcbca.js')}}" crossorigin="anonymous"></script>
-    <link id="pagestyle" href="{{URL::asset('template/css/soft-ui-dashboard.css?v=1.0.6')}}" rel="stylesheet" />
-	<link href="{{URL::asset('template/vendors/flag-icon-css/css/flag-icon.min.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/vendors/pace-progress/css/pace.min.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/vendors/@coreui/coreui-chartjs/css/coreui-chartjs.css')}}" rel="stylesheet">
-	<link rel="stylesheet" href="{{URL::asset('template/vendors/fancybox/jquery.fancybox.min.css')}}" />
-	<link rel="stylesheet" href="{{URL::asset('template/vendors/sweetalert2/dist/sweetalert2.min.css')}}" />
-	<link type="text/css" media="screen" rel="stylesheet" href="{{ URL::asset('template/vendors/jqueryui/jquery-ui.css')}}" />
-	<link type="text/css" media="screen" rel="stylesheet" href="{{{ URL::asset('template/vendors/daterangepicker/daterangepicker.css')}}}" />
-	<link type="text/css" media="screen" rel="stylesheet" src="{{ URL::asset('template/vendors/datetimepicker/bootstrap-datetimepicker.min.css') }}"></link>
-	<link type="text/css" media="screen" rel="stylesheet" href="{{{ URL::asset('template/vendors/select2/dist/css/select2.min.css')}}}" />
-	<link type="text/css" media="screen" rel="stylesheet" href="{{ URL::asset('template/vendors/datatables.net-bs4/css/dataTables.bootstrap4.css') }}" />
-	<link href="{{URL::asset('template/vendors/@coreui/icons/css/free.min.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/vendors/@coreui/icons/css/coreui-icons.min.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/vendors/flag-icon-css/css/flag-icon.min.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/vendors/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('template/back/css/nucleo-icons.css')}}" rel="stylesheet" />
+    <link href="{{URL::asset('template/back/css/nucleo-svg.css')}}" rel="stylesheet" />
+    <script src="{{URL::asset('template/back/js/42d5adcbca.js')}}" crossorigin="anonymous"></script>
+    <link id="pagestyle" href="{{URL::asset('template/back/css/soft-ui-dashboard.css?v=1.0.6')}}" rel="stylesheet" />
+	<link href="{{URL::asset('template/back/vendors/flag-icon-css/css/flag-icon.min.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('template/back/vendors/pace-progress/css/pace.min.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('template/back/vendors/@coreui/coreui-chartjs/css/coreui-chartjs.css')}}" rel="stylesheet">
+	<link rel="stylesheet" href="{{URL::asset('template/back/vendors/fancybox/jquery.fancybox.min.css')}}" />
+	<link rel="stylesheet" href="{{URL::asset('template/back/vendors/sweetalert2/dist/sweetalert2.min.css')}}" />
+	<link type="text/css" media="screen" rel="stylesheet" href="{{ URL::asset('template/back/vendors/jqueryui/jquery-ui.css')}}" />
+	<link type="text/css" media="screen" rel="stylesheet" href="{{{ URL::asset('template/back/vendors/daterangepicker/daterangepicker.css')}}}" />
+	<link type="text/css" media="screen" rel="stylesheet" src="{{ URL::asset('template/back/vendors/datetimepicker/bootstrap-datetimepicker.min.css') }}"></link>
+	<link type="text/css" media="screen" rel="stylesheet" href="{{{ URL::asset('template/back/vendors/select2/dist/css/select2.min.css')}}}" />
+	<link type="text/css" media="screen" rel="stylesheet" href="{{ URL::asset('template/back/vendors/datatables.net-bs4/css/dataTables.bootstrap4.css') }}" />
+	<link href="{{URL::asset('template/back/vendors/@coreui/icons/css/free.min.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('template/back/vendors/@coreui/icons/css/coreui-icons.min.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('template/back/vendors/flag-icon-css/css/flag-icon.min.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('template/back/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('template/back/vendors/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css" />
-	<link type="text/css" media="screen" rel="stylesheet" href="{{ URL::asset('template/vendors/codemirror/css/codemirror.css')}}">
+	<link type="text/css" media="screen" rel="stylesheet" href="{{ URL::asset('template/back/vendors/codemirror/css/codemirror.css')}}">
 
 	<meta name="_token" content="{{ csrf_token() }}">
-	<script src="{{URL::asset('template/vendors/jquery/js/jquery.min.js')}}"></script>
+	<script src="{{URL::asset('template/back/vendors/jquery/js/jquery.min.js')}}"></script>
 	<style type="text/css">
 		.page-item.active .page-link{
 			color:#000 !important;
@@ -164,32 +164,32 @@
 		</div>
   	</main>
 		
-	<script src="{{ URL::asset('template/vendors/jqueryui/jquery-ui.js') }}"></script>
-    <script src="{{URL::asset('template/js/core/popper.min.js')}}"></script>
-    <script src="{{URL::asset('template/js/core/bootstrap.min.js')}}"></script>
-    <script src="{{URL::asset('template/js/plugins/perfect-scrollbar.min.js')}}"></script>
-    <script src="{{URL::asset('template/js/plugins/smooth-scrollbar.min.js')}}"></script>
-	<script src="{{URL::asset('template/vendors/pace-progress/js/pace.min.js')}}"></script>
-	<script src="{{URL::asset('template/vendors/@coreui/coreui-pro/js/coreui.bundle.min.js')}}"></script>
-	<script src="{{URL::asset('template/vendors/fancybox/jquery.fancybox.min.js')}}"></script>
-	<script src="{{URL::asset('template/vendors/sweetalert2/dist/sweetalert2.min.js')}}"></script>
-	<script src="{{URL::asset('template/vendors/sweetalert2/sweet-alert.init.js')}}"></script>
-	<script src="{{ URL::asset('template/vendors/price/jquery.price.js') }}"></script>
-	<script type="text/javascript" src="{{{ URL::asset('template/vendors/daterangepicker/moment.js')}}}"></script>
-	<script type="text/javascript" src="{{{ URL::asset('template/vendors/daterangepicker/daterangepicker.js')}}}"></script>
-	<script type="text/javascript" src="{{ URL::asset('template/vendors/datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
-	<script type="text/javascript" src="{{ URL::asset('template/vendors/select2/dist/js/select2.full.min.js') }}"></script>
-	<script type="text/javascript" src="{{ URL::asset('template/vendors/templateEditor/ckeditor/ckeditor.js') }} "></script>
-	<script type="text/javascript" src="{{ URL::asset('template/vendors/datatables.net/js/jquery.dataTables.js') }}"></script>
-	<script type="text/javascript" src="{{ URL::asset('template/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-	<script src="{{URL::asset('template/js/tooltips.js')}}"></script>
-	<script src="{{URL::asset('template/js/datatables.js')}}"></script>
-	<script type="text/javascript" src="{{ URL::asset('template/vendors/chained/jquery.chained.js') }}"></script>
-	<script type="text/javascript" src="{{ URL::asset('template/vendors/mousewheel/jquery.mousewheel.min.js') }}"></script>
+	<script src="{{ URL::asset('template/back/vendors/jqueryui/jquery-ui.js') }}"></script>
+    <script src="{{URL::asset('template/back/js/core/popper.min.js')}}"></script>
+    <script src="{{URL::asset('template/back/js/core/bootstrap.min.js')}}"></script>
+    <script src="{{URL::asset('template/back/js/plugins/perfect-scrollbar.min.js')}}"></script>
+    <script src="{{URL::asset('template/back/js/plugins/smooth-scrollbar.min.js')}}"></script>
+	<script src="{{URL::asset('template/back/vendors/pace-progress/js/pace.min.js')}}"></script>
+	<script src="{{URL::asset('template/back/vendors/@coreui/coreui-pro/js/coreui.bundle.min.js')}}"></script>
+	<script src="{{URL::asset('template/back/vendors/fancybox/jquery.fancybox.min.js')}}"></script>
+	<script src="{{URL::asset('template/back/vendors/sweetalert2/dist/sweetalert2.min.js')}}"></script>
+	<script src="{{URL::asset('template/back/vendors/sweetalert2/sweet-alert.init.js')}}"></script>
+	<script src="{{ URL::asset('template/back/vendors/price/jquery.price.js') }}"></script>
+	<script type="text/javascript" src="{{{ URL::asset('template/back/vendors/daterangepicker/moment.js')}}}"></script>
+	<script type="text/javascript" src="{{{ URL::asset('template/back/vendors/daterangepicker/daterangepicker.js')}}}"></script>
+	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/select2/dist/js/select2.full.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/templateEditor/ckeditor/ckeditor.js') }} "></script>
+	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/datatables.net/js/jquery.dataTables.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+	<script src="{{URL::asset('template/back/js/tooltips.js')}}"></script>
+	<script src="{{URL::asset('template/back/js/datatables.js')}}"></script>
+	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/chained/jquery.chained.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/mousewheel/jquery.mousewheel.min.js') }}"></script>
 	<script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
-    <script type="text/javascript" src="{{ URL::asset('template/vendors/codemirror/js/codemirror.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('template/vendors/codemirror/js/xml.js') }}"></script>
-  	<script src="{{URL::asset('template/js/soft-ui-dashboard.min.js?v=1.0.6')}}"></script>
+    <script type="text/javascript" src="{{ URL::asset('template/back/vendors/codemirror/js/codemirror.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('template/back/vendors/codemirror/js/xml.js') }}"></script>
+  	<script src="{{URL::asset('template/back/js/soft-ui-dashboard.min.js?v=1.0.6')}}"></script>
 	<script type="text/javascript">
 		$(function() {
 		   	$(".scrolltable").mousewheel(function(event, delta) {
@@ -455,13 +455,13 @@
 	                                    this.editable().setStyle('background-color', '#ffffff');
 	                                }
 	                            },
-	                            filebrowserBrowseUrl: '{{ URL("/") }}/template/vendors/templateEditor/kcfinder/browse.php?opener=ckeditor&type=files',
-	                            filebrowserImageBrowseUrl: '{{ URL("/") }}/template/vendors/templateEditor/kcfinder/browse.php?opener=ckeditor&type=images',
-	                            filebrowserFlashBrowseUrl: '{{ URL("/") }}/template/vendors/templateEditor/kcfinder/browse.php?opener=ckeditor&type=flash',
+	                            filebrowserBrowseUrl: '{{ URL("/") }}/template/back/vendors/templateEditor/kcfinder/browse.php?opener=ckeditor&type=files',
+	                            filebrowserImageBrowseUrl: '{{ URL("/") }}/template/back/vendors/templateEditor/kcfinder/browse.php?opener=ckeditor&type=images',
+	                            filebrowserFlashBrowseUrl: '{{ URL("/") }}/template/back/vendors/templateEditor/kcfinder/browse.php?opener=ckeditor&type=flash',
 
-	                            filebrowserUploadUrl: '{{ URL("/") }}/template/vendors/templateEditor/kcfinder/upload.php?opener=ckeditor&type=files',
-	                            filebrowserImageUploadUrl: '{{ URL("/") }}/template/vendors/templateEditor/kcfinder/upload.php?opener=ckeditor&type=images',
-	                            filebrowserFlashUploadUrl: '{{ URL("/") }}/template/vendors/templateEditor/kcfinder/upload.php?opener=ckeditor&type=flash',
+	                            filebrowserUploadUrl: '{{ URL("/") }}/template/back/vendors/templateEditor/kcfinder/upload.php?opener=ckeditor&type=files',
+	                            filebrowserImageUploadUrl: '{{ URL("/") }}/template/back/vendors/templateEditor/kcfinder/upload.php?opener=ckeditor&type=images',
+	                            filebrowserFlashUploadUrl: '{{ URL("/") }}/template/back/vendors/templateEditor/kcfinder/upload.php?opener=ckeditor&type=flash',
 	                            font_names: 'Arial/Arial, Helvetica, sans-serif;' +
 	                                'Comic Sans MS/Comic Sans MS, cursive;' +
 	                                'Courier New/Courier New, Courier, monospace;' +

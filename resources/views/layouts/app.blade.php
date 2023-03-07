@@ -8,10 +8,10 @@
     <link rel="icon" type="image/png" href="{{$lihat_konfigurasi_aplikasi->icon_konfigurasi_aplikasis}}">
     <title>{{$lihat_konfigurasi_aplikasi->nama_konfigurasi_aplikasis}}</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-    <link href="{{URL::asset('template/css/nucleo-icons.css')}}" rel="stylesheet" />
-    <link href="{{URL::asset('template/css/nucleo-svg.css')}}" rel="stylesheet" />
-    <script src="{{URL::asset('template/js/42d5adcbca.js')}}" crossorigin="anonymous"></script>
-    <link id="pagestyle" href="{{URL::asset('template/css/soft-ui-dashboard.css?v=1.0.6')}}" rel="stylesheet" />
+    <link href="{{URL::asset('template/back/css/nucleo-icons.css')}}" rel="stylesheet" />
+    <link href="{{URL::asset('template/back/css/nucleo-svg.css')}}" rel="stylesheet" />
+    <script src="{{URL::asset('template/back/js/42d5adcbca.js')}}" crossorigin="anonymous"></script>
+    <link id="pagestyle" href="{{URL::asset('template/back/css/soft-ui-dashboard.css?v=1.0.6')}}" rel="stylesheet" />
     <style>
         .text-red-600{
             color:red;
@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('{{URL::asset('template/img/curved-images/curved8.jpg')}}')"></div>
+                                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('{{URL::asset('template/back/img/curved-images/curved8.jpg')}}')"></div>
                             </div>
                         </div>
                     </div>
@@ -99,10 +99,10 @@
             </div>
         </div>
     </footer>
-    <script src="{{URL::asset('template/js/core/popper.min.js')}}"></script>
-    <script src="{{URL::asset('template/js/core/bootstrap.min.js')}}"></script>
-    <script src="{{URL::asset('template/js/plugins/perfect-scrollbar.min.js')}}"></script>
-    <script src="{{URL::asset('template/js/plugins/smooth-scrollbar.min.js')}}"></script>
+    <script src="{{URL::asset('template/back/js/core/popper.min.js')}}"></script>
+    <script src="{{URL::asset('template/back/js/core/bootstrap.min.js')}}"></script>
+    <script src="{{URL::asset('template/back/js/plugins/perfect-scrollbar.min.js')}}"></script>
+    <script src="{{URL::asset('template/back/js/plugins/smooth-scrollbar.min.js')}}"></script>
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
         if (win && document.querySelector('#sidenav-scrollbar')) {

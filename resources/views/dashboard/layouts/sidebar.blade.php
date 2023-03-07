@@ -20,7 +20,7 @@
 				<a class="nav-link {{$active_dashboard}}" href="{{URL('dashboard')}}">
 					<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 						<svg class="c-sidebar-nav-icon">
-							<use xlink:href="{{URL::asset('template/icons/coreui/free.svg#cil-speedometer')}}" {{$active_icon_dashboard}}></use>
+							<use xlink:href="{{URL::asset('template/back/icons/coreui/free.svg#cil-speedometer')}}" {{$active_icon_dashboard}}></use>
 						</svg>
 					</div>
 					<span class="nav-link-text ms-1">Dashboard</span>
@@ -68,7 +68,7 @@
 							<a class="nav-link {{$active_sub_menus}}" href="{{URL('dashboard/'.$sub_menus->link_menus)}}">
 								<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 									<svg class="c-sidebar-nav-icon">
-										<use xlink:href="{{URL::asset('template/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}" {{$active_icon_sub_menus}}></use>
+										<use xlink:href="{{URL::asset('template/back/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}" {{$active_icon_sub_menus}}></use>
 									</svg>
 								</div>
 								<span class="nav-link-text ms-1">{{$sub_menus->nama_menus}}</span>
