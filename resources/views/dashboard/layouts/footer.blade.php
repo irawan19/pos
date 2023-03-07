@@ -16,7 +16,7 @@
 			      	<a href="{{URL('/')}}" class="nav-link text-muted" target="_blank">{{$ambil_konfigurasi_aplikasi->nama_konfigurasi_aplikasis}}</a>
 			    </li>
 			    <li class="nav-item">
-			      	<a href="{{URL('/')}}" class="nav-link text-muted">Dashboard</a>
+			      	<a href="{{URL('/dashboard')}}" class="nav-link text-muted">Dashboard</a>
 			    </li>
 			  </ul>
 			</div>

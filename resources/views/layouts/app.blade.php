@@ -42,7 +42,7 @@
                             </ul>
                             <ul class="navbar-nav d-lg-block d-none">
                                 <li class="nav-item">
-                                    <button type="button" class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark">Point Of Sales</button>
+                                    <a href="{{URL('/')}}" class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark">Point Of Sales</a>
                                 </li>
                             </ul>
                         </div>
@@ -83,6 +83,17 @@
             <div class="row">
                 <div class="col-lg-8 mb-4 mx-auto text-center">
                     <b class="jam">{{General::ubahDBKeTanggal(date('Y-m-d'))}}, <onload="timeJavascript()" id="output"></b>
+                </div>
+                <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
+                    <a href="#" target="_blank" class="text-secondary me-xl-4 me-4">
+                        <span class="text-lg fab fa-facebook"></span>
+                    </a>
+                    <a href="#" target="_blank" class="text-secondary me-xl-4 me-4">
+                        <span class="text-lg fab fa-instagram"></span>
+                    </a>
+                    <a href="#" target="_blank" class="text-secondary me-xl-4 me-4">
+                        <span class="text-lg fab fa-twitter"></span>
+                    </a>
                 </div>
             </div>
             <div class="row">

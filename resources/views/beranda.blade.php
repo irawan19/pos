@@ -31,9 +31,9 @@
     <header id="header">
       <div class="container">
         <h1>
-          <a href="index.html">Point Of Sales</a>
+          <a href="index.html">{{$lihat_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}</a>
         </h1>
-        <h2>{{$lihat_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}</h2>
+        <h2>Point Of Sales Application</h2>
         <nav id="navbar" class="navbar">
           <ul>
             <li>
@@ -52,7 +52,6 @@
           <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
           <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
           <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
     </header>
