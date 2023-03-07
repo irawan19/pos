@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use General;
 use Auth;
+use Storage;
 
 class ItemController extends AdminCoreController
 {
@@ -84,9 +85,17 @@ class ItemController extends AdminCoreController
     {
         $link_item = 'item';
         if(General::hakAkses($link_item,'tambah') == 'true')
-        {
-            $data['tambah_tokos']           = \App\Models\Master_toko::orderBy('nama_tokos')
-                                                                    ->get();
+        {  
+            if(Auth::user()->tokos_id == null)
+            {
+                $data['tambah_tokos']           = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                            ->get();
+            }
+            else
+            {
+                $data['tambah_tokos']           = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                        ->get();
+            }
             $data['tambah_kategori_items']  = \App\Models\Master_kategori_item::orderBy('nama_kategori_items')
                                                                                 ->get();
             $data['tambah_satuans']         = \App\Models\Master_satuan::orderBy('nama_satuans')
@@ -127,10 +136,8 @@ class ItemController extends AdminCoreController
             $this->validate($request, $aturan, $error_pesan);
 
             $nama_foto_item = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_item')->getClientOriginalName())));
-            $path_foto_item = './public/uploads/item/';
-            $request->file('userfile_foto_item')->move(
-                base_path() . '/public/uploads/item/', $nama_foto_item
-            );
+            $path_foto_item = 'item/';
+            Storage::disk('public')->put($path_foto_item.$nama_foto_item, file_get_contents($request->file('userfile_foto_item')));
 
             $deskripsi_items = '';
             if(!empty($request->deskripsi_items))
@@ -182,12 +189,21 @@ class ItemController extends AdminCoreController
             $cek_items = \App\Models\Master_item::where('id_items',$id_items)->first();
             if(!empty($cek_items))
             {
-                $data['edit_tokos']           = \App\Models\Master_toko::orderBy('nama_tokos')
-                                                                    ->get();
-                $data['edit_kategori_items']  = \App\Models\Master_kategori_item::orderBy('nama_kategori_items')
+                if(Auth::user()->tokos_id == null)
+                {
+                    $data['edit_tokos']         = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                        ->get();
+                }
+                else
+                {
+                    $data['edit_tokos']         = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                        ->get();
+                }
+                $data['edit_kategori_items']    = \App\Models\Master_kategori_item::orderBy('nama_kategori_items')
                                                                                     ->get();
-                $data['edit_satuans']         = \App\Models\Master_satuan::orderBy('nama_satuans')
+                $data['edit_satuans']           = \App\Models\Master_satuan::orderBy('nama_satuans')
                                                                             ->get();
+                $data['edit_items']             = $cek_items;
                 return view('dashboard.item.edit',$data);
             }
             else
@@ -232,14 +248,12 @@ class ItemController extends AdminCoreController
                     $this->validate($request, $aturan, $error_pesan);
 
                     $foto_item_lama        = $cek_items->foto_items;
-                    if (file_exists($foto_item_lama))
-                        unlink($foto_item_lama);
+                    if (Storage::disk('public')->exists($foto_item_lama))
+                        Storage::disk('public')->delete($foto_item_lama);
         
                     $nama_foto_item = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_item')->getClientOriginalName())));
-                    $path_foto_item = './public/uploads/item/';
-                    $request->file('userfile_foto_item')->move(
-                        base_path() . '/public/uploads/item/', $nama_foto_item
-                    );
+                    $path_foto_item = 'item/';
+                    Storage::disk('public')->put($path_foto_item.$nama_foto_item, file_get_contents($request->file('userfile_foto_item')));
         
                     $deskripsi_items = '';
                     if(!empty($request->deskripsi_items))

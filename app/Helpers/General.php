@@ -284,11 +284,12 @@ class General
 			$jam = date('G');
 			if($jam >= 5 && $jam <= 10)
 				$greeting = "Selamat Pagi";
-			else if($jam >= 11 && $jam <= 18)
+			else if($jam >= 10 && $jam <= 15)
 				$greeting = "Selamat Siang";
+			else if($jam >= 15 && $jam <= 17)
+				$greeting = "Selamat Sore";
 			else
 				$greeting = "Selamat Malam";
-
 			return $greeting;
 		}
 

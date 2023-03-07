@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use General;
 use Auth;
+use Storage;
 
 class TokoController extends AdminCoreController
 {
@@ -73,10 +74,8 @@ class TokoController extends AdminCoreController
             $this->validate($request, $aturan, $error_pesan);
 
             $nama_logo_toko = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_logo_toko')->getClientOriginalName())));
-            $path_logo_toko = './public/uploads/toko/';
-            $request->file('userfile_logo_toko')->move(
-                base_path() . '/public/uploads/toko/', $nama_logo_toko
-            );
+            $path_logo_toko = 'toko/';
+            Storage::disk('public')->put('toko/'.$nama_foto_user, file_get_contents($request->file('userfile_logo_toko')));
 
             $tokos_data = [
                 'logo_tokos'                            => $path_logo_toko.$nama_logo_toko,
@@ -152,14 +151,12 @@ class TokoController extends AdminCoreController
                     $this->validate($request, $aturan, $error_pesan);
 
                     $logo_toko_lama        = $cek_tokos->logo_tokos;
-                    if (file_exists($logo_toko_lama))
-                        unlink($logo_toko_lama);
+                    if (Storage::disk('public')->exists($logo_toko_lama))
+                        Storage::disk('public')->delete($logo_toko_lama);
         
                     $nama_logo_toko = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_logo_toko')->getClientOriginalName())));
-                    $path_logo_toko = './public/uploads/toko/';
-                    $request->file('userfile_logo_toko')->move(
-                        base_path() . '/public/uploads/toko/', $nama_logo_toko
-                    );
+                    $path_logo_toko = 'toko/';
+                        Storage::disk('public')->put('toko/'.$nama_foto_user, file_get_contents($request->file('userfile_logo_toko')));
         
                     $tokos_data = [
                         'logo_tokos'                            => $path_logo_toko.$nama_logo_toko,

@@ -69,7 +69,7 @@ Route::middleware([
                 Route::get('/tambah', [DashboardToko::class, 'tambah']);
                 Route::post('/prosestambah', [DashboardToko::class, 'prosestambah']);
                 Route::get('/edit/{id}', [DashboardToko::class, 'edit']);
-                Route::post('/prosesedit', [DashboardToko::class, 'prosesedit']);
+                Route::post('/prosesedit/{id}', [DashboardToko::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardToko::class, 'hapus']);
             });
             
@@ -80,7 +80,7 @@ Route::middleware([
                 Route::get('/tambah', [DashboardSatuan::class, 'tambah']);
                 Route::post('/prosestambah', [DashboardSatuan::class, 'prosestambah']);
                 Route::get('/edit/{id}', [DashboardSatuan::class, 'edit']);
-                Route::post('/prosesedit', [DashboardSatuan::class, 'prosesedit']);
+                Route::post('/prosesedit/{id}', [DashboardSatuan::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardSatuan::class, 'hapus']);
             });
 
@@ -91,7 +91,7 @@ Route::middleware([
                 Route::get('/tambah', [DashboardKategoriItem::class, 'tambah']);
                 Route::post('/prosestambah', [DashboardKategoriItem::class, 'prosestambah']);
                 Route::get('/edit/{id}', [DashboardKategoriItem::class, 'edit']);
-                Route::post('/prosesedit', [DashboardKategoriItem::class, 'prosesedit']);
+                Route::post('/prosesedit/{id}', [DashboardKategoriItem::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardKategoriItem::class, 'hapus']);
             });
 
@@ -102,7 +102,7 @@ Route::middleware([
                 Route::get('/tambah', [DashboardItem::class, 'tambah']);
                 Route::post('/prosestambah', [DashboardItem::class, 'prosestambah']);
                 Route::get('/edit/{id}', [DashboardItem::class, 'edit']);
-                Route::post('/prosesedit', [DashboardItem::class, 'prosesedit']);
+                Route::post('/prosesedit/{id}', [DashboardItem::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardItem::class, 'hapus']);
                 Route::get('/cetakbarcode', [DashboardItems::class, 'cetakbarcode']);
             });

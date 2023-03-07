@@ -32,7 +32,9 @@
 				    				@if(General::totalHakAkses($link_item) != 0)
 						    			<th width="5px"></th>
 						    		@endif
+				    				<th class="nowrap">Kategori</th>
 				    				<th class="nowrap">Nama</th>
+				    				<th class="nowrap">Foto</th>
 				    			</tr>
 				    		</thead>
 				    		<tbody>
@@ -52,15 +54,27 @@
 											    </td>
 								    		@endif
 								    		<td class="nowrap">{{$items->nama_items}}</td>
+								    		<td class="nowrap">{{$items->nama_kategori_items}}</td>
+								    		<td class="nowrap">
+                                                <a data-fancybox="gallery" href="{{URL::asset('storage/'.$items->foto_items)}}">
+                                                    <img src="{{ URL::asset('storage/'.$items->foto_items) }}" width="32">
+                                                </a>
+                                            </td>
 								    	</tr>
 								    @endforeach
 								@else
 									<tr>
 										@if(General::totalHakAkses($link_item) != 0)
-											<td colspan="2" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="4" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
+											<td style="display:none"></td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="3" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
+											<td style="display:none"></td>
+											<td style="display:none"></td>
 										@endif
 									</tr>
 								@endif

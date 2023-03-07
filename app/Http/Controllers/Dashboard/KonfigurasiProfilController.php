@@ -33,16 +33,14 @@ class KonfigurasiProfilController extends AdminCoreController
             $cek_foto_user       = \App\Models\User::where('id',$id_users)->first();
             if($cek_foto_user != null)
             {
-                $foto_user_lama        = $cek_foto_user->profile_photo_path;
-            	if (file_exists($foto_user_lama))
-            	    unlink($foto_user_lama);
+                $foto_user_lama        = $cek_admins->profile_photo_path;
+                if (Storage::disk('public')->exists($foto_user_lama))
+                    Storage::disk('public')->delete($foto_user_lama);
             }
 
             $nama_foto_user = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_user')->getClientOriginalName())));
-            $path_foto_user = 'public/uploads/foto_user/';
-            $request->file('userfile_foto_user')->move(
-                base_path() . '/public/uploads/foto_user/', $nama_foto_user
-            );
+            $path_foto_user = 'user/';
+            Storage::disk('public')->put('user/'.$nama_foto_user, file_get_contents($request->file('userfile_foto_user')));
 
             $data = [
                 'profile_photo_path'  	=> $path_foto_user.$nama_foto_user,

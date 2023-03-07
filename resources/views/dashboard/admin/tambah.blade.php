@@ -19,6 +19,7 @@
 									<label class="form-col-form-label" for="userfile_foto_user">Foto (256 x 256px)</label>
 									<br/>
 			                        <input id="userfile_foto_user" type="file" name="userfile_foto_user">
+									{{General::pesanErrorForm($errors->first('userfile_foto_user'))}}
 			                    </div>
 								<div class="form-group">
 									<label class="form-col-form-label" for="tokos_id">Toko <b style="color:red">*</b></label>

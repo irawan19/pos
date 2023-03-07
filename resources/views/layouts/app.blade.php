@@ -82,9 +82,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mb-4 mx-auto text-center">
-                    <a href="{{URL('/')}}" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                        {{$lihat_konfigurasi_aplikasi->nama_konfigurasi_aplikasis}}
-                    </a>
+                    <b class="jam">{{General::ubahDBKeTanggal(date('Y-m-d'))}}, <onload="timeJavascript()" id="output"></b>
                 </div>
             </div>
             <div class="row">
@@ -110,6 +108,15 @@
                 damping: '0.5'
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    <script type="text/javascript">
+        window.setTimeout("timeJavascript()",1000);
+        function timeJavascript()
+        {     
+            var dateNow = new Date().toLocaleTimeString("en-US",{timeZone: "Asia/Jakarta", hour12: false});
+            setTimeout("timeJavascript()",1000);
+            document.getElementById("output").innerHTML = dateNow;
         }
     </script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>

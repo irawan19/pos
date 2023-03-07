@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use General;
 use Auth;
+use Storage;
 
 class AdminController extends AdminCoreController
 {
@@ -98,10 +99,8 @@ class AdminController extends AdminCoreController
                 $this->validate($request, $aturan, $error_pesan);
 
                 $nama_foto_user = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_user')->getClientOriginalName())));
-                $path_foto_user = './public/uploads/user/';
-                $request->file('userfile_foto_user')->move(
-                    base_path() . '/public/uploads/user/', $nama_foto_user
-                );
+                $path_foto_user = 'user/';
+                Storage::disk('public')->put('user/'.$nama_foto_user, file_get_contents($request->file('userfile_foto_user')));
 
                 $tokos_id = null;
                 if(!empty($request->tokos_id))
@@ -262,14 +261,12 @@ class AdminController extends AdminCoreController
                         $this->validate($request, $aturan, $error_pesan);
 
                         $foto_user_lama        = $cek_admins->profile_photo_path;
-                        if (file_exists($foto_user_lama))
-                            unlink($foto_user_lama);
+                        if (Storage::disk('public')->exists($foto_user_lama))
+                            Storage::disk('public')->delete($foto_user_lama);
 
                         $nama_foto_user = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_user')->getClientOriginalName())));
-                        $path_foto_user = './public/uploads/user/';
-                        $request->file('userfile_foto_user')->move(
-                            base_path() . '/public/uploads/user/', $nama_foto_user
-                        );
+                        $path_foto_user = 'user/';
+                        Storage::disk('public')->put('user/'.$nama_foto_user, file_get_contents($request->file('userfile_foto_user')));
 
                         $tokos_id = null;
                         if(!empty($request->tokos_id))
@@ -343,14 +340,12 @@ class AdminController extends AdminCoreController
                         $this->validate($request, $aturan, $error_pesan);
 
                         $foto_user_lama        = $cek_admins->profile_photo_path;
-                        if (file_exists($foto_user_lama))
-                            unlink($foto_user_lama);
+                        if (Storage::disk('public')->exists($foto_user_lama))
+                            Storage::disk('public')->delete($foto_user_lama);
 
                         $nama_foto_user = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_user')->getClientOriginalName())));
-                        $path_foto_user = './public/uploads/user/';
-                        $request->file('userfile_foto_user')->move(
-                            base_path() . '/public/uploads/user/', $nama_foto_user
-                        );
+                        $path_foto_user = 'user/';
+                        Storage::disk('public')->put('user/'.$nama_foto_user, file_get_contents($request->file('userfile_foto_user')));
 
                         $tokos_id = null;
                         if(!empty($request->tokos_id))
