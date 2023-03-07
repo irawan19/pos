@@ -159,6 +159,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -213,6 +214,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'General'   => App\Helpers\General::class,
+        'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
         'DNS1D'     => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D'     => Milon\Barcode\Facades\DNS2DFacade::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
