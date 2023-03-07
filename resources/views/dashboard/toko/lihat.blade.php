@@ -44,7 +44,7 @@
 								    		@if(General::totalHakAkses($link_toko) != 0)
 								    			<td class="nowrap">
 											      	<div class="dropdown">
-														<button class="btn btn-sm bg-gradient-success mb-0 dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+														<button class="btn btn-sm bg-gradient-success mb-0 dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih</button>
 										            	<div class="dropdown-menu" aria-labelledby="dropdownMenu2" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
 										            		{{General::edit($link_toko,'dashboard/toko/edit/'.$tokos->id_tokos)}}
 										            		<div class="dropdown-divider"></div>

@@ -35,6 +35,8 @@
 				    				<th class="nowrap">Kategori</th>
 				    				<th class="nowrap">Nama</th>
 				    				<th class="nowrap" width="50px">Foto</th>
+				    				<th class="nowrap">Harga</th>
+				    				<th class="nowrap">Stock</th>
 				    				<th class="nowrap" width="50px">Barcode</th>
 				    			</tr>
 				    		</thead>
@@ -45,7 +47,7 @@
 								    		@if(General::totalHakAkses($link_item) != 0)
 								    			<td class="nowrap">
 											      	<div class="dropdown">
-														<button class="btn btn-sm bg-gradient-success mb-0 dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+														<button class="btn btn-sm bg-gradient-success mb-0 dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih</button>
 										            	<div class="dropdown-menu" aria-labelledby="dropdownMenu2" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
 										            		{{General::baca($link_item,'dashboard/item/baca/'.$items->id_items)}}
 										            		<div class="dropdown-divider"></div>
@@ -63,6 +65,8 @@
                                                     <img src="{{ URL::asset('storage/'.$items->foto_items) }}" width="32px">
                                                 </a>
                                             </td>
+								    		<td class="nowrap right-align">{{General::ubahDBKeHarga($items->harga_items)}}</td>
+								    		<td class="nowrap right-align">{{$items->stock_items}}</td>
 								    		<td class="nowrap center-align">
 												<a data-fancybox="gallery" href="data:image/png;base64,{{DNS2D::getBarcodePNG($items->id_items.'-'.$items->nama_items.'-'.$items->harga_items, 'QRCODE')}}">
 													<img src="data:image/png;base64,{{DNS2D::getBarcodePNG($items->id_items.'-'.$items->nama_items.'-'.$items->harga_items, 'QRCODE')}}" alt="barcode" width="32px">
@@ -74,13 +78,15 @@
 								@else
 									<tr>
 										@if(General::totalHakAkses($link_item) != 0)
-											<td colspan="4" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="6" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="3" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="5" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
