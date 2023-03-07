@@ -75,7 +75,7 @@ class KonfigurasiAplikasiController extends AdminCoreController
                 'alert'                     => 'sukses',
                 'text'                      => 'Data berhasil diperbarui',
             ];
-            return redirect()->back()->with('setelah_simpan', $setelah_simpan)->withInput($request->all());;
+            return redirect()->back()->with('setelah_simpan', $setelah_simpan)->withInput($request->all());
         }
         else
             return redirect('dashboard');

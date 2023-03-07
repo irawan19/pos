@@ -38,13 +38,21 @@
         height: 100vh;
         z-index: -1;
       }
+      .errorform{
+        color:#f57a7a;
+        font-size:13px;
+      }
+      .alert-success{
+        background-color:#18d26e;
+        color:white;
+      }
     </style>
   </head>
   <body>
     <header id="header">
       <div class="container">
         <h1>
-          <a href="index.html">{{$lihat_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}</a>
+          <a href="{{URL('/')}}">{{$lihat_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}</a>
         </h1>
         <h2>Point Of Sales Application</h2>
         <nav id="navbar" class="navbar">
@@ -63,13 +71,13 @@
         </nav>
         <div class="social-links">
           @if($lihat_konfigurasi_aplikasis->twitter_konfigurasi_aplikasis != '')
-            <a href="{{$lihat_konfigurasi_aplikasis->twitter_konfigurasi_aplikasis}}" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a target="_blank" href="{{$lihat_konfigurasi_aplikasis->twitter_konfigurasi_aplikasis}}" class="twitter"><i class="bi bi-twitter"></i></a>
           @endif
           @if($lihat_konfigurasi_aplikasis->facebook_konfigurasi_aplikasis != '')
-            <a href="{{$lihat_konfigurasi_aplikasis->facebook_konfigurasi_aplikasis}}" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a target="_blank" href="{{$lihat_konfigurasi_aplikasis->facebook_konfigurasi_aplikasis}}" class="facebook"><i class="bi bi-facebook"></i></a>
           @endif
           @if($lihat_konfigurasi_aplikasis->instagram_konfigurasi_aplikasis != '')
-            <a href="{{$lihat_konfigurasi_aplikasis->instagram_konfigurasi_aplikasis}}" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a target="_blank" href="{{$lihat_konfigurasi_aplikasis->instagram_konfigurasi_aplikasis}}" class="instagram"><i class="bi bi-instagram"></i></a>
           @endif
         </div>
       </div>
@@ -94,17 +102,17 @@
               <h3>Sosial Media</h3>
               <div class="social-links">
                 @if($lihat_konfigurasi_aplikasis->twitter_konfigurasi_aplikasis != '')
-                  <a href="{{$lihat_konfigurasi_aplikasis->twitter_konfigurasi_aplikasis}}" class="twitter">
+                  <a target="_blank" href="{{$lihat_konfigurasi_aplikasis->twitter_konfigurasi_aplikasis}}" class="twitter">
                     <i class="bi bi-twitter"></i>
                   </a>
                 @endif
                 @if($lihat_konfigurasi_aplikasis->facebook_konfigurasi_aplikasis != '')
-                  <a href="{{$lihat_konfigurasi_aplikasis->facebook_konfigurasi_aplikasis}}" class="facebook">
+                  <a target="_blank" href="{{$lihat_konfigurasi_aplikasis->facebook_konfigurasi_aplikasis}}" class="facebook">
                     <i class="bi bi-facebook"></i>
                   </a>
                 @endif
                 @if($lihat_konfigurasi_aplikasis->instagram_konfigurasi_aplikasis != '')
-                  <a href="{{$lihat_konfigurasi_aplikasis->instagram_konfigurasi_aplikasis}}" class="instagram">
+                  <a target="_blank" href="{{$lihat_konfigurasi_aplikasis->instagram_konfigurasi_aplikasis}}" class="instagram">
                     <i class="bi bi-instagram"></i>
                   </a>
                 @endif
@@ -126,28 +134,41 @@
             </div>
           </div>
         </div>
-        <form action="forms/contact.php" method="post" role="form" class="php-email-form mt-4">
+        <form action="{{URL('/kirimpesan')}}" method="post" class="php-email-form mt-4">
+          @csrf
           <div class="row">
             <div class="col-md-6 form-group">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+              <input type="text" name="nama_pesans" class="form-control" id="nama_pesans" placeholder="Nama" required>
+              @if(!empty($errors->first('nama_pesans')))
+                <div class="errorform">{{$errors->first('nama_pesans')}}</div>
+              @endif
             </div>
             <div class="col-md-6 form-group mt-3 mt-md-0">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+              <input type="email" class="form-control" name="email_pesans" id="email_pesans" placeholder="Email" required>
+              @if(!empty($errors->first('email')))
+                <div class="errorform">{{$errors->first('email_pesans')}}</div>
+              @endif
             </div>
           </div>
           <div class="form-group mt-3">
-            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+            <input type="number" class="form-control" name="telepon_pesans" id="telepon_pesans" placeholder="Telepon" required>
+                @if(!empty($errors->first('telepon_pesans')))
+                  <div class="errorform">{{$errors->first('telepon_pesans')}}</div>
+                @endif
           </div>
           <div class="form-group mt-3">
-            <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+            <textarea class="form-control" name="konten_pesans" rows="5" placeholder="Pesan" required></textarea>
+                @if(!empty($errors->first('konten_pesans')))
+                  <div class="errorform">{{$errors->first('konten_pesans')}}</div>
+                @endif
           </div>
           <div class="my-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your message has been sent. Thank you!</div>
+						@if (Session::get('setelah_simpan.alert') == 'sukses')
+              <div class="alert alert-success" role="alert">{{Session::get('setelah_simpan.text')}}</div>
+					  @endif
           </div>
           <div class="text-center">
-            <button type="submit">Send Message</button>
+            <button type="submit">Kirim Pesan</button>
           </div>
         </form>
       </div>
@@ -161,7 +182,6 @@
     <script src="{{URL::asset('template/front/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
     <script src="{{URL::asset('template/front/vendor/swiper/swiper-bundle.min.js')}}"></script>
     <script src="{{URL::asset('template/front/vendor/waypoints/noframework.waypoints.js')}}"></script>
-    <script src="{{URL::asset('template/front/vendor/php-email-form/validate.js')}}"></script>
     <script src="{{URL::asset('template/front/js/main.js')}}"></script>
   </body>
 </html>

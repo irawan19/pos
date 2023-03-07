@@ -39,6 +39,7 @@ use App\Http\Controllers\Dashboard\KonfigurasiAplikasiController as DashboardKon
 */
 
 Route::get('/', [Beranda::class, 'index']);
+Route::post('/kirimpesan', [Beranda::class, 'kirimpesan']);
 
 Route::middleware([
     'auth:sanctum',
