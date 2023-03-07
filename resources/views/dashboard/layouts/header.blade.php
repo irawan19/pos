@@ -1,10 +1,21 @@
 @php($tanggal_sekarang		= date('Y-m-d'))
-@php($ambil_menus 			= \App\Models\Master_menu::where('link_menus',Request::segment(2))->first())
+@php($ambil_sub_menus 		= \App\Models\Master_menu::where('link_menus',Request::segment(2))->first())
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
   	<div class="container-fluid py-1 px-3">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-				<li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="#">Halaman</a></li>
+				<li class="breadcrumb-item text-sm opacity-5 text-dark">
+					Halaman
+				</li>
+				@if(!empty($ambil_sub_menus))
+					@php($ambil_menus = \App\Models\Master_menu::where('id_menus',$ambil_sub_menus->menus_id)
+																->first())
+					@if(!empty($ambil_menus))
+						<li class="breadcrumb-item text-sm opacity-5 text-dark">
+							{{$ambil_menus->nama_menus}}
+						</li>
+					@endif
+				@endif
 				@if(Request::segment(2) == '' || Request::segment(2) == 'dashboard')
 					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
 				@elseif(Request::segment(2) == 'konfigurasi_akun')
@@ -12,7 +23,7 @@
 				@elseif(Request::segment(2) == 'konfigurasi_profil')
 					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Konfigurasi Profil</li>
 				@else
-					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">{{$ambil_menus->nama_menus}}</li>
+					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">{{$ambil_sub_menus->nama_menus}}</li>
 				@endif
 			</ol>
 			@if(Request::segment(2) == '' || Request::segment(2) == 'dashboard')
@@ -22,7 +33,7 @@
 			@elseif(Request::segment(2) == 'konfigurasi_profil')
 				<h6 class="font-weight-bolder mb-0">Konfigurasi Profil</h6>
 			@else
-				<h6 class="font-weight-bolder mb-0">{{$ambil_menus->nama_menus}}</h6>
+				<h6 class="font-weight-bolder mb-0">{{$ambil_sub_menus->nama_menus}}</h6>
 			@endif
 		</nav>
 		<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">

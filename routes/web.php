@@ -104,6 +104,7 @@ Route::middleware([
                 Route::get('/edit/{id}', [DashboardItem::class, 'edit']);
                 Route::post('/prosesedit', [DashboardItem::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardItem::class, 'hapus']);
+                Route::get('/cetakbarcode', [DashboardItems::class, 'cetakbarcode']);
             });
 
         //Konfigurasi Aplikasi

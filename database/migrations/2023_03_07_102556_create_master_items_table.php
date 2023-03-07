@@ -25,7 +25,6 @@ return new class extends Migration
             $table->double('harga_items');
             $table->longtext('deskripsi_items');
             $table->double('stock_items');
-            $table->boolean('notifikasi_min_stock_items');
             $table->timestamps();
             $table->softDeletes();
         });
