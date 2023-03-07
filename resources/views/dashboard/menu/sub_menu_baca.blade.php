@@ -14,7 +14,7 @@
 							<th width="1%">:</th>
 							<td>
 								<svg class="c-sidebar-nav-icon" style="width:20px; height:20px;">
-									<use xlink:href="{{URL::asset('template/assets/icons/coreui/free.svg#'.$baca_sub_menus->icon_menus)}}"></use>
+									<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$baca_sub_menus->icon_menus)}}"></use>
 								</svg>
 							</td>
 						</tr>

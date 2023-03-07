@@ -134,7 +134,7 @@
 									<tr>
 										<td>
 								    		<svg class="c-sidebar-nav-icon" style="width:20px; height:20px;">
-											  	<use xlink:href="{{URL::asset('template/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
+											  	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
 											</svg>&nbsp; {{ $sub_menus->nama_menus }}
 										</td>
 										<td class="center-align">
