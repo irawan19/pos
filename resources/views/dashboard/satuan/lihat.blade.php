@@ -32,11 +32,13 @@
 				    				@if(General::totalHakAkses($link_satuan) != 0)
 						    			<th width="5px"></th>
 						    		@endif
+				    				<th class="nowrap" width="50px">No</th>
 				    				<th class="nowrap">Nama</th>
 				    			</tr>
 				    		</thead>
 				    		<tbody>
 				    			@if(!$lihat_satuans->isEmpty())
+									@php($no = 1)
 		            				@foreach($lihat_satuans as $satuans)
 								    	<tr>
 								    		@if(General::totalHakAkses($link_satuan) != 0)
@@ -51,16 +53,20 @@
 										            </div>
 											    </td>
 								    		@endif
+								    		<td class="nowrap">{{$no}}</td>
 								    		<td class="nowrap">{{$satuans->nama_satuans}}</td>
 								    	</tr>
+										@php($no++)
 								    @endforeach
 								@else
 									<tr>
 										@if(General::totalHakAkses($link_satuan) != 0)
-											<td colspan="2" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="3" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="2" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 										@endif
 									</tr>
 								@endif

@@ -32,6 +32,7 @@
 				    				@if(General::totalHakAkses($link_item) != 0)
 						    			<th width="5px"></th>
 						    		@endif
+				    				<th class="nowrap" width="50px">No</th>
 				    				<th class="nowrap">Kategori</th>
 				    				<th class="nowrap">Nama</th>
 				    				<th class="nowrap" width="50px">Foto</th>
@@ -42,6 +43,7 @@
 				    		</thead>
 				    		<tbody>
 				    			@if(!$lihat_items->isEmpty())
+									@php($no = 1)
 		            				@foreach($lihat_items as $items)
 								    	<tr>
 								    		@if(General::totalHakAkses($link_item) != 0)
@@ -58,6 +60,7 @@
 										            </div>
 											    </td>
 								    		@endif
+								    		<td class="nowrap">{{$no}}</td>
 								    		<td class="nowrap">{{$items->nama_kategori_items}}</td>
 								    		<td class="nowrap">{{$items->nama_items}}</td>
 								    		<td class="nowrap">
@@ -74,18 +77,21 @@
 												{{General::cetakBarcode($link_item,'dashboard/item/cetakbarcode/'.$items->id_items)}}
 								    		</td>
 								    	</tr>
+										@php($no++)
 								    @endforeach
 								@else
 									<tr>
 										@if(General::totalHakAkses($link_item) != 0)
-											<td colspan="6" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="7" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="5" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="6" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>

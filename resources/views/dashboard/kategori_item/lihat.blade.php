@@ -32,11 +32,13 @@
 				    				@if(General::totalHakAkses($link_kategori_item) != 0)
 						    			<th width="5px"></th>
 						    		@endif
+				    				<th class="nowrap" width="50px">No</th>
 				    				<th class="nowrap">Nama</th>
 				    			</tr>
 				    		</thead>
 				    		<tbody>
 				    			@if(!$lihat_kategori_items->isEmpty())
+									@php($no = 1)
 		            				@foreach($lihat_kategori_items as $kategori_items)
 								    	<tr>
 								    		@if(General::totalHakAkses($link_kategori_item) != 0)
@@ -51,16 +53,20 @@
 										            </div>
 											    </td>
 								    		@endif
+								    		<td class="nowrap">{{$no}}</td>
 								    		<td class="nowrap">{{$kategori_items->nama_kategori_items}}</td>
 								    	</tr>
+										@php($no++)
 								    @endforeach
 								@else
 									<tr>
 										@if(General::totalHakAkses($link_kategori_item) != 0)
-											<td colspan="2" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="3" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="2" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 										@endif
 									</tr>
 								@endif
