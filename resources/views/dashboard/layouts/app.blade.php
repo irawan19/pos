@@ -124,7 +124,7 @@
 		}
 
 		input[type=file]::file-selector-button:hover {
-			background: #F57328;
+			background: #587473;
 		}
 		.alert-danger{
 			color:#ffffff;
@@ -141,7 +141,7 @@
 		}
 
 		input[type=file]::file-selector-button:hover {
-			background: #F57328;
+			background: #587473;
 		}
 	</style>
     <script type="text/javascript">
