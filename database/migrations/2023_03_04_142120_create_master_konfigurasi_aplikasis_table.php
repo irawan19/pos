@@ -19,6 +19,13 @@ return new class extends Migration
             $table->string('icon_konfigurasi_aplikasis');
             $table->string('logo_konfigurasi_aplikasis');
             $table->string('logo_text_konfigurasi_aplikasis');
+            $table->string('background_website_konfigurasi_aplikasis');
+            $table->string('facebook_konfigurasi_aplikasis');
+            $table->string('twitter_konfigurasi_aplikasis');
+            $table->string('instagram_konfigurasi_aplikasis');
+            $table->longtext('alamat_konfigurasi_aplikasis');
+            $table->string('email_konfigurasi_aplikasis');
+            $table->string('telepon_konfigurasi_aplikasis');
             $table->timestamps();
             $table->softDeletes();
         });

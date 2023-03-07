@@ -26,6 +26,19 @@
     <link href="{{URL::asset('template/front/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
     <link href="{{URL::asset('template/front/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
     <link href="{{URL::asset('template/front/css/style.css')}}" rel="stylesheet">
+    <style type="text/css">
+      body::before {
+        content: "";
+        position: fixed;
+        background: #040404 url('{{"storage/".$lihat_konfigurasi_aplikasis->background_website_konfigurasi_aplikasis}}') top right no-repeat;
+        background-size: cover;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 100vh;
+        z-index: -1;
+      }
+    </style>
   </head>
   <body>
     <header id="header">
@@ -49,9 +62,15 @@
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
         <div class="social-links">
-          <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+          @if($lihat_konfigurasi_aplikasis->twitter_konfigurasi_aplikasis != '')
+            <a href="{{$lihat_konfigurasi_aplikasis->twitter_konfigurasi_aplikasis}}" class="twitter"><i class="bi bi-twitter"></i></a>
+          @endif
+          @if($lihat_konfigurasi_aplikasis->facebook_konfigurasi_aplikasis != '')
+            <a href="{{$lihat_konfigurasi_aplikasis->facebook_konfigurasi_aplikasis}}" class="facebook"><i class="bi bi-facebook"></i></a>
+          @endif
+          @if($lihat_konfigurasi_aplikasis->instagram_konfigurasi_aplikasis != '')
+            <a href="{{$lihat_konfigurasi_aplikasis->instagram_konfigurasi_aplikasis}}" class="instagram"><i class="bi bi-instagram"></i></a>
+          @endif
         </div>
       </div>
     </header>
@@ -66,44 +85,44 @@
             <div class="info-box">
               <i class="bx bx-map"></i>
               <h3>Alamat</h3>
-              <p>A108 Adam Street, New York, NY 535022</p>
+              <p>{!! nl2br($lihat_konfigurasi_aplikasis->alamat_konfigurasi_aplikasis) !!}</p>
             </div>
           </div>
           <div class="col-md-6 mt-4 mt-md-0 d-flex align-items-stretch">
             <div class="info-box">
               <i class="bx bx-share-alt"></i>
-              <h3>Social Profiles</h3>
+              <h3>Sosial Media</h3>
               <div class="social-links">
-                <a href="#" class="twitter">
-                  <i class="bi bi-twitter"></i>
-                </a>
-                <a href="#" class="facebook">
-                  <i class="bi bi-facebook"></i>
-                </a>
-                <a href="#" class="instagram">
-                  <i class="bi bi-instagram"></i>
-                </a>
-                <a href="#" class="google-plus">
-                  <i class="bi bi-skype"></i>
-                </a>
-                <a href="#" class="linkedin">
-                  <i class="bi bi-linkedin"></i>
-                </a>
+                @if($lihat_konfigurasi_aplikasis->twitter_konfigurasi_aplikasis != '')
+                  <a href="{{$lihat_konfigurasi_aplikasis->twitter_konfigurasi_aplikasis}}" class="twitter">
+                    <i class="bi bi-twitter"></i>
+                  </a>
+                @endif
+                @if($lihat_konfigurasi_aplikasis->facebook_konfigurasi_aplikasis != '')
+                  <a href="{{$lihat_konfigurasi_aplikasis->facebook_konfigurasi_aplikasis}}" class="facebook">
+                    <i class="bi bi-facebook"></i>
+                  </a>
+                @endif
+                @if($lihat_konfigurasi_aplikasis->instagram_konfigurasi_aplikasis != '')
+                  <a href="{{$lihat_konfigurasi_aplikasis->instagram_konfigurasi_aplikasis}}" class="instagram">
+                    <i class="bi bi-instagram"></i>
+                  </a>
+                @endif
               </div>
             </div>
           </div>
           <div class="col-md-6 mt-4 d-flex align-items-stretch">
             <div class="info-box">
               <i class="bx bx-envelope"></i>
-              <h3>Email Me</h3>
-              <p>contact@example.com</p>
+              <h3>Email</h3>
+              <p><a href="mailto:{{$lihat_konfigurasi_aplikasis->email_konfigurasi_aplikasis}}">{{$lihat_konfigurasi_aplikasis->email_konfigurasi_aplikasis}}</a></p>
             </div>
           </div>
           <div class="col-md-6 mt-4 d-flex align-items-stretch">
             <div class="info-box">
               <i class="bx bx-phone-call"></i>
-              <h3>Call Me</h3>
-              <p>+1 5589 55488 55</p>
+              <h3>Telepon</h3>
+              <p><a href="tel:{{$lihat_konfigurasi_aplikasis->telepon_konfigurasi_aplikasis}}">{{$lihat_konfigurasi_aplikasis->telepon_konfigurasi_aplikasis}}</a></p>
             </div>
           </div>
         </div>

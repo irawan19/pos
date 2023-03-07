@@ -101,10 +101,11 @@ Route::middleware([
                 Route::get('/cari', [DashboardItem::class, 'cari']);
                 Route::get('/tambah', [DashboardItem::class, 'tambah']);
                 Route::post('/prosestambah', [DashboardItem::class, 'prosestambah']);
+                Route::get('/baca/{id}', [DashboardItem::class, 'baca']);
                 Route::get('/edit/{id}', [DashboardItem::class, 'edit']);
                 Route::post('/prosesedit/{id}', [DashboardItem::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardItem::class, 'hapus']);
-                Route::get('/cetakbarcode', [DashboardItems::class, 'cetakbarcode']);
+                Route::get('/cetakbarcode/{id}', [DashboardItem::class, 'cetakbarcode']);
             });
 
         //Konfigurasi Aplikasi
@@ -162,6 +163,7 @@ Route::middleware([
                 Route::post('/proseseditlogo', [DashboardKonfigurasiAplikasi::class, 'proseseditlogo']);
                 Route::post('/prosesediticon', [DashboardKonfigurasiAplikasi::class, 'prosesediticon']);
                 Route::post('/proseseditlogotext', [DashboardKonfigurasiAplikasi::class, 'proseseditlogotext']);
+                Route::post('/proseseditbackgroundwebsite', [DashboardKonfigurasiAplikasi::class, 'proseseditbackgroundwebsite']);
             });
 
         //Logout

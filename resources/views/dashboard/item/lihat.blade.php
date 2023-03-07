@@ -34,7 +34,8 @@
 						    		@endif
 				    				<th class="nowrap">Kategori</th>
 				    				<th class="nowrap">Nama</th>
-				    				<th class="nowrap">Foto</th>
+				    				<th class="nowrap" width="50px">Foto</th>
+				    				<th class="nowrap" width="50px">Barcode</th>
 				    			</tr>
 				    		</thead>
 				    		<tbody>
@@ -46,6 +47,8 @@
 											      	<div class="dropdown">
 														<button class="btn btn-sm bg-gradient-success mb-0 dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
 										            	<div class="dropdown-menu" aria-labelledby="dropdownMenu2" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
+										            		{{General::baca($link_item,'dashboard/item/baca/'.$items->id_items)}}
+										            		<div class="dropdown-divider"></div>
 										            		{{General::edit($link_item,'dashboard/item/edit/'.$items->id_items)}}
 										            		<div class="dropdown-divider"></div>
 										            		{{General::hapus($link_item,'dashboard/item/hapus/'.$items->id_items, $items->id_items.' - '.$items->nama_items)}}
@@ -53,13 +56,19 @@
 										            </div>
 											    </td>
 								    		@endif
-								    		<td class="nowrap">{{$items->nama_items}}</td>
 								    		<td class="nowrap">{{$items->nama_kategori_items}}</td>
+								    		<td class="nowrap">{{$items->nama_items}}</td>
 								    		<td class="nowrap">
                                                 <a data-fancybox="gallery" href="{{URL::asset('storage/'.$items->foto_items)}}">
-                                                    <img src="{{ URL::asset('storage/'.$items->foto_items) }}" width="32">
+                                                    <img src="{{ URL::asset('storage/'.$items->foto_items) }}" width="32px">
                                                 </a>
                                             </td>
+								    		<td class="nowrap center-align">
+												<a data-fancybox="gallery" href="data:image/png;base64,{{DNS2D::getBarcodePNG($items->id_items.'-'.$items->nama_items.'-'.$items->harga_items, 'QRCODE')}}">
+													<img src="data:image/png;base64,{{DNS2D::getBarcodePNG($items->id_items.'-'.$items->nama_items.'-'.$items->harga_items, 'QRCODE')}}" alt="barcode" width="32px">
+												</a>
+												{{General::cetakBarcode($link_item,'dashboard/item/cetakbarcode/'.$items->id_items)}}
+								    		</td>
 								    	</tr>
 								    @endforeach
 								@else

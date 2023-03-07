@@ -26,6 +26,11 @@
 							<input class="form-control {{ General::validForm($errors->first('nama_tokos')) }}" id="nama_tokos" type="text" name="nama_tokos" value="{{Request::old('nama_tokos') == '' ? $edit_tokos->nama_tokos : Request::old('nama_tokos')}}">
 							{{General::pesanErrorForm($errors->first('nama_tokos'))}}
 						</div>
+						<div class="form-group">
+							<label class="form-col-form-label" for="alamat_tokos">Alamat <b style="color:red">*</b></label>
+							<textarea class="form-control {{ General::validForm($errors->first('alamat_tokos')) }}" id="alamat_tokos" name="alamat_tokos" rows="5">{{Request::old('alamat_tokos') == '' ? $edit_tokos->alamat_tokos : Request::old('alamat_tokos') }}</textarea>
+							{{General::pesanErrorForm($errors->first('alamat_tokos'))}}
+						</div>
 					</div>
 			        <div class="card-footer right-align">
 						{{General::perbarui()}}

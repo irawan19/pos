@@ -62,6 +62,6 @@ class KonfigurasiAkunController extends AdminCoreController
     	    'alert'  => 'sukses',
     	    'text'   => 'Akun berhasil diperbarui',
     	];
-    	return redirect()->back()->with('setelah_simpan', $setelah_simpan);
+    	return redirect()->back()->with('setelah_simpan', $setelah_simpan)->withInput($request->all());;
     }
 }

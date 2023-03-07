@@ -4,15 +4,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{$lihat_konfigurasi_aplikasi->icon_konfigurasi_aplikasis}}">
-    <link rel="icon" type="image/png" href="{{$lihat_konfigurasi_aplikasi->icon_konfigurasi_aplikasis}}">
+	<link rel="shortcut icon" href="{{URL::asset('storage/'.$lihat_konfigurasi_aplikasi->icon_konfigurasi_aplikasis)}}" type="image/x-icon">
+	<link rel="apple-touch-icon" href="{{URL::asset('storage/'.$lihat_konfigurasi_aplikasi->icon_konfigurasi_aplikasis)}}">
     <title>{{$lihat_konfigurasi_aplikasi->nama_konfigurasi_aplikasis}}</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <link href="{{URL::asset('template/back/css/nucleo-icons.css')}}" rel="stylesheet" />
     <link href="{{URL::asset('template/back/css/nucleo-svg.css')}}" rel="stylesheet" />
     <script src="{{URL::asset('template/back/js/42d5adcbca.js')}}" crossorigin="anonymous"></script>
     <link id="pagestyle" href="{{URL::asset('template/back/css/soft-ui-dashboard.css?v=1.0.6')}}" rel="stylesheet" />
-    <style>
+    <style type="text/css">
         .text-red-600{
             color:red;
         }
@@ -81,22 +81,26 @@
     <footer class="footer py-5">
         <div class="container">
             <div class="row">
+                <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
+                    @if($lihat_konfigurasi_aplikasi->facebook_konfigurasi_aplikasis != '')
+                        <a href="{{$lihat_konfigurasi_aplikasi->facebook_konfigurasi_aplikasis}}" target="_blank" class="text-secondary me-xl-4 me-4">
+                            <span class="text-lg fab fa-facebook"></span>
+                        </a>
+                    @endif
+                    @if($lihat_konfigurasi_aplikasi->instagram_konfigurasi_aplikasis != '')
+                        <a href="{{$lihat_konfigurasi_aplikasi->instagram_konfigurasi_aplikasis}}" target="_blank" class="text-secondary me-xl-4 me-4">
+                            <span class="text-lg fab fa-instagram"></span>
+                        </a>
+                    @endif
+                    @if($lihat_konfigurasi_aplikasi->twitter_konfigurasi_aplikasis != '')
+                        <a href="{{$lihat_konfigurasi_aplikasi->twitter_konfigurasi_aplikasis}}" target="_blank" class="text-secondary me-xl-4 me-4">
+                            <span class="text-lg fab fa-twitter"></span>
+                        </a>
+                    @endif
+                </div>
                 <div class="col-lg-8 mb-4 mx-auto text-center">
                     <b class="jam">{{General::ubahDBKeTanggal(date('Y-m-d'))}}, <onload="timeJavascript()" id="output"></b>
                 </div>
-                <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
-                    <a href="#" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-facebook"></span>
-                    </a>
-                    <a href="#" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-instagram"></span>
-                    </a>
-                    <a href="#" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-twitter"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-8 mx-auto text-center mt-1">
                     <p class="mb-0 text-secondary">
                         Copyright ©

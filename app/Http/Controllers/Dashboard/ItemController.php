@@ -165,7 +165,7 @@ class ItemController extends AdminCoreController
                     'alert'  => 'sukses',
                     'text'   => 'Data berhasil ditambahkan',
                 ];
-                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
+                return redirect()->back()->with('setelah_simpan', $setelah_simpan)->withInput($request->all());;
             }
             if($simpan_kembali)
             {
@@ -176,6 +176,28 @@ class ItemController extends AdminCoreController
 
                 return redirect($redirect_halaman);
             }
+        }
+        else
+            return redirect('dashboard/item');
+    }
+
+    public function baca($id_items=0)
+    {
+        $link_item = 'item';
+        if(General::hakAkses($link_item,'edit') == 'true')
+        {
+            $cek_items = \App\Models\Master_item::where('id_items',$id_items)->count();
+            if($cek_items != 0)
+            {
+                $data['baca_items'] = \App\Models\Master_item::join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
+                                                                ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
+                                                                ->join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                ->where('id_items',$id_items)
+                                                                ->first();
+                return view('dashboard.item.baca',$data);
+            }
+            else
+                return redirect('dashboard/item');
         }
         else
             return redirect('dashboard/item');
@@ -351,20 +373,20 @@ class ItemController extends AdminCoreController
     public function cetakbarcode($id_items=0)
     {
         $link_item = 'item';
-        if(Cerberus::hakAkses($link_item,'cetak') == 'true')
+        if(General::hakAkses($link_item,'cetak') == 'true')
         {
-            $cek_items = \App\Master_item::where('id_items',$id_items)
+            $cek_items = \App\Models\Master_item::where('id_items',$id_items)
                                         ->first();
             if(!empty($cek_items))
             {
                 $data['lihat_items']  = $cek_items;
-                return view('item.cetak_barcode',$data);
+                return view('dashboard.item.cetak_barcode',$data);
             }
             else
-                return redirect('item');
+                return redirect('dashboard/item');
         }
         else
-            return redirect('item');
+            return redirect('dashboard/item');
     }
 
 }

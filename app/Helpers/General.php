@@ -205,6 +205,15 @@ class General
 			}
 		}
 
+		public static function cetakBarcode($link_menus = '', $link = '')
+		{
+			if (General::hakAkses($link_menus, 'cetak') == 'true') {
+				echo 	'<a href="' . URL($link) . '" target="_blank" class="btn btn-sm bg-gradient-primary mb-0">
+							<i class="fas fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Cetak
+						</a>';
+			}
+		}
+
 		public static function urutan($link_menus = '', $link = '')
 		{
 			if (General::hakAkses($link_menus, 'lihat') == 'true') {

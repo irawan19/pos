@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use General;
 use Auth;
+use Storage;
 
 class KonfigurasiAplikasiController extends AdminCoreController
 {
@@ -30,18 +31,42 @@ class KonfigurasiAplikasiController extends AdminCoreController
                 'nama_konfigurasi_aplikasis'                => 'required',
                 'deskripsi_konfigurasi_aplikasis'           => 'required',
                 'keywords_konfigurasi_aplikasis'            => 'required',
+                'alamat_konfigurasi_aplikasis'              => 'required',
+                'email_konfigurasi_aplikasis'               => 'required',
+                'telepon_konfigurasi_aplikasis'             => 'required',
             ];
             $error_pesan = [
                 'nama_konfigurasi_aplikasis.required'       => 'Form Email Harus Diisi.',
                 'deskripsi_konfigurasi_aplikasis.required'  => 'Form Deskripsi Harus Diisi.',
                 'keywords_konfigurasi_aplikasis.required'   => 'Form Keywords Harus Diisi.',
+                'alamat_konfigurasi_aplikasis.required'     => 'Form Alamat Harus Diisi.',
+                'email_konfigurasi_aplikasis.required'      => 'Form Email Harus Diisi.',
+                'telepon_konfigurasi_aplikasis.required'    => 'Form Telepon Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
+
+            $facebook_konfigurasi_aplikasis = '';
+            if(!empty($request->facebook_konfigurasi_aplikasis))
+                $facebook_konfigurasi_aplikasis = $request->facebook_konfigurasi_aplikasis;
+            
+            $twitter_konfigurasi_aplikasis = '';
+            if(!empty($request->twitter_konfigurasi_aplikasis))
+                $twitter_konfigurasi_aplikasis = $request->twitter_konfigurasi_aplikasis;
+
+            $instagram_konfigurasi_aplikasis = '';
+            if(!empty($request->instagram_konfigurasi_aplikasis))
+                $instagram_konfigurasi_aplikasis = $request->instagram_konfigurasi_aplikasis;
 
             $konfigurasi_aplikasi_data = [
                 'nama_konfigurasi_aplikasis'                    => $request->nama_konfigurasi_aplikasis,
                 'deskripsi_konfigurasi_aplikasis'               => $request->deskripsi_konfigurasi_aplikasis,
                 'keywords_konfigurasi_aplikasis'                => $request->keywords_konfigurasi_aplikasis,
+                'alamat_konfigurasi_aplikasis'                  => $request->alamat_konfigurasi_aplikasis,
+                'email_konfigurasi_aplikasis'                   => $request->email_konfigurasi_aplikasis,
+                'telepon_konfigurasi_aplikasis'                 => $request->telepon_konfigurasi_aplikasis,
+                'facebook_konfigurasi_aplikasis'                => $request->facebook_konfigurasi_aplikasis,
+                'twitter_konfigurasi_aplikasis'                 => $request->twitter_konfigurasi_aplikasis,
+                'instagram_konfigurasi_aplikasis'               => $request->instagram_konfigurasi_aplikasis,
                 'updated_at'                                    => date('Y-m-d H:i:s'),
             ];
             \App\Models\Master_konfigurasi_aplikasi::query()->update($konfigurasi_aplikasi_data);
@@ -50,7 +75,7 @@ class KonfigurasiAplikasiController extends AdminCoreController
                 'alert'                     => 'sukses',
                 'text'                      => 'Data berhasil diperbarui',
             ];
-            return redirect()->back()->with('setelah_simpan', $setelah_simpan);
+            return redirect()->back()->with('setelah_simpan', $setelah_simpan)->withInput($request->all());;
         }
         else
             return redirect('dashboard');
@@ -174,6 +199,47 @@ class KonfigurasiAplikasiController extends AdminCoreController
                 'text'                      => 'Logo Text berhasil diperbarui',
             ];
             return redirect()->back()->with('setelah_simpan_logo_text', $setelah_simpan_logo_text);
+        }
+        else
+            return redirect('dashboard');
+    }
+
+    public function proseseditbackgroundwebsite(Request $request)
+    {
+        $link_konfigurasi_aplikasi = 'konfigurasi_aplikasi';
+        if(General::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
+        {
+            $aturan = [
+                'userfile_background_website'     => 'required|mimes:png,jpg,jpeg,svg',
+            ];
+            $error_pesan = [
+                'userfile_background_website.required'   => 'Form Logo Harus Diisi.',
+            ];
+            $this->validate($request, $aturan, $error_pesan);
+
+            $cek_background_website       = \App\Models\Master_konfigurasi_aplikasi::first();
+            if (!empty($cek_background_website)) {
+                $background_website_lama        = $cek_background_website->background_website_konfigurasi_aplikasis;
+                if (Storage::disk('public')->exists($background_website_lama))
+                    Storage::disk('public')->delete($background_website_lama);
+            }
+
+            $nama_background_website = date('Ymd') . date('His') . str_replace(')', '', str_replace('(', '', str_replace(' ', '-', $request->file('userfile_background_website')->getClientOriginalName())));
+            $path_background_website = 'logo/';
+            Storage::disk('public')->put($path_background_website.$nama_background_website, file_get_contents($request->file('userfile_background_website')));
+
+            $data = [
+                'background_website_konfigurasi_aplikasis'    => $path_background_website . $nama_background_website,
+                'updated_at'                    => date('Y-m-d H:i:s'),
+            ];
+
+            \App\Models\Master_konfigurasi_aplikasi::query()->update($data);
+
+            $setelah_simpan_background_website = [
+                'alert'                     => 'sukses',
+                'text'                      => 'Logo berhasil diperbarui',
+            ];
+            return redirect()->back()->with('setelah_simpan_background_website', $setelah_simpan_background_website);
         }
         else
             return redirect('dashboard');

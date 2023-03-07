@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use General;
 use Auth;
+use Storage;
 
 class KonfigurasiProfilController extends AdminCoreController
 {
@@ -70,6 +71,6 @@ class KonfigurasiProfilController extends AdminCoreController
             'alert'  => 'sukses',
             'text'   => 'Profil berhasil diperbarui',
         ];
-        return redirect()->back()->with('setelah_simpan', $setelah_simpan);
+        return redirect()->back()->with('setelah_simpan', $setelah_simpan)->withInput($request->all());;
     }
 }
