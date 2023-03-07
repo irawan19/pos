@@ -16,8 +16,8 @@
 		<meta property="og:url" content="{{URL('/')}}">
 		<meta property="og:site_name" content="{{$lihat_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}">
 		<meta name="twitter:image:alt" content="{{$lihat_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}">
-		<link rel="shortcut icon" href="{{URL::asset($lihat_konfigurasi_aplikasis->icon_konfigurasi_aplikasis)}}" type="image/x-icon">
-		<link rel="apple-touch-icon" href="{{URL::asset($lihat_konfigurasi_aplikasis->icon_konfigurasi_aplikasis)}}">
+		<link rel="shortcut icon" href="{{URL::asset('storage/'.$lihat_konfigurasi_aplikasis->icon_konfigurasi_aplikasis)}}" type="image/x-icon">
+		<link rel="apple-touch-icon" href="{{URL::asset('storage/'.$lihat_konfigurasi_aplikasis->icon_konfigurasi_aplikasis)}}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     <link href="{{URL::asset('template/front/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{URL::asset('template/front/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">

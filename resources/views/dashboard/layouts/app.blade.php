@@ -11,7 +11,7 @@
 	<meta name="author" content="{{$ambil_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}">
 	<meta name="keyword" content="{{$ambil_konfigurasi_aplikasis->keyword_konfigurasi_aplikasis}}">
 	<title>{{$ambil_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}</title>
-	<link rel="icon" type="image/png" href="{{URL::asset($ambil_konfigurasi_aplikasis->icon_konfigurasi_aplikasis)}}" sizes="any" />
+	<link rel="icon" type="image/png" href="{{URL::asset('storage/'.$ambil_konfigurasi_aplikasis->icon_konfigurasi_aplikasis)}}" sizes="any" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <link href="{{URL::asset('template/back/css/nucleo-icons.css')}}" rel="stylesheet" />
     <link href="{{URL::asset('template/back/css/nucleo-svg.css')}}" rel="stylesheet" />
