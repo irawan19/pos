@@ -11,13 +11,13 @@
 						</div>
 						<div class="col-sm-6">
 							<div class="right-align">
-								{{ General::tambah($link_toko,'dashboard/toko/tambah') }}
+								{{ General::tambah($link_satuan,'dashboard/satuan/tambah') }}
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="card-body">
-					<form method="GET" action="{{ URL('dashboard/toko/cari') }}">
+					<form method="GET" action="{{ URL('dashboard/satuan/cari') }}">
 						@csrf
 	                	<div class="input-group">
 	                		<input class="form-control" id="input2-group2" type="text" name="cari_kata" placeholder="Cari" value="{{$hasil_kata}}">
@@ -31,7 +31,7 @@
                         <table id="tablesort" class="table table-responsive-sm table-bordered table-striped table-sm">
 				    		<thead>
 				    			<tr>
-				    				@if(General::totalHakAkses($link_toko) != 0)
+				    				@if(General::totalHakAkses($link_satuan) != 0)
 						    			<th width="5px"></th>
 						    		@endif
 				    				<th class="nowrap">Logo</th>
@@ -40,33 +40,33 @@
 				    			</tr>
 				    		</thead>
 				    		<tbody>
-				    			@if(!$lihat_tokos->isEmpty())
-		            				@foreach($lihat_tokos as $tokos)
+				    			@if(!$lihat_satuans->isEmpty())
+		            				@foreach($lihat_satuans as $satuans)
 								    	<tr>
-								    		@if(General::totalHakAkses($link_toko) != 0)
+								    		@if(General::totalHakAkses($link_satuan) != 0)
 								    			<td class="nowrap">
 											      	<div class="dropdown">
-										            	<button class="btn btn-sm btn-primary dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+														<button class="btn btn-sm bg-gradient-success mb-0 dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
 										            	<div class="dropdown-menu" aria-labelledby="dropdownMenu2" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
-										            		{{General::edit($link_toko,'dashboard/toko/edit/'.$tokos->id_tokos)}}
+										            		{{General::edit($link_satuan,'dashboard/satuan/edit/'.$satuans->id_satuans)}}
 										            		<div class="dropdown-divider"></div>
-										            		{{General::hapus($link_toko,'dashboard/toko/hapus/'.$tokos->id_tokos, $tokos->id_tokos.' - '.$tokos->nama_tokos)}}
+										            		{{General::hapus($link_satuan,'dashboard/satuan/hapus/'.$satuans->id_satuans, $satuans->id_satuans.' - '.$satuans->nama_satuans)}}
 										            	</div>
 										            </div>
 											    </td>
 								    		@endif
 								    		<td class="nowrap">
-                                                <a data-fancybox="gallery" href="{{URL::asset($tokos->logo_tokos)}}">
-                                                    <img src="{{ URL::asset($tokos->logo_tokos) }}" width="108">
+                                                <a data-fancybox="gallery" href="{{URL::asset($satuans->logo_satuans)}}">
+                                                    <img src="{{ URL::asset($satuans->logo_satuans) }}" width="108">
                                                 </a>
                                             </td>
-								    		<td class="nowrap">{{$tokos->nama_tokos}}</td>
-								    		<td>{{$tokos->alamat_tokos}}</td>
+								    		<td class="nowrap">{{$satuans->nama_satuans}}</td>
+								    		<td>{{$satuans->alamat_satuans}}</td>
 								    	</tr>
 								    @endforeach
 								@else
 									<tr>
-										@if(General::totalHakAkses($link_toko) != 0)
+										@if(General::totalHakAkses($link_satuan) != 0)
 											<td colspan="4" class="center-align">Tidak ada data ditampilkan</td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
@@ -83,7 +83,7 @@
 				    	</table>
 				    </div>
 					<br/>
-				   	{{ $lihat_tokos->appends(Request::except('page'))->links('vendor.pagination.custom') }}
+				   	{{ $lihat_satuans->appends(Request::except('page'))->links('vendor.pagination.custom') }}
 				</div>
 			</div>
 		</div>

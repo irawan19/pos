@@ -2,21 +2,21 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-sm-6">
+		<div class="col-sm-6 col-center">
 			<div class="card">
-				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/toko/prosestambah') }}" method="POST">
+				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/satuan/prosestambah') }}" method="POST">
 					{{ csrf_field() }}
 					<div class="card-header">
-						<strong>Tambah Toko</strong>
+						<strong>Tambah Satuan</strong>
 					</div>
 					<div class="card-body">
 						@if (Session::get('setelah_simpan.alert') == 'sukses')
 					    	{{ General::pesanSuksesForm(Session::get('setelah_simpan.text')) }}
 					    @endif
 						<div class="form-group">
-							<label class="form-col-form-label" for="nama_tokos">Nama <b style="color:red">*</b></label>
-							<input class="form-control {{ General::validForm($errors->first('nama_tokos')) }}" id="nama_tokos" type="text" name="nama_tokos" value="{{Request::old('nama_tokos')}}">
-							{{General::pesanErorForm($errors->first('nama_tokos'))}}
+							<label class="form-col-form-label" for="nama_satuans">Nama <b style="color:red">*</b></label>
+							<input class="form-control {{ General::validForm($errors->first('nama_satuans')) }}" id="nama_satuans" type="text" name="nama_satuans" value="{{Request::old('nama_satuans')}}">
+							{{General::pesanErrorForm($errors->first('nama_satuans'))}}
 						</div>
 					</div>
 			        <div class="card-footer right-align">
@@ -25,7 +25,7 @@
 			          	@if(request()->session()->get('halaman') != '')
 		            		@php($ambil_kembali = request()->session()->get('halaman'))
 	                    @else
-	                    	@php($ambil_kembali = URL('dashboard/toko'))
+	                    	@php($ambil_kembali = URL('dashboard/satuan'))
 	                    @endif
 						{{General::batal($ambil_kembali)}}
 			        </div>

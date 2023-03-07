@@ -17,6 +17,8 @@ use App\Http\Controllers\Dashboard\KonfigurasiAkunController as DashboardKonfigu
 //Master Data
 use App\Http\Controllers\Dashboard\TokoController as DashboardToko;
 use App\Http\Controllers\Dashboard\SatuanController as DashboardSatuan;
+use App\Http\Controllers\Dashboard\KategoriItemController as DashboardKategoriItem;
+use App\Http\Controllers\Dashboard\ItemController as DashboardItem;
 
 //Konfigurasi Aplikasi
 use App\Http\Controllers\Dashboard\MenuController as DashboardMenu;
@@ -69,6 +71,39 @@ Route::middleware([
                 Route::get('/edit/{id}', [DashboardToko::class, 'edit']);
                 Route::post('/prosesedit', [DashboardToko::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardToko::class, 'hapus']);
+            });
+            
+            //Satuan
+            Route::group(['prefix' => 'satuan'], function() {
+                Route::get('/', [DashboardSatuan::class, 'index']);
+                Route::get('/cari', [DashboardSatuan::class, 'cari']);
+                Route::get('/tambah', [DashboardSatuan::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardSatuan::class, 'prosestambah']);
+                Route::get('/edit/{id}', [DashboardSatuan::class, 'edit']);
+                Route::post('/prosesedit', [DashboardSatuan::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardSatuan::class, 'hapus']);
+            });
+
+            //Kategori Item
+            Route::group(['prefix' => 'kategori_item'], function() {
+                Route::get('/', [DashboardKategoriItem::class, 'index']);
+                Route::get('/cari', [DashboardKategoriItem::class, 'cari']);
+                Route::get('/tambah', [DashboardKategoriItem::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardKategoriItem::class, 'prosestambah']);
+                Route::get('/edit/{id}', [DashboardKategoriItem::class, 'edit']);
+                Route::post('/prosesedit', [DashboardKategoriItem::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardKategoriItem::class, 'hapus']);
+            });
+
+            //Item
+            Route::group(['prefix' => 'item'], function() {
+                Route::get('/', [DashboardItem::class, 'index']);
+                Route::get('/cari', [DashboardItem::class, 'cari']);
+                Route::get('/tambah', [DashboardItem::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardItem::class, 'prosestambah']);
+                Route::get('/edit/{id}', [DashboardItem::class, 'edit']);
+                Route::post('/prosesedit', [DashboardItem::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardItem::class, 'hapus']);
             });
 
         //Konfigurasi Aplikasi
