@@ -115,11 +115,8 @@ class AdminController extends AdminCoreController
                     'username'              => $request->username,
                     'email'              	=> $request->email,
                     'created_at'         	=> date('Y-m-d H:i:s'),
-                    'updated_at'         	=> date('Y-m-d H:i:s'),
                     'password'           	=> bcrypt($request->password),
                     'remember_token'     	=> str_random(100),
-                    'no_telp'               => '',
-                    'alamat'                => '',
                 ];
             }
             else
@@ -153,11 +150,8 @@ class AdminController extends AdminCoreController
                     'username'              => $request->username,
                     'email'              	=> $request->email,
                     'created_at'         	=> date('Y-m-d H:i:s'),
-                    'updated_at'         	=> date('Y-m-d H:i:s'),
                     'password'           	=> bcrypt($request->password),
                     'remember_token'     	=> str_random(100),
-                    'no_telp'               => '',
-                    'alamat'                => '',
                 ];
             }
             \App\Models\User::insert($data);
@@ -427,10 +421,7 @@ class AdminController extends AdminCoreController
             $cek_admins = \App\Models\User::where('id',$id_admins)->first();
             if(!empty($cek_admins))
             {
-                $delete_users_data = [
-                    'updated_at'         => date('Y-m-d H:i:s'),
-                ];
-                \App\Models\User::where('id',$id_admins)->update($delete_users_data);
+                \App\Models\User::where('id',$id_admins)->delete();
 
                 return response()->json(["sukses" => "sukses"], 200);
             }

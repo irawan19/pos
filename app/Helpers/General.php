@@ -7,6 +7,7 @@ use Datetime;
 use Request;
 use URL;
 use Str;
+use DB;
 use DateTimeZone;
 use GuzzleHttp\Client;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -89,7 +90,14 @@ class General
 		}
 	//Notifikasi
 
-	
+	//Auto Increment
+		public static function autoIncrementKey($table='',$id='')
+		{
+			$autoincrement 		= DB::table($table)->max($id);
+			$id_auto_increment 	= $autoincrement + 1;
+			return $id_auto_increment;
+		}
+	//Auto Increment
 	
 	//Auto Generate No Pemesanan
 		public static function noPenjualan()

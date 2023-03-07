@@ -14,6 +14,10 @@ use App\Http\Controllers\Dashboard\KonfigurasiProfilController as DashboardKonfi
 //Konfigurasi Akun
 use App\Http\Controllers\Dashboard\KonfigurasiAkunController as DashboardKonfigurasiAkun;
 
+//Master Data
+use App\Http\Controllers\Dashboard\TokoController as DashboardToko;
+use App\Http\Controllers\Dashboard\SatuanController as DashboardSatuan;
+
 //Konfigurasi Aplikasi
 use App\Http\Controllers\Dashboard\MenuController as DashboardMenu;
 use App\Http\Controllers\Dashboard\LevelSistemController as DashboardLevelSistem;
@@ -55,61 +59,74 @@ Route::middleware([
             Route::post('/prosesedit', [DashboardKonfigurasiAkun::class, 'prosesedit']);
         });
 
-		//Menu
-        Route::group(['prefix' => 'menu'], function () {
-            Route::get('/', [DashboardMenu::class, 'index']);
-            Route::get('/cari', [DashboardMenu::class, 'cari']);
-            Route::get('/urutan', [DashboardMenu::class, 'urutan']);
-            Route::post('/prosesurutan', [DashboardMenu::class, 'prosesurutan']);
-            Route::get('/tambah', [DashboardMenu::class, 'tambah']);
-            Route::post('/prosestambah', [DashboardMenu::class, 'prosestambah']);
-            Route::get('/baca/{id}', [DashboardMenu::class, 'baca']);
-            Route::get('/edit/{id}', [DashboardMenu::class, 'edit']);
-            Route::post('/prosesedit/{id}', [DashboardMenu::class, 'prosesedit']);
-            Route::get('/hapus/{id}', [DashboardMenu::class, 'hapus']);
-            Route::get('/submenu/{id}', [DashboardMenu::class, 'submenu']);
-            Route::get('/cari_submenu/{id}', [DashboardMenu::class, 'cari_submenu']);
-            Route::get('/tambah_submenu/{id}', [DashboardMenu::class, 'tambah_submenu']);
-            Route::post('/prosestambah_submenu/{id}', [DashboardMenu::class, 'prosestambah_submenu']);
-            Route::get('/urutan_submenu/{id}', [DashboardMenu::class, 'urutan_submenu']);
-            Route::get('/baca_submenu/{id}', [DashboardMenu::class, 'baca_submenu']);
-            Route::get('/edit_submenu/{id}', [DashboardMenu::class, 'edit_submenu']);
-            Route::post('/prosesedit_submenu/{id}', [DashboardMenu::class, 'prosesedit_submenu']);
-            Route::get('/hapus_submenu/{id}', [DashboardMenu::class, 'hapus_submenu']);
-        });
-
-        //Level Sistem
-        Route::group(['prefix' => 'level_sistem'], function () {
-            Route::get('/', [DashboardLevelSistem::class, 'index']);
-            Route::get('/cari', [DashboardLevelSistem::class, 'cari']);
-            Route::get('/tambah', [DashboardLevelSistem::class, 'tambah']);
-            Route::post('/prosestambah', [DashboardLevelSistem::class, 'prosestambah']);
-            Route::get('/baca/{id}', [DashboardLevelSistem::class, 'baca']);
-            Route::get('/edit/{id}', [DashboardLevelSistem::class, 'edit']);
-            Route::post('/prosesedit/{id}', [DashboardLevelSistem::class, 'prosesedit']);
-            Route::get('/hapus/{id}', [DashboardLevelSistem::class, 'hapus']);
-        });
-
-        //Admin
-        Route::group(['prefix' => 'admin'], function () {
-            Route::get('/', [DashboardAdmin::class, 'index']);
-            Route::get('/cari', [DashboardAdmin::class, 'cari']);
-            Route::get('/tambah', [DashboardAdmin::class, 'tambah']);
-            Route::post('/prosestambah', [DashboardAdmin::class, 'prosestambah']);
-            Route::get('/baca/{id}', [DashboardAdmin::class, 'baca']);
-            Route::get('/edit/{id}', [DashboardAdmin::class, 'edit']);
-            Route::post('/prosesedit/{id}', [DashboardAdmin::class, 'prosesedit']);
-            Route::get('/hapus/{id}', [DashboardAdmin::class, 'hapus']);
-        });
+        //Master Data
+            //Toko
+            Route::group(['prefix' => 'toko'], function() {
+                Route::get('/', [DashboardToko::class, 'index']);
+                Route::get('/cari', [DashboardToko::class, 'cari']);
+                Route::get('/tambah', [DashboardToko::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardToko::class, 'prosestambah']);
+                Route::get('/edit/{id}', [DashboardToko::class, 'edit']);
+                Route::post('/prosesedit', [DashboardToko::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardToko::class, 'hapus']);
+            });
 
         //Konfigurasi Aplikasi
-        Route::group(['prefix' => 'konfigurasi_aplikasi'], function () {
-            Route::get('/', [DashboardKonfigurasiAplikasi::class, 'index']);
-            Route::post('/prosesedit', [DashboardKonfigurasiAplikasi::class, 'prosesedit']);
-            Route::post('/proseseditlogo', [DashboardKonfigurasiAplikasi::class, 'proseseditlogo']);
-            Route::post('/prosesediticon', [DashboardKonfigurasiAplikasi::class, 'prosesediticon']);
-            Route::post('/proseseditlogotext', [DashboardKonfigurasiAplikasi::class, 'proseseditlogotext']);
-        });
+            //Menu
+            Route::group(['prefix' => 'menu'], function () {
+                Route::get('/', [DashboardMenu::class, 'index']);
+                Route::get('/cari', [DashboardMenu::class, 'cari']);
+                Route::get('/urutan', [DashboardMenu::class, 'urutan']);
+                Route::post('/prosesurutan', [DashboardMenu::class, 'prosesurutan']);
+                Route::get('/tambah', [DashboardMenu::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardMenu::class, 'prosestambah']);
+                Route::get('/baca/{id}', [DashboardMenu::class, 'baca']);
+                Route::get('/edit/{id}', [DashboardMenu::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardMenu::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardMenu::class, 'hapus']);
+                Route::get('/submenu/{id}', [DashboardMenu::class, 'submenu']);
+                Route::get('/cari_submenu/{id}', [DashboardMenu::class, 'cari_submenu']);
+                Route::get('/tambah_submenu/{id}', [DashboardMenu::class, 'tambah_submenu']);
+                Route::post('/prosestambah_submenu/{id}', [DashboardMenu::class, 'prosestambah_submenu']);
+                Route::get('/urutan_submenu/{id}', [DashboardMenu::class, 'urutan_submenu']);
+                Route::get('/baca_submenu/{id}', [DashboardMenu::class, 'baca_submenu']);
+                Route::get('/edit_submenu/{id}', [DashboardMenu::class, 'edit_submenu']);
+                Route::post('/prosesedit_submenu/{id}', [DashboardMenu::class, 'prosesedit_submenu']);
+                Route::get('/hapus_submenu/{id}', [DashboardMenu::class, 'hapus_submenu']);
+            });
+
+            //Level Sistem
+            Route::group(['prefix' => 'level_sistem'], function () {
+                Route::get('/', [DashboardLevelSistem::class, 'index']);
+                Route::get('/cari', [DashboardLevelSistem::class, 'cari']);
+                Route::get('/tambah', [DashboardLevelSistem::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardLevelSistem::class, 'prosestambah']);
+                Route::get('/baca/{id}', [DashboardLevelSistem::class, 'baca']);
+                Route::get('/edit/{id}', [DashboardLevelSistem::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardLevelSistem::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardLevelSistem::class, 'hapus']);
+            });
+
+            //Admin
+            Route::group(['prefix' => 'admin'], function () {
+                Route::get('/', [DashboardAdmin::class, 'index']);
+                Route::get('/cari', [DashboardAdmin::class, 'cari']);
+                Route::get('/tambah', [DashboardAdmin::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardAdmin::class, 'prosestambah']);
+                Route::get('/baca/{id}', [DashboardAdmin::class, 'baca']);
+                Route::get('/edit/{id}', [DashboardAdmin::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardAdmin::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardAdmin::class, 'hapus']);
+            });
+
+            //Konfigurasi Aplikasi
+            Route::group(['prefix' => 'konfigurasi_aplikasi'], function () {
+                Route::get('/', [DashboardKonfigurasiAplikasi::class, 'index']);
+                Route::post('/prosesedit', [DashboardKonfigurasiAplikasi::class, 'prosesedit']);
+                Route::post('/proseseditlogo', [DashboardKonfigurasiAplikasi::class, 'proseseditlogo']);
+                Route::post('/prosesediticon', [DashboardKonfigurasiAplikasi::class, 'prosesediticon']);
+                Route::post('/proseseditlogotext', [DashboardKonfigurasiAplikasi::class, 'proseseditlogotext']);
+            });
 
         //Logout
         Route::get('/logout', [Dashboard::class, 'logout']);
