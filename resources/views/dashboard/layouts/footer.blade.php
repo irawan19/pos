@@ -7,13 +7,13 @@
 					© <script>
 					  	document.write(new Date().getFullYear())
 					</script>,
-					<a href="https:/smartkantin.com" class="font-weight-bold" target="_blank">{{$ambil_konfigurasi_aplikasi->nama_konfigurasi_aplikasis}}</a>
+					<a href="{{URL('/')}}" class="font-weight-bold" target="_blank">{{$ambil_konfigurasi_aplikasi->nama_konfigurasi_aplikasis}}</a>
 				</div>
 			</div>
 			<div class="col-lg-6">
 			  <ul class="nav nav-footer justify-content-center justify-content-lg-end">
 			    <li class="nav-item">
-			      	<a href="https://smartkantin.com" class="nav-link text-muted" target="_blank">{{$ambil_konfigurasi_aplikasi->nama_konfigurasi_aplikasis}}</a>
+			      	<a href="{{URL('/')}}" class="nav-link text-muted" target="_blank">{{$ambil_konfigurasi_aplikasi->nama_konfigurasi_aplikasis}}</a>
 			    </li>
 			    <li class="nav-item">
 			      	<a href="{{URL('/')}}" class="nav-link text-muted">Dashboard</a>

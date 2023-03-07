@@ -9,7 +9,9 @@ class BerandaController extends Controller
 
     public function index()
     {
-        return view('beranda');    
+        $data['lihat_konfigurasi_aplikasis']    = \App\Models\Master_konfigurasi_aplikasi::where('id_konfigurasi_aplikasis',1)
+                                                                                        ->first();
+        return view('beranda',$data);
     }
 
 }
