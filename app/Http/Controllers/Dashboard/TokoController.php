@@ -75,7 +75,7 @@ class TokoController extends AdminCoreController
 
             $nama_logo_toko = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_logo_toko')->getClientOriginalName())));
             $path_logo_toko = 'toko/';
-            Storage::disk('public')->put('toko/'.$nama_foto_user, file_get_contents($request->file('userfile_logo_toko')));
+            Storage::disk('public')->put($path_logo_toko.$nama_foto_user, file_get_contents($request->file('userfile_logo_toko')));
 
             $tokos_data = [
                 'logo_tokos'                            => $path_logo_toko.$nama_logo_toko,
@@ -156,7 +156,7 @@ class TokoController extends AdminCoreController
         
                     $nama_logo_toko = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_logo_toko')->getClientOriginalName())));
                     $path_logo_toko = 'toko/';
-                        Storage::disk('public')->put('toko/'.$nama_foto_user, file_get_contents($request->file('userfile_logo_toko')));
+                    Storage::disk('public')->put($path_logo_toko.$nama_foto_user, file_get_contents($request->file('userfile_logo_toko')));
         
                     $tokos_data = [
                         'logo_tokos'                            => $path_logo_toko.$nama_logo_toko,

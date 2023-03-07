@@ -18,8 +18,8 @@
 							<br/>
 							<div class="form-group center-align">
 								@if(Auth::user()->profile_photo_path != null)
-									<a data-fancybox="gallery" href="{{URL::asset(Auth::user()->profile_photo_path)}}">
-										<img src="{{URL::asset(Auth::user()->profile_photo_path)}}" width="108">
+									<a data-fancybox="gallery" href="{{URL::asset('storage/'.Auth::user()->profile_photo_path)}}">
+										<img src="{{URL::asset('storage/'.Auth::user()->profile_photo_path)}}" width="108">
 									</a>
 								@else
 									<a data-fancybox="gallery" href="{{Auth::user()->profile_photo_url}}">

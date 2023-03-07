@@ -40,7 +40,7 @@ class KonfigurasiProfilController extends AdminCoreController
 
             $nama_foto_user = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_user')->getClientOriginalName())));
             $path_foto_user = 'user/';
-            Storage::disk('public')->put('user/'.$nama_foto_user, file_get_contents($request->file('userfile_foto_user')));
+            Storage::disk('public')->put($path_foto_user.$nama_foto_user, file_get_contents($request->file('userfile_foto_user')));
 
             $data = [
                 'profile_photo_path'  	=> $path_foto_user.$nama_foto_user,

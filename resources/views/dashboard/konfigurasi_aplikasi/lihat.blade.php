@@ -48,8 +48,8 @@
 							{{ General::pesanSuksesForm(Session::get('setelah_simpan_logo.text')) }}
 					    @endif
 						<div class="form-group center-align">
-							<a data-fancybox="gallery" href="{{URL::asset($lihat_konfigurasi_aplikasis->logo_konfigurasi_aplikasis)}}">
-								<img src="{{URL::asset($lihat_konfigurasi_aplikasis->logo_konfigurasi_aplikasis)}}" width="108">
+							<a data-fancybox="gallery" href="{{URL::asset('storage/'.$lihat_konfigurasi_aplikasis->logo_konfigurasi_aplikasis)}}">
+								<img src="{{URL::asset('storage/'.$lihat_konfigurasi_aplikasis->logo_konfigurasi_aplikasis)}}" width="108">
 							</a>
 						</div>
 						<div class="form-group row">
@@ -76,8 +76,8 @@
 							{{ General::pesanSuksesForm(Session::get('setelah_simpan_icon.text')) }}
 					    @endif
 						<div class="form-group center-align">
-							<a data-fancybox="gallery" href="{{URL::asset($lihat_konfigurasi_aplikasis->icon_konfigurasi_aplikasis)}}">
-								<img src="{{URL::asset($lihat_konfigurasi_aplikasis->icon_konfigurasi_aplikasis)}}" width="16">
+							<a data-fancybox="gallery" href="{{URL::asset('storage/'.$lihat_konfigurasi_aplikasis->icon_konfigurasi_aplikasis)}}">
+								<img src="{{URL::asset('storage/'.$lihat_konfigurasi_aplikasis->icon_konfigurasi_aplikasis)}}" width="16">
 							</a>
 						</div>
 						<div class="form-group row">
@@ -104,8 +104,8 @@
 							{{ General::pesanSuksesForm(Session::get('setelah_simpan_logo_text.text')) }}
 					    @endif
 						<div class="form-group center-align">
-							<a data-fancybox="gallery" href="{{URL::asset($lihat_konfigurasi_aplikasis->logo_text_konfigurasi_aplikasis)}}">
-								<img src="{{URL::asset($lihat_konfigurasi_aplikasis->logo_text_konfigurasi_aplikasis)}}" width="108">
+							<a data-fancybox="gallery" href="{{URL::asset('storage/'.$lihat_konfigurasi_aplikasis->logo_text_konfigurasi_aplikasis)}}">
+								<img src="{{URL::asset('storage/'.$lihat_konfigurasi_aplikasis->logo_text_konfigurasi_aplikasis)}}" width="108">
 							</a>
 						</div>
 						<div class="form-group row">

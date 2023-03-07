@@ -14,8 +14,8 @@
 							<label class="form-col-form-label" for="userfile_logo_toko">Logo <b style="color:red">*</b></label>
 							<br/>
 							<div class="form-group center-align">
-							    <a data-fancybox="gallery" href="{{URL::asset($edit_tokos->logo_tokos)}}">
-							    	<img src="{{URL::asset($edit_tokos->logo_tokos)}}" width="108">
+							    <a data-fancybox="gallery" href="{{URL::asset('storage/'.$edit_tokos->logo_tokos)}}">
+							    	<img src="{{URL::asset('storage/'.$edit_tokos->logo_tokos)}}" width="108">
 							    </a>
 							</div>
 			                <input id="userfile_logo_toko" type="file" name="userfile_logo_toko">

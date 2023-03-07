@@ -10,12 +10,12 @@
 				<div class="card-body">
 					<div class="center-align">
 						@if($baca_admins->profile_photo_path != null)
-							<a data-fancybox="gallery" href="{{URL::asset($baca_admins->profile_photo_path)}}">
-								<img src="{{URL::asset($baca_admins->profile_photo_path)}}" width="108">
+							<a data-fancybox="gallery" href="{{URL::asset('storage/'.$baca_admins->profile_photo_path)}}">
+								<img src="{{URL::asset('storage/'.$baca_admins->profile_photo_path)}}" width="108">
 							</a>
 						@else
 							<a data-fancybox="gallery" href="{{ $baca_admins->profile_photo_url }}">
-								<img src="{{ $baca_admins->profile_photo_url }}" width="108">
+								<img src="{{ URL::asset('storage/'.$baca_admins->profile_photo_url) }}" width="108">
 							</a>
 						@endif
 					</div>

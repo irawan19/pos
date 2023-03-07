@@ -71,17 +71,14 @@ class KonfigurasiAplikasiController extends AdminCoreController
 
             $cek_logo       = \App\Models\Master_konfigurasi_aplikasi::first();
             if (!empty($cek_logo)) {
-                $logo_old        = $cek_logo->logo_konfigurasi_aplikasis;
-                if (file_exists($logo_old))
-                    unlink($logo_old);
+                $logo_lama        = $cek_logo->logo_konfigurasi_aplikasis;
+                if (Storage::disk('public')->exists($logo_lama))
+                    Storage::disk('public')->delete($logo_lama);
             }
 
             $nama_logo = date('Ymd') . date('His') . str_replace(')', '', str_replace('(', '', str_replace(' ', '-', $request->file('userfile_logo')->getClientOriginalName())));
-            $path_logo = 'public/uploads/logo/';
-            $request->file('userfile_logo')->move(
-                base_path() . '/public/uploads/logo/',
-                $nama_logo
-            );
+            $path_logo = 'logo/';
+            Storage::disk('public')->put($path_logo.$nama_logo, file_get_contents($request->file('userfile_logo')));
 
             $data = [
                 'logo_konfigurasi_aplikasis'    => $path_logo . $nama_logo,
@@ -115,17 +112,14 @@ class KonfigurasiAplikasiController extends AdminCoreController
 
             $cek_icon       = \App\Models\Master_konfigurasi_aplikasi::first();
             if (!empty($cek_icon)) {
-                $icon_old        = $cek_icon->icon_konfigurasi_aplikasis;
-                if (file_exists($icon_old))
-                    unlink($icon_old);
+                $icon_lama        = $cek_icon->icon_konfigurasi_aplikasis;
+                if (Storage::disk('public')->exists($icon_lama))
+                    Storage::disk('public')->delete($icon_lama);
             }
 
             $nama_icon = date('Ymd') . date('His') . str_replace(')', '', str_replace('(', '', str_replace(' ', '-', $request->file('userfile_icon')->getClientOriginalName())));
-            $path_icon = 'public/uploads/logo/';
-            $request->file('userfile_icon')->move(
-                base_path() . '/public/uploads/logo/',
-                $nama_icon
-            );
+            $path_icon = 'logo/';
+            Storage::disk('public')->put($path_icon.$nama_icon, file_get_contents($request->file('userfile_icon')));
 
             $data = [
                 'icon_konfigurasi_aplikasis'    => $path_icon . $nama_icon,
@@ -159,17 +153,14 @@ class KonfigurasiAplikasiController extends AdminCoreController
 
             $cek_logo_text       = \App\Models\Master_konfigurasi_aplikasi::first();
             if (!empty($cek_logo_text)) {
-                $logo_text_old        = $cek_logo_text->logo_text_konfigurasi_aplikasis;
-                if (file_exists($logo_text_old))
-                    unlink($logo_text_old);
+                $logo_text_lama        = $cek_logo_text->logo_text_konfigurasi_aplikasis;
+                if (Storage::disk('public')->exists($logo_text_lama))
+                    Storage::disk('public')->delete($logo_text_lama);
             }
 
             $nama_logo_text = date('Ymd') . date('His') . str_replace(')', '', str_replace('(', '', str_replace(' ', '-', $request->file('userfile_logo_text')->getClientOriginalName())));
-            $path_logo_text = 'public/uploads/logo/';
-            $request->file('userfile_logo_text')->move(
-                base_path() . '/public/uploads/logo/',
-                $nama_logo_text
-            );
+            $path_logo_text = 'logo/';
+            Storage::disk('public')->put($path_logo_text.$nama_logo_text, file_get_contents($request->file('userfile_logo_text')));
 
             $data = [
                 'logo_text_konfigurasi_aplikasis'   => $path_logo_text . $nama_logo_text,

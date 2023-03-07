@@ -17,11 +17,11 @@
 									<br/>
 									<div class="form-group center-align">
 										@if($edit_admins->profile_photo_path != null)
-											<a data-fancybox="gallery" href="{{URL::asset($edit_admins->profile_photo_path)}}">
-												<img src="{{URL::asset($edit_admins->profile_photo_path)}}" width="108">
+											<a data-fancybox="gallery" href="{{URL::asset('storage/'.$edit_admins->profile_photo_path)}}">
+												<img src="{{URL::asset('storage/'.$edit_admins->profile_photo_path)}}" width="108">
 											</a>
 										@else
-											<a data-fancybox="gallery" href="{{URL::asset($edit_admins->profile_photo_url)}}">
+											<a data-fancybox="gallery" href="{{ $edit_admins->profile_photo_url }}">
 												<img src="{{ $edit_admins->profile_photo_url }}" width="108">
 											</a>
 										@endif
