@@ -139,12 +139,24 @@ Route::middleware([
         //Transaksi
             //Customer
             Route::group(['prefix' => 'customer'], function() {
-
+                Route::get('/', [DashboardCustomer::class, 'index']);
+                Route::get('/cari', [DashboardCustomer::class, 'cari']);
+                Route::get('/tambah', [DashboardCustomer::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardCustomer::class, 'prosestambah']);
+                Route::get('/edit/{id}', [DashboardCustomer::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardCustomer::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardCustomer::class, 'hapus']);
             });
 
             //Supplier
             Route::group(['prefix' => 'supplier'], function() {
-
+                Route::get('/', [DashboardSupplier::class, 'index']);
+                Route::get('/cari', [DashboardSupplier::class, 'cari']);
+                Route::get('/tambah', [DashboardSupplier::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardSupplier::class, 'prosestambah']);
+                Route::get('/edit/{id}', [DashboardSupplier::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardSupplier::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardSupplier::class, 'hapus']);
             });
 
             //Pembelian
