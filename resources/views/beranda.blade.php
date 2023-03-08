@@ -64,7 +64,7 @@
               <a class="nav-link" href="#kontakkami">Kontak Kami</a>
             </li>
             <li>
-              <a class="nav-link" href="{{URL('/login')}}">Login</a>
+              <a class="nav-link" href="{{URL('/login')}}">Dashboard</a>
             </li>
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
