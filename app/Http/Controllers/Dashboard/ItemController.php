@@ -14,11 +14,15 @@ class ItemController extends AdminCoreController
         $link_item = 'item';
         if(General::hakAkses($link_item,'lihat') == 'true')
         {
+            $url_sekarang                   = $request->fullUrl();
             $data['link_item']              = $link_item;
             $data['hasil_kata']             = '';
-            $url_sekarang                   = $request->fullUrl();
+
             if(Auth::user()->tokos_id == null)
             {
+                $data['lihat_tokos']        = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                        ->get();
+                $hasil_toko                 = '';
                 $data['lihat_items']        = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                     ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                     ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
@@ -26,13 +30,23 @@ class ItemController extends AdminCoreController
             }
             else
             {
+                $data['lihat_tokos']        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                        ->orderBy('nama_tokos')
+                                                                        ->get();
+                $hasil_toko                 = Auth::user()->tokos_id;
                 $data['lihat_items']        = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                     ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                     ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
-                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                    ->where('tokos_id',$hasil_toko)
                                                                     ->paginate(10);
             }
+            $data['hasil_toko']             = $hasil_toko;
+            $data['lihat_kategori_items']   = \App\Models\Master_kategori_item::orderBy('nama_kategori_items')
+                                                                                ->get();
+            $data['hasil_kategori_item']   = '';
             session()->forget('halaman');
+            session()->forget('hasil_toko');
+            session()->forget('hasil_kategori_item');
             session()->forget('hasil_kata');
             session(['halaman'              => $url_sekarang]);
         	return view('dashboard.item.lihat', $data);
@@ -50,8 +64,16 @@ class ItemController extends AdminCoreController
             $url_sekarang                   = $request->fullUrl();
             $hasil_kata                     = $request->cari_kata;
             $data['hasil_kata']             = $hasil_kata;
+            $hasil_toko                     = $request->cari_toko;
+            $data['hasil_toko']             = $hasil_toko;
+            $data['lihat_kategori_items']   = \App\Models\Master_kategori_item::orderBy('nama_kategori_items')
+                                                                                ->get();
+            $hasil_kategori_item            = $request->hasil_kategori_item;
+            $data['hasil_kategori_item']    = $request->cari_kategori_item;
             if(Auth::user()->tokos_id == null)
             {
+                $data['lihat_tokos']        = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                        ->get();
                 $data['lihat_items']            = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                         ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                         ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
@@ -60,20 +82,25 @@ class ItemController extends AdminCoreController
             }
             else
             {
+                $data['lihat_tokos']        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                        ->orderBy('nama_tokos')
+                                                                        ->get();
                 $data['lihat_items']            = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                         ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                         ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
                                                                         ->where('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
-                                                                        ->where('tokos_id',Auth::user()->tokos_id)
+                                                                        ->where('tokos_id',$hasil_toko)
                                                                         ->orWhere('nama_kategori_items', 'LIKE', '%'.$hasil_kata.'%')
-                                                                        ->where('tokos_id',Auth::user()->tokos_id)
+                                                                        ->where('tokos_id',$hasil_toko)
                                                                         ->orWhere('nama_satuans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                        ->where('tokos_id',Auth::user()->tokos_id)
+                                                                        ->where('tokos_id',$hasil_toko)
                                                                         ->orWhere('nama_satuans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                        ->where('tokos_id',Auth::user()->tokos_id)
+                                                                        ->where('tokos_id',$hasil_toko)
                                                                         ->paginate(10);
             }
             session(['halaman'              => $url_sekarang]);
+            session(['hasil_toko'		    => $hasil_toko]);
+            session(['hasil_kategori_item'	=> $hasil_kategori_item]);
             session(['hasil_kata'		    => $hasil_kata]);
             return view('dashboard.item.lihat', $data);
         }

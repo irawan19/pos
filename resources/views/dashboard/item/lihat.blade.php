@@ -19,10 +19,56 @@
 				<div class="card-body">
 					<form method="GET" action="{{ URL('dashboard/item/cari') }}">
 						@csrf
-	                	<div class="input-group">
-	                		<input class="form-control" id="input2-group2" type="text" name="cari_kata" placeholder="Cari" value="{{$hasil_kata}}">
-	                		<button class="btn btn-primary" type="submit"> Cari</button>
-	                	</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="form-group">
+									<select class="form-control select2" id="cari_toko" name="cari_toko">
+										@if(Auth::user()->tokos_id == null)
+											<option value="" selected>Semua Toko</option>
+										@endif
+										@foreach($lihat_tokos as $tokos)
+											@php($selected = '')
+											@if(!empty($hasil_toko))
+												@if($tokos->id_tokos == $hasil_toko)
+													@php($selected = 'selected')
+												@endif
+											@else
+												@if($tokos->id_tokos == Request::old('cari_toko'))
+													@php($selected = 'selected')
+												@endif
+											@endif
+											<option value="{{$tokos->id_tokos}}" {{ $selected }}>{{$tokos->nama_tokos}}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<select class="form-control select2" id="cari_kategori_item" name="cari_kategori_item">
+										<option value="" selected>Semua Kategori Item</option>
+										@foreach($lihat_kategori_items as $kategori_items)
+											@php($selected = '')
+											@if(!empty($hasil_kategori_item))
+												@if($kategori_items->id_kategori_items == $hasil_kategori_item)
+													@php($selected = 'selected')
+												@endif
+											@else
+												@if($kategori_items->id_kategori_items == Request::old('cari_kategori_item'))
+													@php($selected = 'selected')
+												@endif
+											@endif
+											<option value="{{$kategori_items->id_kategori_items}}" {{ $selected }}>{{$kategori_items->nama_kategori_items}}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="input-group">
+									<input class="form-control" id="input2-group2" type="text" name="cari_kata" placeholder="Cari" value="{{$hasil_kata}}">
+									<button class="btn btn-primary" type="submit"> Cari</button>
+								</div>
+							</div>
+						</div>
 	                </form>
 	            	<br/>
 	            	<div class="scrolltable">
