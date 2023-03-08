@@ -124,42 +124,21 @@ class KategoriItemController extends AdminCoreController
             $cek_kategori_items = \App\Models\Master_kategori_item::where('id_kategori_items',$id_kategori_items)->first();
             if(!empty($cek_kategori_items))
             {
-                if(!empty($request->userfile_logo_kategori_item))
-                {
-                    $aturan = [
-                        'nama_kategori_items'                          => 'required',
-                    ];
+                $aturan = [
+                    'nama_kategori_items'                          => 'required',
+                ];
         
-                    $error_pesan = [
-                        'nama_kategori_items.required'                 => 'Form Nama Harus Diisi.',
-                    ];
-                    $this->validate($request, $aturan, $error_pesan);
+                $error_pesan = [
+                    'nama_kategori_items.required'                 => 'Form Nama Harus Diisi.',
+                ];
+                $this->validate($request, $aturan, $error_pesan);
         
-                    $kategori_items_data = [
-                        'nama_kategori_items'                          => $request->nama_kategori_items,
-                        'updated_at'                            => date('Y-m-d H:i:s'),
-                    ];
-                    \App\Models\Master_kategori_item::where('id_kategori_items',$id_kategori_items)
-                                                ->update($kategori_items_data);
-                }
-                else
-                {
-                    $aturan = [
-                        'nama_kategori_items'                            => 'required',
-                    ];
-        
-                    $error_pesan = [
-                        'nama_kategori_items.required'                   => 'Form Nama Harus Diisi.',
-                    ];
-                    $this->validate($request, $aturan, $error_pesan);
-        
-                    $kategori_items_data = [
-                        'nama_kategori_items'                            => $request->nama_kategori_items,
-                        'updated_at'                            => date('Y-m-d H:i:s'),
-                    ];
-                    \App\Models\Master_kategori_item::where('id_kategori_items',$id_kategori_items)
-                                                ->update($kategori_items_data);
-                }
+                $kategori_items_data = [
+                    'nama_kategori_items'                          => $request->nama_kategori_items,
+                    'updated_at'                            => date('Y-m-d H:i:s'),
+                ];
+                \App\Models\Master_kategori_item::where('id_kategori_items',$id_kategori_items)
+                                            ->update($kategori_items_data);
 
                 if(request()->session()->get('halaman') != '')
                     $redirect_halaman    = request()->session()->get('halaman');

@@ -124,42 +124,21 @@ class SatuanController extends AdminCoreController
             $cek_satuans = \App\Models\Master_satuan::where('id_satuans',$id_satuans)->first();
             if(!empty($cek_satuans))
             {
-                if(!empty($request->userfile_logo_satuan))
-                {
-                    $aturan = [
-                        'nama_satuans'                          => 'required',
-                    ];
+                $aturan = [
+                    'nama_satuans'                          => 'required',
+                ];
         
-                    $error_pesan = [
-                        'nama_satuans.required'                 => 'Form Nama Harus Diisi.',
-                    ];
-                    $this->validate($request, $aturan, $error_pesan);
+                $error_pesan = [
+                    'nama_satuans.required'                 => 'Form Nama Harus Diisi.',
+                ];
+                $this->validate($request, $aturan, $error_pesan);
         
-                    $satuans_data = [
-                        'nama_satuans'                          => $request->nama_satuans,
-                        'updated_at'                            => date('Y-m-d H:i:s'),
-                    ];
-                    \App\Models\Master_satuan::where('id_satuans',$id_satuans)
+                $satuans_data = [
+                    'nama_satuans'                          => $request->nama_satuans,
+                    'updated_at'                            => date('Y-m-d H:i:s'),
+                ];
+                \App\Models\Master_satuan::where('id_satuans',$id_satuans)
                                                 ->update($satuans_data);
-                }
-                else
-                {
-                    $aturan = [
-                        'nama_satuans'                            => 'required',
-                    ];
-        
-                    $error_pesan = [
-                        'nama_satuans.required'                   => 'Form Nama Harus Diisi.',
-                    ];
-                    $this->validate($request, $aturan, $error_pesan);
-        
-                    $satuans_data = [
-                        'nama_satuans'                            => $request->nama_satuans,
-                        'updated_at'                            => date('Y-m-d H:i:s'),
-                    ];
-                    \App\Models\Master_satuan::where('id_satuans',$id_satuans)
-                                                ->update($satuans_data);
-                }
 
                 if(request()->session()->get('halaman') != '')
                     $redirect_halaman    = request()->session()->get('halaman');
