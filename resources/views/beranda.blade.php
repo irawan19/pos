@@ -86,7 +86,7 @@
       <div class="container">
         <div class="section-title">
           <h2>Kontak</h2>
-          <p>Kontak Kami</p>
+          <p>Hubungi Kami</p>
         </div>
         <div class="row mt-2">
           <div class="col-md-6 d-flex align-items-stretch">

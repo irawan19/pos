@@ -26,6 +26,25 @@
 					<span class="nav-link-text ms-1">Dashboard</span>
 				</a>
 			</li>
+
+			@if(Auth::user()->tokos_id == null)
+				@php($active_pesan 						= '')
+				@php($active_icon_pesan 				= '')
+				@if(Request::segment(2) == 'pesan')
+					@php($active_pesan 					= 'active')
+					@php($active_icon_pesan 			= 'class=activeicon')
+				@endif
+				<li class="nav-item">
+					<a class="nav-link {{$active_pesan}}" href="{{URL('dashboard/pesan')}}">
+						<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+							<svg class="c-sidebar-nav-icon">
+								<use xlink:href="{{URL::asset('template/back/icons/coreui/free.svg#cil-envelope-letter')}}" {{$active_icon_pesan}}></use>
+							</svg>
+						</div>
+						<span class="nav-link-text ms-1">Pesan</span>
+					</a>
+				</li>
+			@endif
 			@php($id_user               = Auth::user()->id)
 			@php($get_menus             = \App\Models\Master_menu::where('master_menus.menus_id',null)
 															->orderBy('order_menus')

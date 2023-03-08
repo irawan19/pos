@@ -13,10 +13,10 @@ class KategoriItemController extends AdminCoreController
         $link_kategori_item = 'kategori_item';
         if(General::hakAkses($link_kategori_item,'lihat') == 'true')
         {
-            $data['link_kategori_item']              = $link_kategori_item;
+            $data['link_kategori_item']     = $link_kategori_item;
             $data['hasil_kata']             = '';
             $url_sekarang                   = $request->fullUrl();
-        	$data['lihat_kategori_items']            = \App\Models\Master_kategori_item::paginate(10);
+        	$data['lihat_kategori_items']   = \App\Models\Master_kategori_item::paginate(10);
             session()->forget('halaman');
             session()->forget('hasil_kata');
             session(['halaman'              => $url_sekarang]);
@@ -31,11 +31,11 @@ class KategoriItemController extends AdminCoreController
         $link_kategori_item = 'kategori_item';
         if(General::hakAkses($link_kategori_item,'lihat') == 'true')
         {
-            $data['link_kategori_item']              = $link_kategori_item;
+            $data['link_kategori_item']     = $link_kategori_item;
             $url_sekarang                   = $request->fullUrl();
             $hasil_kata                     = $request->cari_kata;
             $data['hasil_kata']             = $hasil_kata;
-            $data['lihat_kategori_items']            = \App\Models\Master_kategori_item::where('nama_kategori_items', 'LIKE', '%'.$hasil_kata.'%')
+            $data['lihat_kategori_items']   = \App\Models\Master_kategori_item::where('nama_kategori_items', 'LIKE', '%'.$hasil_kata.'%')
                                                                     ->paginate(10);
             session(['halaman'              => $url_sekarang]);
             session(['hasil_kata'		    => $hasil_kata]);

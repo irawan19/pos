@@ -37,7 +37,7 @@ class BerandaController extends Controller
             'telepon_pesans'            => $request->telepon_pesans,
             'konten_pesans'             => $request->konten_pesans,
             'created_at'                => date('Y-m-d H:i:s'),
-            'status_baca'               => 0,
+            'status_baca_pesans'        => 0,
         ];
         \App\Models\Master_pesan::insert($pesans_data);
 
