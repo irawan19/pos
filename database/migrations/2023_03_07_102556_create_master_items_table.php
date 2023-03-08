@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('foto_items');
             $table->double('harga_items');
             $table->longtext('deskripsi_items');
-            $table->double('stock_items');
+            $table->double('stok_items');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -19,6 +19,19 @@ use App\Http\Controllers\Dashboard\TokoController as DashboardToko;
 use App\Http\Controllers\Dashboard\SatuanController as DashboardSatuan;
 use App\Http\Controllers\Dashboard\KategoriItemController as DashboardKategoriItem;
 use App\Http\Controllers\Dashboard\ItemController as DashboardItem;
+use App\Http\Controllers\Dashboard\PembayaranController as DashboardPembayaran;
+
+//Transaksi
+use App\Http\Controllers\Dashboard\CustomerController as DashboardCustomer;
+use App\Http\Controllers\Dashboard\SupplierController as DashboardSupplier;
+use App\Http\Controllers\Dashboard\PembelianController as DashboardPembelian;
+
+//Laporan
+use App\Http\Controllers\Dashboard\LaporanPenjualanController as DashboardLaporanPenjualan;
+use App\Http\Controllers\Dashboard\LaporanPembelianController as DashboardLaporanPembelian;
+use App\Http\Controllers\Dashboard\LaporanStokController as DashboardLaporanStok;
+use App\Http\Controllers\Dashboard\LaporanKeuanganController as DashboardLaporanKeuangan;
+
 
 //Konfigurasi Aplikasi
 use App\Http\Controllers\Dashboard\MenuController as DashboardMenu;
@@ -110,6 +123,54 @@ Route::middleware([
                 Route::post('/prosesedit/{id}', [DashboardItem::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardItem::class, 'hapus']);
                 Route::get('/cetakbarcode/{id}', [DashboardItem::class, 'cetakbarcode']);
+            });
+
+            //Pembayaran
+            Route::group(['prefix' => 'pembayaran'], function() {
+                Route::get('/', [DashboardPembayaran::class, 'index']);
+                Route::get('/cari', [DashboardPembayaran::class, 'cari']);
+                Route::get('/tambah', [DashboardPembayaran::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardPembayaran::class, 'prosestambah']);
+                Route::get('/edit/{id}', [DashboardPembayaran::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardPembayaran::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardPembayaran::class, 'hapus']);
+            });
+        
+        //Transaksi
+            //Customer
+            Route::group(['prefix' => 'customer'], function() {
+
+            });
+
+            //Supplier
+            Route::group(['prefix' => 'supplier'], function() {
+
+            });
+
+            //Pembelian
+            Route::group(['prefix' =>  'pembelian'], function() {
+
+            });
+
+        //Laporan
+            //Penjualan
+            Route::group(['prefix' => 'laporan_penjualan'], function() {
+
+            });
+
+            //Pembelian
+            Route::group(['prefix' => 'laporan_pembelian'], function() {
+
+            });
+
+            //Stok
+            Route::group(['prefix' => 'laporan_stok'], function() {
+
+            });
+
+            //Keuangan
+            Route::group(['prefix' => 'laporan_keuangan'], function() {
+
             });
 
         //Konfigurasi Aplikasi

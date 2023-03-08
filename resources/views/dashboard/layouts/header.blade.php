@@ -52,11 +52,11 @@
 						@php($notifikasi_pesan_baru 				= 0)
 					@endif
 					@if(Auth::user()->tokos_id == null)
-						@php($total_notifikasi_stock 				= \App\Models\Master_item::where('stock_items',0)->count())
+						@php($total_notifikasi_stok 				= \App\Models\Master_item::where('stok_items',0)->count())
 					@else
-						@php($total_notifikasi_stock 				= \App\Models\Master_item::where('stock_items',0)->where('tokos_id',Auth::user()->tokos_id)->count())
+						@php($total_notifikasi_stok 				= \App\Models\Master_item::where('stok_items',0)->where('tokos_id',Auth::user()->tokos_id)->count())
 					@endif
-					@php($total_notifikasi 							= $notifikasi_pesan_baru + $total_notifikasi_stock)
+					@php($total_notifikasi 							= $notifikasi_pesan_baru + $total_notifikasi_stok)
 					<a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
 						<i class="fa fa-bell cursor-pointer"></i> <span>{{$total_notifikasi}}</span>
 					</a>
@@ -101,31 +101,31 @@
 								@endif
 							@endif
 
-							@if($total_notifikasi_stock != 0)
+							@if($total_notifikasi_stok != 0)
 								@if(Auth::user()->tokos_id == null)
-									@php($ambil_notifikasi_stock = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')->where('stock_items',0)->orderBy('nama_items','asc')->get())
+									@php($ambil_notifikasi_stok = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')->where('stok_items',0)->orderBy('nama_items','asc')->get())
 								@else
-									@php($ambil_notifikasi_stock = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')->where('stock_items',0)->where('id_tokos',Auth::user()->tokos_id)->orderBy('nama_items','asc')->get())
+									@php($ambil_notifikasi_stok = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')->where('stok_items',0)->where('id_tokos',Auth::user()->tokos_id)->orderBy('nama_items','asc')->get())
 								@endif
 							
-								@foreach($ambil_notifikasi_stock as $notifikasi_stock)
+								@foreach($ambil_notifikasi_stok as $notifikasi_stok)
 									<li class="mb-2">
 										<a class="dropdown-item border-radius-md" href="{{URL('dashboard/item')}}">
 											<div class="d-flex py-1">
 												<div class="my-auto">
-													<img src="{{URL::asset('storage/'.$notifikasi_stock->foto_items)}}" class="avatar avatar-sm  me-3 ">
+													<img src="{{URL::asset('storage/'.$notifikasi_stok->foto_items)}}" class="avatar avatar-sm  me-3 ">
 												</div>
 												<div class="d-flex flex-column justify-content-center">
 													<h6 class="text-sm font-weight-normal mb-1">
-														<span class="font-weight-bold">{{$notifikasi_stock->kode_items.' - '.$notifikasi_stock->nama_items}}</span>
+														<span class="font-weight-bold">{{$notifikasi_stok->kode_items.' - '.$notifikasi_stok->nama_items}}</span>
 													</h6>
 													<p class="text-xs text-secondary mb-0 ">
 														<i class="fa fa-home"></i>
-														{{$notifikasi_stock->nama_tokos}}
+														{{$notifikasi_stok->nama_tokos}}
 													</p>
 													<p class="text-xs text-secondary mt-2 ">
 														<i class="fa fa-file"></i>
-														Stock 0
+														Stok 0
 													</p>
 												</div>
 											</div>

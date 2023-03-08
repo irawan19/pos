@@ -54,7 +54,7 @@
         <h1>
           <a href="{{URL('/')}}">{{$lihat_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}</a>
         </h1>
-        <h2>Point Of Sales Application</h2>
+        <h2>Aplikasi Point Of Sales</h2>
         <nav id="navbar" class="navbar">
           <ul>
             <li>

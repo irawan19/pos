@@ -63,9 +63,9 @@
 									{{General::pesanErrorForm($errors->first('harga_items'))}}
 								</div>
 								<div class="form-group">
-									<label class="form-col-form-label" for="stock_items">Stock <b style="color:red">*</b></label>
-									<input class="form-control {{ General::validForm($errors->first('stock_items')) }} right-align" id="stock_items" type="numeric" name="stock_items" value="{{Request::old('stock_items') == '' ? 0 : Request::old('stock_items')}}">
-									{{General::pesanErrorForm($errors->first('stock_items'))}}
+									<label class="form-col-form-label" for="stok_items">Stok <b style="color:red">*</b></label>
+									<input class="form-control {{ General::validForm($errors->first('stok_items')) }} right-align" id="stok_items" type="numeric" name="stok_items" value="{{Request::old('stok_items') == '' ? 0 : Request::old('stok_items')}}">
+									{{General::pesanErrorForm($errors->first('stok_items'))}}
 								</div>
 							</div>
 							<div class="col-md-12">

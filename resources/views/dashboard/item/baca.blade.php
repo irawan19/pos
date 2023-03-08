@@ -44,9 +44,9 @@
 							<td>{{General::ubahDBKeHarga($baca_items->harga_items)}}</td>
 						</tr>
 						<tr>
-							<th>Stock</th>
+							<th>Stok</th>
 							<th>:</th>
-							<td>{{$baca_items->stock_items}}</td>
+							<td>{{$baca_items->stok_items}}</td>
 						</tr>
 						<tr>
 							<th>Deskripsi</th>

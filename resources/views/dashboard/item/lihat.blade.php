@@ -83,7 +83,7 @@
 				    				<th class="nowrap">Nama</th>
 				    				<th class="nowrap" width="50px">Foto</th>
 				    				<th class="nowrap">Harga</th>
-				    				<th class="nowrap">Stock</th>
+				    				<th class="nowrap">Stok</th>
 				    				<th class="nowrap" width="50px">Barcode</th>
 				    			</tr>
 				    		</thead>
@@ -115,7 +115,7 @@
                                                 </a>
                                             </td>
 								    		<td class="nowrap right-align">{{General::ubahDBKeHarga($items->harga_items)}}</td>
-								    		<td class="nowrap right-align">{{$items->stock_items}}</td>
+								    		<td class="nowrap right-align">{{$items->stok_items}}</td>
 								    		<td class="nowrap center-align">
 												<a data-fancybox="gallery" href="data:image/png;base64,{{DNS2D::getBarcodePNG($items->id_items.'-'.$items->nama_items.'-'.$items->harga_items, 'QRCODE')}}">
 													<img src="data:image/png;base64,{{DNS2D::getBarcodePNG($items->id_items.'-'.$items->nama_items.'-'.$items->harga_items, 'QRCODE')}}" alt="barcode" width="32px">
