@@ -225,11 +225,11 @@ class LaporanPembelianController extends AdminCoreController
         $link_laporan_pembelian = 'laporan_pembelian';
         if(General::hakAkses($link_laporan_pembelian,'cetak') == 'true')
         {
-            $tanggal_mulai = date('Y-m-d H:i:s');
+            $tanggal_mulai = date('Y-m-d');
             if(!empty(session('tanggal_mulai')))
                 $tanggal_mulai = session('tanggal_mulai');
 
-            $tanggal_selesai = date('Y-m-d H:i:s');
+            $tanggal_selesai = date('Y-m-d');
             if(!empty(session('tanggal_selesai')))
                 $tanggal_selesai = session('tanggal_selesai');
             

@@ -23,7 +23,7 @@ class LaporanPembelian implements FromView, ShouldQueue
         if(!empty(session('tanggal_mulai')))
             $tanggal_mulai = session('tanggal_mulai');
 
-        $tanggal_selesai  = date('Y-m-d');
+        $tanggal_selesai  = date('Y-m-j', strtotime("last day of this month"));
         if(!empty(session('tanggal_selesai')))
             $tanggal_selesai = session('tanggal_selesai');
 

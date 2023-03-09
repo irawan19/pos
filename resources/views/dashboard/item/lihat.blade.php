@@ -80,6 +80,7 @@
 						    		@endif
 				    				<th class="nowrap" width="50px">No</th>
 				    				<th class="nowrap">Kategori</th>
+				    				<th class="nowrap">Kode</th>
 				    				<th class="nowrap">Nama</th>
 				    				<th class="nowrap" width="50px">Foto</th>
 				    				<th class="nowrap">Harga</th>
@@ -108,6 +109,7 @@
 								    		@endif
 								    		<td class="nowrap">{{$no}}</td>
 								    		<td class="nowrap">{{$items->nama_kategori_items}}</td>
+								    		<td class="nowrap">{{$items->kode_items}}</td>
 								    		<td class="nowrap">{{$items->nama_items}}</td>
 								    		<td class="nowrap">
                                                 <a data-fancybox="gallery" href="{{URL::asset('storage/'.$items->foto_items)}}">
@@ -128,7 +130,9 @@
 								@else
 									<tr>
 										@if(General::totalHakAkses($link_item) != 0)
-											<td colspan="7" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="9" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
@@ -136,7 +140,9 @@
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="6" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="8" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
