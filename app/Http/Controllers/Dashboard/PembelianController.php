@@ -30,8 +30,8 @@ class PembelianController extends AdminCoreController
                 $data['lihat_pembelians']           = \App\Models\Transaksi_pembelian::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                     ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
-                                                                                    ->where('transaksi_pembelians.created_at','>=',$tanggal_mulai)
-                                                                                    ->where('transaksi_pembelians.created_at','<=',$tanggal_selesai)
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
                                                                                     ->paginate(10);
             }
             else
@@ -44,8 +44,8 @@ class PembelianController extends AdminCoreController
                                                                                     ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                     ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
                                                                                     ->where('tokos_id',$hasil_toko)
-                                                                                    ->where('transaksi_pembelians.created_at','>=',$tanggal_mulai)
-                                                                                    ->where('transaksi_pembelians.created_at','<=',$tanggal_selesai)
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
                                                                                     ->paginate(10);
             }
             $data['hasil_toko']             = $hasil_toko;
@@ -72,13 +72,72 @@ class PembelianController extends AdminCoreController
             $url_sekarang                       = $request->fullUrl();
             $hasil_kata                         = $request->cari_kata;
             $data['hasil_kata']                 = $hasil_kata;
-            $data['lihat_pembelians']           = \App\Models\Transaksi_pembelian::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+            $tanggal_mulai                      = date('Y-m-01');
+            $tanggal_selesai                    = date('Y-m-j', strtotime("last day of this month"));
+            $hasil_tanggal                      = General::ubahDBKeTanggal($tanggal_mulai).' sampai '.General::ubahDBKeTanggal($tanggal_selesai);
+            $data['tanggal_mulai']              = $tanggal_mulai;
+            $data['tanggal_selesai']            = $tanggal_selesai;
+            $data['hasil_tanggal']              = $hasil_tanggal;
+            $hasil_toko                 = $request->cari_toko;
+            if(Auth::user()->tokos_id == null)
+            {
+                $data['lihat_tokos']        = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                        ->get();
+                if($hasil_toko != '')
+                {
+                    $data['lihat_pembelians']           = \App\Models\Transaksi_pembelian::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                        ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
+                                                                                        ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
+                                                                                        ->where('no_pembelians', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                        ->orwhere('referensi_no_nota_pembelians', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                        ->paginate(10);
+                }
+                else
+                {
+                    $data['lihat_pembelians']           = \App\Models\Transaksi_pembelian::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                        ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
+                                                                                        ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
+                                                                                        ->where('no_pembelians', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                        ->orwhere('referensi_no_nota_pembelians', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                        ->paginate(10);
+                }
+            }
+            else
+            {
+                $data['lihat_tokos']        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                        ->orderBy('nama_tokos')
+                                                                        ->get();
+                $data['lihat_pembelians']           = \App\Models\Transaksi_pembelian::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
+                                                                                    ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
                                                                                     ->where('no_pembelians', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                    ->where('referensi_no_nota_pembelians', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                    ->orwhere('referensi_no_nota_pembelians', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
                                                                                     ->paginate(10);
+            }
+            $data['hasil_toko']             = $hasil_toko;
+            session()->forget('halaman');
+            session()->forget('hasil_toko');
+            session()->forget('hasil_kata');
+            session()->forget('tanggal_mulai');
+            session()->forget('tanggal_selesai');
+            session()->forget('hasil_tanggal');
             session(['halaman'              => $url_sekarang]);
-            session(['hasil_kata'		    => $hasil_kata]);
             return view('dashboard.pembelian.lihat', $data);
         }
         else

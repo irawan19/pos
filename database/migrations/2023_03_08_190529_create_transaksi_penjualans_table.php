@@ -19,11 +19,14 @@ return new class extends Migration
             $table->foreign('customers_id')->references('id_customers')->on('master_customers')->onUpdate('set null')->onDelete('set null');
             $table->integer('pembayarans_id')->unsigned()->index()->nullable();
             $table->foreign('pembayarans_id')->references('id_pembayarans')->on('master_pembayarans')->onUpdate('set null')->onDelete('set null');
+            $table->integer('users_id')->unsigned()->index()->nullable();
+            $table->foreign('users_id')->references('id')->on('users')->onUpdate('set null')->onDelete('set null');
             $table->string('no_penjualans');
             $table->datetime('tanggal_penjualans');
             $table->longtext('keterangan_penjualans');
             $table->double('sub_total_penjualans');
             $table->double('diskon_penjualans');
+            $table->double('pajak_penjualans');
             $table->double('total_penjualans');
             $table->timestamps();
             $table->softDeletes();

@@ -175,22 +175,34 @@ Route::middleware([
         //Laporan
             //Penjualan
             Route::group(['prefix' => 'laporan_penjualan'], function() {
-
+                Route::get('/', [DashboardLaporanPenjualan::class, 'index']);
+                Route::get('/cari', [DashboardLaporanPenjualan::class, 'cari']);
+                Route::get('/baca/{id}', [DashboardLaporanPenjualan::class, 'baca']);
+                Route::get('/cetakexcel', [DashboardLaporanPenjualan::class, 'cetakexcel']);
             });
 
             //Pembelian
             Route::group(['prefix' => 'laporan_pembelian'], function() {
-
+                Route::get('/', [DashboardLaporanPembelian::class, 'index']);
+                Route::get('/cari', [DashboardLaporanPembelian::class, 'cari']);
+                Route::get('/baca/{id}', [DashboardLaporanPembelian::class, 'baca']);
+                Route::get('/cetakexcel', [DashboardLaporanPembelian::class, 'cetakexcel']);
             });
 
             //Stok
             Route::group(['prefix' => 'laporan_stok'], function() {
-
+                Route::get('/', [DashboardLaporanStok::class, 'index']);
+                Route::get('/cari', [DashboardLaporanStok::class, 'cari']);
+                Route::get('/baca/{id}', [DashboardLaporanStok::class, 'baca']);
+                Route::get('/cetakexcel', [DashboardLaporanStok::class, 'cetakexcel']);
             });
 
             //Keuangan
             Route::group(['prefix' => 'laporan_keuangan'], function() {
-
+                Route::get('/', [DashboardLaporanKeuangan::class, 'index']);
+                Route::get('/cari', [DashboardLaporanKeuangan::class, 'cari']);
+                Route::get('/baca/{id}', [DashboardLaporanKeuangan::class, 'baca']);
+                Route::get('/cetakexcel', [DashboardLaporanKeuangan::class, 'cetakexcel']);
             });
 
         //Konfigurasi Aplikasi

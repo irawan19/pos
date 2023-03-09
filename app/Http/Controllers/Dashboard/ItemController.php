@@ -74,11 +74,23 @@ class ItemController extends AdminCoreController
             {
                 $data['lihat_tokos']        = \App\Models\Master_toko::orderBy('nama_tokos')
                                                                         ->get();
-                $data['lihat_items']            = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
-                                                                        ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
-                                                                        ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
-                                                                        ->where('nama_items', 'LIKE', '%'.$hasil_kata.'%')
-                                                                        ->paginate(10);
+                if($hasil_toko != '')
+                {
+                    $data['lihat_items']            = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                            ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
+                                                                            ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
+                                                                            ->where('tokos_id',$hasil_toko)
+                                                                            ->where('nama_items', 'LIKE', '%'.$hasil_kata.'%')
+                                                                            ->paginate(10);
+                }
+                else
+                {
+                    $data['lihat_items']            = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                            ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
+                                                                            ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
+                                                                            ->where('nama_items', 'LIKE', '%'.$hasil_kata.'%')
+                                                                            ->paginate(10);
+                }
             }
             else
             {

@@ -146,6 +146,9 @@
 		.btn{
 			z-index: 0 !important;
 		}
+		tfoot{
+			background-color: #ffdede;
+		}
 	</style>
     <script type="text/javascript">
         jQuery(document).ready(function () {

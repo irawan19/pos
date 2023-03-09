@@ -266,6 +266,15 @@ class General
 						</a>';
 			}
 		}
+		
+		public static function bacaButton($link_menus = '', $link = '')
+		{
+			if (General::hakAkses($link_menus, 'baca') == 'true') {
+				echo '<a href="'. URL($link) .'" class="btn bg-gradient-warning mb-0">
+							<i class="fas fa-check" aria-hidden="true"></i>&nbsp;&nbsp;Baca
+						</button>';
+			}
+		}
 
 		public static function cetaklist($link_menus = '', $link = '')
 		{
