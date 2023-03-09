@@ -2,7 +2,7 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-sm-6 col-center mt-4">
+		<div class="col-sm-6 col-center mb-4">
 			<div class="card">
 				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/satuan/prosesedit/'.$edit_satuans->id_satuans) }}" method="POST">
 					{{ csrf_field() }}

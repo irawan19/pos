@@ -2,7 +2,7 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-sm-12 mt-4">
+		<div class="col-sm-12 mb-4">
 			<div class="card">
 				<form class="form-horizontal m-t-40" enctype="multipart/form-data" action="{{ URL('dashboard/admin/prosesedit/'.$edit_admins->id) }}" method="POST">
 					{{ csrf_field() }}

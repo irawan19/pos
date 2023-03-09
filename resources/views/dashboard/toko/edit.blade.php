@@ -2,7 +2,7 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-sm-6 col-center mt-4">
+		<div class="col-sm-6 col-center mb-4">
 			<div class="card">
 				<form class="form-horizontal m-t-40" enctype="multipart/form-data" action="{{ URL('dashboard/toko/prosesedit/'.$edit_tokos->id_tokos) }}" method="POST">
 					{{ csrf_field() }}

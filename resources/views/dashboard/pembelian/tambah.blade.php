@@ -2,7 +2,7 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-sm-4 mt-4">
+		<div class="col-sm-4 mb-4">
 			<div class="card">
 				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/pembelian/prosestambah') }}" method="POST">
 					{{ csrf_field() }}
@@ -67,7 +67,7 @@
 			</div>
 		</div>
         
-		<div class="col-sm-8 mt-4">
+		<div class="col-sm-8 mb-4">
 			<div class="card">
 				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/pembelian/prosestambah') }}" method="POST">
 					{{ csrf_field() }}
