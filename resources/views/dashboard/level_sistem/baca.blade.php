@@ -2,7 +2,7 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-sm-8">
+		<div class="col-sm-8 mt-4">
 			<div class="card">
 				<div class="card-header">
 					<strong>Baca Level Sistem</strong>
@@ -227,7 +227,7 @@
 			</div>
 		</div>
 
-		<div class="col-sm-4">
+		<div class="col-sm-4 mt-4">
 			<div class="card">
 				<div class="card-header">
 					<strong>Baca Admin List</strong>

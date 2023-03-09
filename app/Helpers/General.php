@@ -58,6 +58,60 @@ class General
 		}
 	//Hak Akses
 
+	//Auto Generate Penomoran
+		public static function noPenjualan()
+		{
+			$ambil_penjualans = \App\Models\Transaksi_penjualan::select('no_penjualans')
+															->whereRaw('MONTH(created_at) = "'.date('m').'"')
+															->whereRaw('YEAR(created_at) = "'.date('Y').'"')
+															->orderByRaw('CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(no_penjualans,"-",2),"-",-1) AS SIGNED) desc')
+															->first();
+			if(!empty($ambil_penjualans))
+			{
+				$no_penjualans 				= $ambil_penjualans->no_penjualans;
+				$explode_no 				= explode('-', $no_penjualans);
+				if(!empty($explode_no[1]))
+				{
+					$no_penjualans_new 			= (int)$explode_no[1] + 1;
+					$format_no_penjualans_new 	= sprintf('%04d', $no_penjualans_new);
+					$format_penjualans_new 		= 'PJ-'.$format_no_penjualans_new.'-'.date('m').'-'.date('Y');
+				}
+				else
+					$format_penjualans_new 	= 'PJ-0001-'.date('m').'-'.date('Y');
+			}
+			else
+				$format_penjualans_new 	= 'PJ-0001-'.date('m').'-'.date('Y');
+
+			return $format_penjualans_new;
+		}
+
+		public static function noPembelian()
+		{
+			$ambil_pembelians = \App\Models\Transaksi_pembelian::select('no_pembelians')
+															->whereRaw('MONTH(created_at) = "'.date('m').'"')
+															->whereRaw('YEAR(created_at) = "'.date('Y').'"')
+															->orderByRaw('CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(no_pembelians,"-",2),"-",-1) AS SIGNED) desc')
+															->first();
+			if(!empty($ambil_pembelians))
+			{
+				$no_pembelians 				= $ambil_pembelians->no_pembelians;
+				$explode_no 				= explode('-', $no_pembelians);
+				if(!empty($explode_no[1]))
+				{
+					$no_pembelians_new 			= (int)$explode_no[1] + 1;
+					$format_no_pembelians_new 	= sprintf('%04d', $no_pembelians_new);
+					$format_pembelians_new 		= 'PJ-'.$format_no_pembelians_new.'-'.date('m').'-'.date('Y');
+				}
+				else
+					$format_pembelians_new 	= 'PJ-0001-'.date('m').'-'.date('Y');
+			}
+			else
+				$format_pembelians_new 	= 'PJ-0001-'.date('m').'-'.date('Y');
+
+			return $format_pembelians_new;
+		}
+	//Auto Generate Penomoran
+
     //Notifikasi
 		public static function pesanErrorForm($form_input='')
 		{
@@ -98,34 +152,6 @@ class General
 			return $id_auto_increment;
 		}
 	//Auto Increment
-	
-	//Auto Generate No Pemesanan
-		public static function noPenjualan()
-		{
-			$ambil_penjualans = \App\Models\Transaksi_penjualan::select('no_penjualans')
-															->whereRaw('MONTH(created_at) = "'.date('m').'"')
-															->whereRaw('YEAR(created_at) = "'.date('Y').'"')
-															->orderByRaw('CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(no_penjualans,"-",2),"-",-1) AS SIGNED) desc')
-															->first();
-			if(!empty($ambil_penjualans))
-			{
-				$no_penjualans 				= $ambil_penjualans->no_penjualans;
-				$explode_no 				= explode('-', $no_penjualans);
-				if(!empty($explode_no[1]))
-				{
-					$no_penjualans_new 			= (int)$explode_no[1] + 1;
-					$format_no_penjualans_new 	= sprintf('%04d', $no_penjualans_new);
-					$format_penjualans_new 		= 'PJ-'.$format_no_penjualans_new.'-'.date('m').'-'.date('Y');
-				}
-				else
-					$format_penjualans_new 	= 'PJ-0001-'.date('m').'-'.date('Y');
-			}
-			else
-				$format_penjualans_new 	= 'PJ-0001-'.date('m').'-'.date('Y');
-
-			return $format_penjualans_new;
-		}
-	//Auto Generate No Pemesanan
 
 	//Tombol
 		public static function simpan()

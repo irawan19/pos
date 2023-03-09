@@ -2,7 +2,7 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-sm-6 col-center">
+		<div class="col-sm-6 col-center mt-4">
 			<div class="card">
 				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/kategori_item/prosesedit/'.$edit_kategori_items->id_kategori_items) }}" method="POST">
 					{{ csrf_field() }}

@@ -161,7 +161,14 @@ Route::middleware([
 
             //Pembelian
             Route::group(['prefix' =>  'pembelian'], function() {
-
+                Route::get('/', [DashboardPembelian::class, 'index']);
+                Route::get('/cari', [DashboardPembelian::class, 'cari']);
+                Route::get('/tambah', [DashboardPembelian::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardPembelian::class, 'prosestambah']);
+                Route::get('/baca/{id}', [DashboardPembelian::class, 'baca']);
+                Route::get('/edit/{id}', [DashboardPembelian::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardPembelian::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardPembelian::class, 'hapus']);
             });
 
         //Laporan

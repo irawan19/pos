@@ -2,7 +2,7 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-sm-12 mt-4">
 			<div class="card">
 				<div class="card-header">
 					<div class="row">
@@ -50,7 +50,7 @@
 										            	<div class="dropdown-menu" aria-labelledby="dropdownMenu2" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
 										            		{{General::edit($link_pembayaran,'dashboard/pembayaran/edit/'.$pembayarans->id_pembayarans)}}
 										            		<div class="dropdown-divider"></div>
-										            		{{General::hapus($link_pembayaran,'dashboard/pembayaran/hapus/'.$pembayarans->id_pembayarans, $pembayarans->id_pembayarans.' - '.$pembayarans->nama_pembayarans)}}
+										            		{{General::hapus($link_pembayaran,'dashboard/pembayaran/hapus/'.$pembayarans->id_pembayarans, $pembayarans->nama_pembayarans)}}
 										            	</div>
 										            </div>
 											    </td>

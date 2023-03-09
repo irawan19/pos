@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('pembayarans_id')->unsigned()->index()->nullable();
             $table->foreign('pembayarans_id')->references('id_pembayarans')->on('master_pembayarans')->onUpdate('set null')->onDelete('set null');
             $table->string('no_pembelians');
+            $table->string('referensi_no_nota_pembelians');
             $table->datetime('tanggal_pembelians');
             $table->longtext('keterangan_pembelians');
             $table->double('sub_total_pembelians');

@@ -2,7 +2,7 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-sm-12 mt-4">
 			<div class="card">
 				<div class="card-header">
 					<div class="row">
@@ -101,7 +101,7 @@
 										            		<div class="dropdown-divider"></div>
 										            		{{General::edit($link_item,'dashboard/item/edit/'.$items->id_items)}}
 										            		<div class="dropdown-divider"></div>
-										            		{{General::hapus($link_item,'dashboard/item/hapus/'.$items->id_items, $items->id_items.' - '.$items->nama_items)}}
+										            		{{General::hapus($link_item,'dashboard/item/hapus/'.$items->id_items, $items->nama_items)}}
 										            	</div>
 										            </div>
 											    </td>
