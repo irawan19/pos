@@ -33,7 +33,8 @@
 						</div>
 						<div class="form-group">
 							<label class="form-col-form-label" for="suppliers_id">Supplier</label>
-							<select class="form-control select2" id="suppliers_id" name="suppliers_id">
+							<select class="form-control select2creation" id="suppliers_id" name="suppliers_id">
+								<option value="">-</option>
 								@foreach($tambah_suppliers as $suppliers)
 									<option value="{{$suppliers->id_suppliers}}" {{ Request::old('suppliers_id') == $suppliers->id_suppliers ? $select='selected' : $select='' }}>{{$suppliers->nama_suppliers}}</option>
 								@endforeach
@@ -54,12 +55,12 @@
 						</div>
 						<div class="form-group">
 							<label class="form-col-form-label" for="diskon_pembelians">Diskon </label>
-							<input class="form-control {{ General::validForm($errors->first('diskon_pembelians')) }}" id="diskon_pembelians" type="text" name="diskon_pembelians" value="{{Request::old('diskon_pembelians')}}">
+							<input class="form-control {{ General::validForm($errors->first('diskon_pembelians')) }} right-align" id="diskon_pembelians" type="number" name="diskon_pembelians" value="{{Request::old('diskon_pembelians') == '' ? 0 : Request::old('diskon_pembelians') }}">
 							{{General::pesanErrorForm($errors->first('diskon_pembelians'))}}
 						</div>
 						<div class="form-group">
 							<label class="form-col-form-label" for="pajak_pembelians">Pajak</label>
-							<input class="form-control {{ General::validForm($errors->first('pajak_pembelians')) }}" id="pajak_pembelians" type="text" name="pajak_pembelians" value="{{Request::old('pajak_pembelians')}}">
+							<input class="form-control {{ General::validForm($errors->first('pajak_pembelians')) }} right-align" id="pajak_pembelians" type="number" name="pajak_pembelians" value="{{Request::old('pajak_pembelians') == '' ? 0 : Request::old('pajak_pembelians') }}">
 							{{General::pesanErrorForm($errors->first('pajak_pembelians'))}}
 						</div>
 					</div>
@@ -75,18 +76,10 @@
 						<strong>Detail Pembelian</strong>
 					</div>
 					<div class="card-body">
-						@if (Session::get('setelah_simpan.alert') == 'sukses')
-					    	{{ General::pesanSuksesForm(Session::get('setelah_simpan.text')) }}
-					    @endif
-						<div class="form-group">
-							<label class="form-col-form-label" for="nama_pembelians">Nama <b style="color:red">*</b></label>
-							<input class="form-control {{ General::validForm($errors->first('nama_pembelians')) }}" id="nama_pembelians" type="text" name="nama_pembelians" value="{{Request::old('nama_pembelians')}}">
-							{{General::pesanErrorForm($errors->first('nama_pembelians'))}}
-						</div>
+						<div class="listitem"></div>
 					</div>
 			        <div class="card-footer right-align">
 						{{General::simpan()}}
-						{{General::simpankembali()}}
 			          	@if(request()->session()->get('halaman') != '')
 		            		@php($ambil_kembali = request()->session()->get('halaman'))
 	                    @else
@@ -98,5 +91,15 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		idtoko = $('#tokos_id :selected').val();
+		$('.listitem').load('{{URL("/dashboard/pembelian/listitem")}}/'+idtoko);
+
+		$('.tokos_id').on('change', async function() {
+			idtoko = $('#tokos_id :selected').val();
+			$('.listitem').load('{{URL("/dashboard/pembelian/listitem")}}/'+idtoko);
+        });
+	</script>
 
 @endsection

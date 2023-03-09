@@ -153,6 +153,11 @@
                 $('.select2').select2({
                     width: '100%',
                 });
+
+			//Creation
+				$(".select2creation").select2({
+					tags: true
+				});
         });
     </script>
 </head>

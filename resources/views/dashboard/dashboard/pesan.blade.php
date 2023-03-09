@@ -121,7 +121,7 @@
 							'X-CSRF-Token': $('meta[name="_token"]').attr('content'),
 						};
 			$.ajax({
-						url: '{{URL("/dashboard/pesan/baca/")}}/'+idpesan,
+						url: '{{URL("/dashboard/pesan/baca")}}/'+idpesan,
 						type: "GET",
 						dataType: 'JSON',
 						headers: headerRequest,

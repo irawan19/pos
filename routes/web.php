@@ -169,6 +169,7 @@ Route::middleware([
                 Route::get('/edit/{id}', [DashboardPembelian::class, 'edit']);
                 Route::post('/prosesedit/{id}', [DashboardPembelian::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardPembelian::class, 'hapus']);
+                Route::get('/listitem/{id}', [DashboardPembelian::class, 'listitem']);
             });
 
         //Laporan
