@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('users_id')->index()->nullable();
             $table->foreign('users_id')->references('id')->on('users')->onUpdate('set null')->onDelete('set null');
             $table->string('no_keuangans');
+            $table->string('jenis_transaksi_keuangans');
             $table->string('nama_keuangans');
             $table->double('jumlah_keuangans');
             $table->timestamps();

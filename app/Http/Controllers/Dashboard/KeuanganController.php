@@ -124,7 +124,9 @@ class KeuanganController extends AdminCoreController
     {
         $link_keuangan = 'keuangan';
         if(General::hakAkses($link_keuangan,'tambah') == 'true')
+        {
             return view('dashboard.keuangan.tambah');
+        }
         else
             return redirect('dashboard/keuangan');
     }
@@ -135,21 +137,27 @@ class KeuanganController extends AdminCoreController
         if(General::hakAkses($link_keuangan,'tambah') == 'true')
         {
             $aturan = [
+                'tokos_id'                                    => 'required',
                 'nama_keuangans'                              => 'required',
                 'jumlah_keuangans'                            => 'required',
+                'jenis_transaksi_keuangans'                   => 'required',
                 'created_at'                                  => 'required',
             ];
 
             $error_pesan = [
+                'tokos_id.required'                           => 'Form Toko Harus Dipilih.',
                 'nama_keuangans.required'                     => 'Form Nama Harus Diisi.',
                 'jumlah_keuangans.required'                   => 'Form Jumlah Harus Diisi.',
+                'jenis_transaksi_keuangans.required'          => 'Form Jenis Transaksi Harus Dipilih.',
                 'created_at.required'                         => 'Form Tanggal Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
             $keuangans_data = [
+                'tokos_id'                                      => $request->tokos_id,
                 'no_keuangans'                                  => General::noKeuangan(),
                 'nama_keuangans'                                => $request->nama_keuangans,
+                'jenis_transaksi_keuangans'                     => $request->jenis_transaksi_keuangans,
                 'jumlah_keuangans'                              => General::ubahHargaKeDB($request->jumlah_keuangans),
                 'created_at'                                    => General::ubahTanggalKeDB($request->created_at),
             ];
@@ -206,17 +214,29 @@ class KeuanganController extends AdminCoreController
             if(!empty($cek_keuangans))
             {
                 $aturan = [
-                    'nama_keuangans'                          => 'required',
+                    'tokos_id'                                    => 'required',
+                    'nama_keuangans'                              => 'required',
+                    'jumlah_keuangans'                            => 'required',
+                    'jenis_transaksi_keuangans'                   => 'required',
+                    'created_at'                                  => 'required',
                 ];
-        
+    
                 $error_pesan = [
-                    'nama_keuangans.required'                 => 'Form Nama Harus Diisi.',
+                    'tokos_id.required'                           => 'Form Toko Harus Dipilih.',
+                    'nama_keuangans.required'                     => 'Form Nama Harus Diisi.',
+                    'jumlah_keuangans.required'                   => 'Form Jumlah Harus Diisi.',
+                    'jenis_transaksi_keuangans.required'          => 'Form Jenis Transaksi Harus Dipilih.',
+                    'created_at.required'                         => 'Form Tanggal Harus Diisi.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
         
                 $keuangans_data = [
-                    'nama_keuangans'                          => $request->nama_keuangans,
-                    'updated_at'                            => date('Y-m-d H:i:s'),
+                    'tokos_id'                                  => $request->tokos_id,
+                    'jenis_transaksi_keuangans'                 => $request->jenis_transaksi_keuangans,
+                    'nama_keuangans'                            => $request->nama_keuangans,
+                    'jumlah_keuangans'                          => General::ubahHargaKeDB($request->jumlah_keuangans),
+                    'created+_at'                               => General::ubahTanggalKeDB($request->created_at),
+                    'updated_at'                                => date('Y-m-d H:i:s'),
                 ];
                 \App\Models\Transaksi_keuangan::where('id_keuangans',$id_keuangans)
                                                 ->update($keuangans_data);
@@ -244,7 +264,7 @@ class KeuanganController extends AdminCoreController
             if(!empty($cek_keuangans))
             {
                 \App\Models\Transaksi_keuangan::where('id_keuangans',$id_keuangans)
-                                        ->delete();
+                                                ->delete();
                 return response()->json(["sukses" => "sukses"], 200);
             }
             else
