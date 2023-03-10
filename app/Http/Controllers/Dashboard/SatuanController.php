@@ -72,7 +72,7 @@ class SatuanController extends AdminCoreController
                 'nama_satuans'                              => $request->nama_satuans,
                 'created_at'                                => date('Y-m-d H:i:s'),
             ];
-            $id_satuans = \App\Models\Master_satuan::insertGetId($satuans_data);
+            \App\Models\Master_satuan::insert($satuans_data);
 
             $simpan           = $request->simpan;
             $simpan_kembali   = $request->simpan_kembali;

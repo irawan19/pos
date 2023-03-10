@@ -72,7 +72,7 @@ class SupplierController extends AdminCoreController
                 'nama_suppliers'                              => $request->nama_suppliers,
                 'created_at'                                => date('Y-m-d H:i:s'),
             ];
-            $id_suppliers = \App\Models\Master_supplier::insertGetId($suppliers_data);
+            \App\Models\Master_supplier::insert($suppliers_data);
 
             $simpan           = $request->simpan;
             $simpan_kembali   = $request->simpan_kembali;

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('suppliers_id')->references('id_suppliers')->on('master_suppliers')->onUpdate('set null')->onDelete('set null');
             $table->integer('pembayarans_id')->unsigned()->index()->nullable();
             $table->foreign('pembayarans_id')->references('id_pembayarans')->on('master_pembayarans')->onUpdate('set null')->onDelete('set null');
-            $table->integer('users_id')->unsigned()->index()->nullable();
+            $table->unsignedBigInteger('users_id')->index()->nullable();
             $table->foreign('users_id')->references('id')->on('users')->onUpdate('set null')->onDelete('set null');
             $table->string('no_pembelians');
             $table->string('referensi_no_nota_pembelians');

@@ -213,7 +213,7 @@ class PembelianController extends AdminCoreController
                 'nama_pembelians'                              => $request->nama_pembelians,
                 'created_at'                                => date('Y-m-d H:i:s'),
             ];
-            $id_pembelians = \App\Models\Transaksi_pembelian::insertGetId($pembelians_data);
+            \App\Models\Transaksi_pembelian::insert($pembelians_data);
 
             $simpan           = $request->simpan;
             $simpan_kembali   = $request->simpan_kembali;

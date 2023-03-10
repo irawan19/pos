@@ -194,7 +194,7 @@ class ItemController extends AdminCoreController
                 'deskripsi_items'                       => $deskripsi_items,
                 'created_at'                            => date('Y-m-d H:i:s'),
             ];
-            $id_items = \App\Models\Master_item::insertGetId($items_data);
+            \App\Models\Master_item::insert($items_data);
 
             $simpan           = $request->simpan;
             $simpan_kembali   = $request->simpan_kembali;

@@ -72,7 +72,7 @@ class KategoriItemController extends AdminCoreController
                 'nama_kategori_items'                              => $request->nama_kategori_items,
                 'created_at'                                => date('Y-m-d H:i:s'),
             ];
-            $id_kategori_items = \App\Models\Master_kategori_item::insertGetId($kategori_items_data);
+            \App\Models\Master_kategori_item::insert($kategori_items_data);
 
             $simpan           = $request->simpan;
             $simpan_kembali   = $request->simpan_kembali;

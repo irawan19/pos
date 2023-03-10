@@ -83,7 +83,7 @@ class TokoController extends AdminCoreController
                 'alamat_tokos'                          => $request->alamat_tokos,
                 'created_at'                            => date('Y-m-d H:i:s'),
             ];
-            $id_tokos = \App\Models\Master_toko::insertGetId($tokos_data);
+            \App\Models\Master_toko::insert($tokos_data);
 
             $simpan           = $request->simpan;
             $simpan_kembali   = $request->simpan_kembali;

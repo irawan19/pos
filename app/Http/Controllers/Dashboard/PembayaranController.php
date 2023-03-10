@@ -84,7 +84,7 @@ class PembayaranController extends AdminCoreController
                 'no_rekening_pembayarans'                       => $no_rekening_pembayarans,
                 'created_at'                                    => date('Y-m-d H:i:s'),
             ];
-            $id_pembayarans = \App\Models\Master_pembayaran::insertGetId($pembayarans_data);
+            \App\Models\Master_pembayaran::insert($pembayarans_data);
 
             $simpan           = $request->simpan;
             $simpan_kembali   = $request->simpan_kembali;

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('customers_id')->references('id_customers')->on('master_customers')->onUpdate('set null')->onDelete('set null');
             $table->integer('pembayarans_id')->unsigned()->index()->nullable();
             $table->foreign('pembayarans_id')->references('id_pembayarans')->on('master_pembayarans')->onUpdate('set null')->onDelete('set null');
-            $table->integer('users_id')->unsigned()->index()->nullable();
+            $table->unsignedBigInteger('users_id')->index()->nullable();
             $table->foreign('users_id')->references('id')->on('users')->onUpdate('set null')->onDelete('set null');
             $table->string('no_penjualans');
             $table->datetime('tanggal_penjualans');
