@@ -9,7 +9,7 @@
 		<td style="display:none"></td>
 	</tr>
 	<tr>
-		<td colspan="7" style="font-weight: bold; text-align: center">{{General::ubahDBKeTanggal($tanggal_mulai).' sampai '.General::ubahDBKeTanggal($tanggal_selesai)}}</td>
+		<td colspan="7" style="font-weight: bold; text-align: center">{{General::ubahDBKeTanggalwaktu($tanggal)}}</td>
 		<td style="display:none"></td>
 		<td style="display:none"></td>
 		<td style="display:none"></td>

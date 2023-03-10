@@ -45,7 +45,7 @@ class BerandaController extends Controller
             'alert'  => 'sukses',
             'text'   => 'Pesan anda berhasil dikirim. Silahkan tunggu, kami akan membalas secepatnya.',
         ];
-        return redirect('/#kontakkami')->with('setelah_simpan', $setelah_simpan);
+        return redirect('#kontakkami')->with('setelah_simpan', $setelah_simpan);
     }
 
 }

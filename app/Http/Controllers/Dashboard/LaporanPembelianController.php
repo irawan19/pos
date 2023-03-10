@@ -214,10 +214,10 @@ class LaporanPembelianController extends AdminCoreController
                 return view('dashboard.laporan_pembelian.baca',$data);
             }
             else
-                return redirect('/dashboard/laporan_pembelian');
+                return redirect('dashboard/laporan_pembelian');
         }
         else
-            return redirect('/dashboard/laporan_pembelian');
+            return redirect('dashboard/laporan_pembelian');
     }
 
     public function cetakexcel()
@@ -229,13 +229,13 @@ class LaporanPembelianController extends AdminCoreController
             if(!empty(session('tanggal_mulai')))
                 $tanggal_mulai = session('tanggal_mulai');
 
-            $tanggal_selesai = date('Y-m-d');
+            $tanggal_selesai = date('Y-m-j', strtotime("last day of this month"));
             if(!empty(session('tanggal_selesai')))
                 $tanggal_selesai = session('tanggal_selesai');
             
             return Excel::download(new LaporanPembelian, 'laporanpembelian_'.General::ubahDBKeTanggal($tanggal_mulai).'_'.General::ubahDBKeTanggal($tanggal_selesai).'.xlsx');
         }
         else
-            return redirect('/dashboard/laporan_pembelian');
+            return redirect('dashboard/laporan_pembelian');
     }
 }

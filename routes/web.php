@@ -25,6 +25,7 @@ use App\Http\Controllers\Dashboard\PembayaranController as DashboardPembayaran;
 use App\Http\Controllers\Dashboard\CustomerController as DashboardCustomer;
 use App\Http\Controllers\Dashboard\SupplierController as DashboardSupplier;
 use App\Http\Controllers\Dashboard\PembelianController as DashboardPembelian;
+use App\Http\Controllers\Dashboard\KeuanganController as DashboardKeuangan;
 
 //Laporan
 use App\Http\Controllers\Dashboard\LaporanPenjualanController as DashboardLaporanPenjualan;
@@ -170,6 +171,17 @@ Route::middleware([
                 Route::post('/prosesedit/{id}', [DashboardPembelian::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardPembelian::class, 'hapus']);
                 Route::get('/listitem/{id}', [DashboardPembelian::class, 'listitem']);
+            });
+
+            //Keuangan
+            Route::group(['prefix' =>  'keuangan'], function() {
+                Route::get('/', [DashboardKeuangan::class, 'index']);
+                Route::get('/cari', [DashboardKeuangan::class, 'cari']);
+                Route::get('/tambah', [DashboardKeuangan::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardKeuangan::class, 'prosestambah']);
+                Route::get('/edit/{id}', [DashboardKeuangan::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardKeuangan::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardKeuangan::class, 'hapus']);
             });
 
         //Laporan

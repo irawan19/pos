@@ -28,7 +28,7 @@ class DashboardController extends AdminCoreController
 
         $request->session()->flush();
         $request->session()->regenerate();
-        return redirect('/login');
+        return redirect('login');
     }
 
     public function index()

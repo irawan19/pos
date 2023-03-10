@@ -19,15 +19,13 @@ class LaporanStok implements FromView, ShouldQueue
         if(!empty(session('hasil_kata')))
             $hasil_kata = session('hasil_kata');
 
-        $tanggal_mulai      = date('Y-m-d');
-        $tanggal_selesai    = date('Y-m-d');
+        $tanggal      = date('Y-m-d H:i:s');
 
         $hasil_toko = '';
         if(!empty(session('hasil_toko')))
         	$hasil_toko = session('hasil_toko');
 
-        $data['tanggal_mulai'] 	    = $tanggal_mulai;
-        $data['tanggal_selesai']	= $tanggal_selesai;
+        $data['tanggal'] 	    = $tanggal;
 
         if($hasil_toko != '')
         {

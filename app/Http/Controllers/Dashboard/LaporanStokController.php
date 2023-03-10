@@ -6,6 +6,7 @@ use General;
 use Auth;
 use Storage;
 use App\Exports\LaporanStok;
+use App\Exports\LaporanStokBaca;
 use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanStokController extends AdminCoreController
@@ -127,12 +128,11 @@ class LaporanStokController extends AdminCoreController
         $link_laporan_stok = 'laporan_stok';
         if(General::hakAkses($link_laporan_stok,'cetak') == 'true')
         {
-            $tanggal_mulai = date('Y-m-d');
-            $tanggal_selesai = date('Y-m-d');
-            return Excel::download(new LaporanStok, 'laporanstok_'.General::ubahDBKeTanggal($tanggal_mulai).'_'.General::ubahDBKeTanggal($tanggal_selesai).'.xlsx');
+            $tanggal      = date('Y-m-d H:i:s');
+            return Excel::download(new LaporanStok, 'laporanstok_'.General::ubahDBKeTanggalwaktu($tanggal).'.xlsx');
         }
         else
-            return redirect('/dashboard/laporan_stok');
+            return redirect('dashboard/laporan_stok');
     }
 
     public function baca($id_items=0, Request $request)
@@ -140,10 +140,50 @@ class LaporanStokController extends AdminCoreController
         $link_laporan_stok = 'laporan_stok';
         if(General::hakAkses($link_laporan_stok,'baca') == 'true')
         {
-            
+            $data['link_laporan_stok']                  = $link_laporan_stok;
+            $data['lihat_itmes']                        = \App\Models\Master_item::where('id_items',$id_items)
+                                                                                    ->first();
+            $tanggal_mulai                              = date('Y-m-01');
+            $tanggal_selesai                            = date('Y-m-j', strtotime("last day of this month"));
+            $hasil_tanggal                              = General::ubahDBKeTanggal($tanggal_mulai).' sampai '.General::ubahDBKeTanggal($tanggal_selesai);
+            $data['tanggal_mulai']                      = $tanggal_mulai;
+            $data['tanggal_selesai']                    = $tanggal_selesai;
+            $data['hasil_tanggal']                      = $hasil_tanggal;
+            $data['baca_items']                         = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                    ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
+                                                                                    ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
+                                                                                    ->first();
+            $transaksi_pembelian                        = \App\Models\Transaksi_pembelian_detail::selectRaw('no_pembelians AS no_transaksi,
+                                                                                                            transaksi_pembelians.created_at AS tanggal_transaksi,
+                                                                                                            "msauk" AS jenis_transaksi,
+                                                                                                            users.name AS nama_admin,
+                                                                                                            jumlah_pembelian_details AS total_transaksi')
+                                                                                                ->join('transaksi_pembelians','transaksi_pembelians.id_pembelians','=','transaksi_pembelians.id_pembelians')
+                                                                                                ->join('users','users_id','=','users.id')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                                ->where('items_id',$id_items)
+                                                                                                ->orderBy('transaksi_pembelians.created_at','asc');
+            $transaksi_penjualan                        = \App\Models\Transaksi_penjualan_detail::selectRaw('no_penjualans AS no_transaksi,
+                                                                                                            transaksi_penjualans.created_at AS tanggal_transaksi,
+                                                                                                            "keluar" as jenis_transaksi,
+                                                                                                            users.name AS nama_admin,
+                                                                                                            jumlah_penjualan_details AS total_transaksi')
+                                                                                                ->join('transaksi_penjualans','penjualans_id','=','transaksi_penjualans.id_penjualans')
+                                                                                                ->join('users','users_id','=','users.id')
+                                                                                                ->whereRaw('DATE(transaksi_penjualans.created_at) >= "'.$tanggal_mulai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_penjualans.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                                ->where('items_id',$id_items)
+                                                                                                ->union($transaksi_pembelian)
+                                                                                                ->orderBy('tanggal_transaksi')
+                                                                                                ->get();
+            $data['baca_laporan_stoks']               = $transaksi_penjualan;
+            session()->forget('tanggal_mulai');
+            session()->forget('tanggal_selesai');
+            return view('dashboard.laporan_stok.baca',$data);
         }
         else
-            return redirect('/dashboard/laporan_stok');
+            return redirect('dashboard/laporan_stok');
     }
 
     public function caribaca($id_items=0, Request $request)
@@ -151,10 +191,55 @@ class LaporanStokController extends AdminCoreController
         $link_laporan_stok = 'laporan_stok';
         if(General::hakAkses($link_laporan_stok,'baca') == 'true')
         {
-            
+            $data['link_laporan_stok']                  = $link_laporan_stok;
+            $data['lihat_itmes']                        = \App\Models\Master_item::where('id_items',$id_items)
+                                                                                    ->first();
+                                                                                    
+            $ambil_tanggal                              = $request->cari_tanggal;
+            $pecah_tanggal                              = explode(' sampai ',$ambil_tanggal);
+            $tanggal_mulai                              = General::ubahTanggalKeDB($pecah_tanggal[0]);
+            $tanggal_selesai                            = General::ubahTanggalKeDB($pecah_tanggal[1]);
+            $hasil_tanggal                              = General::ubahDBKeTanggal($tanggal_mulai).' sampai '.General::ubahDBKeTanggal($tanggal_selesai);
+            $data['tanggal_mulai']                      = $tanggal_mulai;
+            $data['tanggal_selesai']                    = $tanggal_selesai;
+            $data['hasil_tanggal']                      = $hasil_tanggal;
+
+            $data['baca_items']                         = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                    ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
+                                                                                    ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
+                                                                                    ->first();
+            $transaksi_pembelian                        = \App\Models\Transaksi_pembelian_detail::selectRaw('no_pembelians AS no_transaksi,
+                                                                                                            transaksi_pembelians.created_at AS tanggal_transaksi,
+                                                                                                            "msauk" AS jenis_transaksi,
+                                                                                                            users.name AS nama_admin,
+                                                                                                            jumlah_pembelian_details AS total_transaksi')
+                                                                                                ->join('transaksi_pembelians','transaksi_pembelians.id_pembelians','=','transaksi_pembelians.id_pembelians')
+                                                                                                ->join('users','users_id','=','users.id')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                                ->where('items_id',$id_items)
+                                                                                                ->orderBy('transaksi_pembelians.created_at','asc');
+            $transaksi_penjualan                        = \App\Models\Transaksi_penjualan_detail::selectRaw('no_penjualans AS no_transaksi,
+                                                                                                            transaksi_penjualans.created_at AS tanggal_transaksi,
+                                                                                                            "keluar" as jenis_transaksi,
+                                                                                                            users.name AS nama_admin,
+                                                                                                            jumlah_penjualan_details AS total_transaksi')
+                                                                                                ->join('transaksi_penjualans','penjualans_id','=','transaksi_penjualans.id_penjualans')
+                                                                                                ->join('users','users_id','=','users.id')
+                                                                                                ->whereRaw('DATE(transaksi_penjualans.created_at) >= "'.$tanggal_mulai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_penjualans.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                                ->where('items_id',$id_items)
+                                                                                                ->union($transaksi_pembelian)
+                                                                                                ->orderBy('tanggal_transaksi')
+                                                                                                ->get();
+            $data['baca_laporan_stoks']               = $transaksi_penjualan;
+            session(['tanggal_mulai'	    => $tanggal_mulai]);
+            session(['tanggal_selesai'	    => $tanggal_selesai]);
+            session(['hasil_tanggal'	    => $hasil_tanggal]);
+            return view('dashboard.laporan_stok.baca',$data);
         }
         else
-            return redirect('/dashboard/laporan_stok');
+            return redirect('dashboard/laporan_stok');
     }
 
     public function cetakexcelbaca($id_items, Request $request)
@@ -162,9 +247,17 @@ class LaporanStokController extends AdminCoreController
         $link_laporan_stok = 'laporan_stok';
         if(General::hakAkses($link_laporan_stok,'baca') == 'true')
         {
-            
+            $ambil_items        = \App\Models\Master_item::where('id_items',$id_items)->first();
+            $tanggal_mulai = date('Y-m-d');
+            if(!empty(session('tanggal_mulai')))
+                $tanggal_mulai = session('tanggal_mulai');
+
+            $tanggal_selesai = date('Y-m-j', strtotime("last day of this month"));
+            if(!empty(session('tanggal_selesai')))
+                $tanggal_selesai = session('tanggal_selesai');
+            return Excel::download(new LaporanStokBaca($id_items), 'laporanstok_'.$ambil_items->nama_items.'_'.General::ubahDBKeTanggal($tanggal_mulai).'_'.General::ubahDBKeTanggal($tanggal_selesai).'.xlsx');
         }
         else
-            return redirect('/dashboard/laporan_stok');
+            return redirect('dashboard/laporan_stok');
     }
 }
