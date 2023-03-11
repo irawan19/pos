@@ -16,9 +16,28 @@ class CustomerController extends AdminCoreController
             $data['link_customer']              = $link_customer;
             $data['hasil_kata']                 = '';
             $url_sekarang                       = $request->fullUrl();
-        	$data['lihat_customers']            = \App\Models\Master_customer::paginate(10);
+            if(Auth::user()->tokos_id == null)
+            {
+                $data['lihat_tokos']                = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                        ->get();
+                $hasil_toko                         = '';
+        	    $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                ->paginate(10);
+            }
+            else
+            {
+                $data['lihat_tokos']                = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                                ->orderBy('nama_tokos')
+                                                                                ->get();
+                $hasil_toko                         = Auth::user()->tokos_id;
+        	    $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->paginate(10);
+            }
+            $data['hasil_toko']             = $hasil_toko;
             session()->forget('halaman');
             session()->forget('hasil_kata');
+            session()->forget('hasil_toko');
             session(['halaman'              => $url_sekarang]);
         	return view('dashboard.customer.lihat', $data);
         }
@@ -35,9 +54,38 @@ class CustomerController extends AdminCoreController
             $url_sekarang                       = $request->fullUrl();
             $hasil_kata                         = $request->cari_kata;
             $data['hasil_kata']                 = $hasil_kata;
-            $data['lihat_customers']            = \App\Models\Master_customer::where('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
-                                                                    ->paginate(10);
+            $hasil_toko                         = $request->cari_toko;
+            $data['hasil_toko']                 = $hasil_toko;
+            if(Auth::user()->tokos_id == null)
+            {
+                $data['lihat_tokos']            = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                        ->get();
+                if($hasil_toko != '')
+                {
+                    $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                    ->where('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->paginate(10);
+                }
+                else
+                {
+                    $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                    ->where('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                    ->paginate(10);
+                }
+            }
+            else
+            {
+                $data['lihat_tokos']        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                        ->orderBy('nama_tokos')
+                                                                        ->get();
+                $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                ->where('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                ->where('tokos_id',$hasil_toko)
+                                                                                ->paginate(10);
+            }
             session(['halaman'              => $url_sekarang]);
+            session(['hasil_toko'		    => $hasil_toko]);
             session(['hasil_kata'		    => $hasil_kata]);
             return view('dashboard.customer.lihat', $data);
         }
@@ -49,7 +97,20 @@ class CustomerController extends AdminCoreController
     {
         $link_customer = 'customer';
         if(General::hakAkses($link_customer,'tambah') == 'true')
-            return view('dashboard.customer.tambah');
+        {
+            if(Auth::user()->tokos_id == null)
+            {
+                $data['tambah_tokos'] = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                ->get();
+            }
+            else
+            {
+                $data['tambah_tokos'] = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                ->orderBy('nama_tokos')
+                                                                ->get();
+            }
+            return view('dashboard.customer.tambah',$data);
+        }
         else
             return redirect('dashboard/customer');
     }
@@ -60,17 +121,20 @@ class CustomerController extends AdminCoreController
         if(General::hakAkses($link_customer,'tambah') == 'true')
         {
             $aturan = [
+                'tokos_id'                                    => 'required',
                 'nama_customers'                              => 'required',
             ];
 
             $error_pesan = [
+                'tokos_id.required'                           => 'Form Toko Harus Diisi.',
                 'nama_customers.required'                     => 'Form Nama Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
             $customers_data = [
+                'tokos_id'                                    => $request->tokos_id,
                 'nama_customers'                              => $request->nama_customers,
-                'created_at'                                => date('Y-m-d H:i:s'),
+                'created_at'                                  => date('Y-m-d H:i:s'),
             ];
             $id_customers = \App\Models\Master_customer::insertGetId($customers_data);
 
@@ -106,6 +170,17 @@ class CustomerController extends AdminCoreController
             $cek_customers = \App\Models\Master_customer::where('id_customers',$id_customers)->first();
             if(!empty($cek_customers))
             {
+                if(Auth::user()->tokos_id == null)
+                {
+                    $data['edit_tokos'] = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                    ->get();
+                }
+                else
+                {
+                    $data['edit_tokos'] = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                    ->orderBy('nama_tokos')
+                                                                    ->get();
+                }
                 $data['edit_customers']           = $cek_customers;
                 return view('dashboard.customer.edit',$data);
             }
@@ -125,17 +200,20 @@ class CustomerController extends AdminCoreController
             if(!empty($cek_customers))
             {
                 $aturan = [
-                    'nama_customers'                          => 'required',
+                    'tokos_id'                                    => 'required',
+                    'nama_customers'                              => 'required',
                 ];
-        
+    
                 $error_pesan = [
-                    'nama_customers.required'                 => 'Form Nama Harus Diisi.',
+                    'tokos_id.required'                           => 'Form Toko Harus Diisi.',
+                    'nama_customers.required'                     => 'Form Nama Harus Diisi.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
         
                 $customers_data = [
-                    'nama_customers'                          => $request->nama_customers,
-                    'updated_at'                            => date('Y-m-d H:i:s'),
+                    'tokos_id'                                    => $request->tokos_id,
+                    'nama_customers'                              => $request->nama_customers,
+                    'updated_at'                                  => date('Y-m-d H:i:s'),
                 ];
                 \App\Models\Master_customer::where('id_customers',$id_customers)
                                                 ->update($customers_data);

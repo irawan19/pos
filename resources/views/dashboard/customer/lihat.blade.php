@@ -33,6 +33,7 @@
 						    			<th width="5px"></th>
 						    		@endif
 				    				<th class="nowrap" width="50px">No</th>
+				    				<th class="nowrap">Toko</th>
 				    				<th class="nowrap">Nama</th>
 				    			</tr>
 				    		</thead>
@@ -54,6 +55,7 @@
 											    </td>
 								    		@endif
 								    		<td class="nowrap">{{$no}}</td>
+								    		<td class="nowrap">{{$customers->nama_tokos}}</td>
 								    		<td class="nowrap">{{$customers->nama_customers}}</td>
 								    	</tr>
 										@php($no++)
@@ -61,11 +63,13 @@
 								@else
 									<tr>
 										@if(General::totalHakAkses($link_customer) != 0)
-											<td colspan="3" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="4" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="2" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="3" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@endif
 									</tr>

@@ -16,9 +16,28 @@ class SupplierController extends AdminCoreController
             $data['link_supplier']              = $link_supplier;
             $data['hasil_kata']                 = '';
             $url_sekarang                       = $request->fullUrl();
-        	$data['lihat_suppliers']            = \App\Models\Master_supplier::paginate(10);
+            if(Auth::user()->tokos_id == null)
+            {
+                $data['lihat_tokos']                = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                        ->get();
+                $hasil_toko                         = '';
+        	    $data['lihat_suppliers']            = \App\Models\Master_supplier::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                ->paginate(10);
+            }
+            else
+            {
+                $data['lihat_tokos']                = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                                ->orderBy('nama_tokos')
+                                                                                ->get();
+                $hasil_toko                         = Auth::user()->tokos_id;
+        	    $data['lihat_suppliers']            = \App\Models\Master_supplier::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->paginate(10);
+            }
+            $data['hasil_toko']             = $hasil_toko;
             session()->forget('halaman');
             session()->forget('hasil_kata');
+            session()->forget('hasil_toko');
             session(['halaman'              => $url_sekarang]);
         	return view('dashboard.supplier.lihat', $data);
         }
@@ -35,9 +54,38 @@ class SupplierController extends AdminCoreController
             $url_sekarang                       = $request->fullUrl();
             $hasil_kata                         = $request->cari_kata;
             $data['hasil_kata']                 = $hasil_kata;
-            $data['lihat_suppliers']            = \App\Models\Master_supplier::where('nama_suppliers', 'LIKE', '%'.$hasil_kata.'%')
-                                                                    ->paginate(10);
+            $hasil_toko                         = $request->cari_toko;
+            $data['hasil_toko']                 = $hasil_toko;
+            if(Auth::user()->tokos_id == null)
+            {
+                $data['lihat_tokos']            = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                        ->get();
+                if($hasil_toko != '')
+                {
+                    $data['lihat_suppliers']            = \App\Models\Master_supplier::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                    ->where('nama_suppliers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->paginate(10);
+                }
+                else
+                {
+                    $data['lihat_suppliers']            = \App\Models\Master_supplier::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                    ->where('nama_suppliers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                    ->paginate(10);
+                }
+            }
+            else
+            {
+                $data['lihat_tokos']        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                        ->orderBy('nama_tokos')
+                                                                        ->get();
+                $data['lihat_suppliers']            = \App\Models\Master_supplier::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                ->where('nama_suppliers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                ->where('tokos_id',$hasil_toko)
+                                                                                ->paginate(10);
+            }
             session(['halaman'              => $url_sekarang]);
+            session(['hasil_toko'		    => $hasil_toko]);
             session(['hasil_kata'		    => $hasil_kata]);
             return view('dashboard.supplier.lihat', $data);
         }
@@ -49,7 +97,20 @@ class SupplierController extends AdminCoreController
     {
         $link_supplier = 'supplier';
         if(General::hakAkses($link_supplier,'tambah') == 'true')
-            return view('dashboard.supplier.tambah');
+        {
+            if(Auth::user()->tokos_id == null)
+            {
+                $data['tambah_tokos'] = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                ->get();
+            }
+            else
+            {
+                $data['tambah_tokos'] = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                ->orderBy('nama_tokos')
+                                                                ->get();
+            }
+            return view('dashboard.supplier.tambah',$data);
+        }
         else
             return redirect('dashboard/supplier');
     }
@@ -60,19 +121,22 @@ class SupplierController extends AdminCoreController
         if(General::hakAkses($link_supplier,'tambah') == 'true')
         {
             $aturan = [
+                'tokos_id'                                    => 'required',
                 'nama_suppliers'                              => 'required',
             ];
 
             $error_pesan = [
+                'tokos_id.required'                           => 'Form Toko Harus Diisi.',
                 'nama_suppliers.required'                     => 'Form Nama Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
             $suppliers_data = [
+                'tokos_id'                                    => $request->tokos_id,
                 'nama_suppliers'                              => $request->nama_suppliers,
-                'created_at'                                => date('Y-m-d H:i:s'),
+                'created_at'                                  => date('Y-m-d H:i:s'),
             ];
-            \App\Models\Master_supplier::insert($suppliers_data);
+            $id_suppliers = \App\Models\Master_supplier::insertGetId($suppliers_data);
 
             $simpan           = $request->simpan;
             $simpan_kembali   = $request->simpan_kembali;
@@ -106,6 +170,17 @@ class SupplierController extends AdminCoreController
             $cek_suppliers = \App\Models\Master_supplier::where('id_suppliers',$id_suppliers)->first();
             if(!empty($cek_suppliers))
             {
+                if(Auth::user()->tokos_id == null)
+                {
+                    $data['edit_tokos'] = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                    ->get();
+                }
+                else
+                {
+                    $data['edit_tokos'] = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                    ->orderBy('nama_tokos')
+                                                                    ->get();
+                }
                 $data['edit_suppliers']           = $cek_suppliers;
                 return view('dashboard.supplier.edit',$data);
             }
@@ -125,17 +200,20 @@ class SupplierController extends AdminCoreController
             if(!empty($cek_suppliers))
             {
                 $aturan = [
-                    'nama_suppliers'                          => 'required',
+                    'tokos_id'                                    => 'required',
+                    'nama_suppliers'                              => 'required',
                 ];
-        
+    
                 $error_pesan = [
-                    'nama_suppliers.required'                 => 'Form Nama Harus Diisi.',
+                    'tokos_id.required'                           => 'Form Toko Harus Diisi.',
+                    'nama_suppliers.required'                     => 'Form Nama Harus Diisi.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
         
                 $suppliers_data = [
-                    'nama_suppliers'                          => $request->nama_suppliers,
-                    'updated_at'                            => date('Y-m-d H:i:s'),
+                    'tokos_id'                                    => $request->tokos_id,
+                    'nama_suppliers'                              => $request->nama_suppliers,
+                    'updated_at'                                  => date('Y-m-d H:i:s'),
                 ];
                 \App\Models\Master_supplier::where('id_suppliers',$id_suppliers)
                                                 ->update($suppliers_data);

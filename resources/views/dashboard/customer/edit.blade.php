@@ -11,6 +11,24 @@
 					</div>
 					<div class="card-body">
 						<div class="form-group">
+							<label class="form-col-form-label" for="tokos_id">Toko <b style="color:red">*</b></label>
+							<select class="form-control select2" id="tokos_id" name="tokos_id">
+								@foreach($edit_tokos as $tokos)
+				            		@php($selected = '')
+					                @if(Request::old('tokos_id') == '')
+					                	@if($tokos->id_tokos == $edit_customers->tokos_id)
+					                		@php($selected = 'selected')
+					                	@endif
+					                @else
+					                	@if($tokos->id_tokos == Request::old('tokos_id'))
+					                		@php($selected = 'selected')
+					                	@endif
+					                @endif
+									<option value="{{$tokos->id_tokos}}" {{ $selected }}>{{$tokos->nama_tokos}}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="form-group">
 							<label class="form-col-form-label" for="nama_customers">Nama <b style="color:red">*</b></label>
 							<input class="form-control {{ General::validForm($errors->first('nama_customers')) }}" id="nama_customers" type="text" name="nama_customers" value="{{Request::old('nama_customers') == '' ? $edit_customers->nama_customers : Request::old('nama_customers')}}">
 							{{General::pesanErrorForm($errors->first('nama_customers'))}}
