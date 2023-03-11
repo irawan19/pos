@@ -29,6 +29,7 @@ class LaporanPenjualanController extends AdminCoreController
             {
                 $data['lihat_tokos']                        = \App\Models\Master_toko::orderBy('nama_tokos')
                                                                                         ->get();
+                $hasil_toko                                 = '';
                 $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*,
                                                                                                         transaksi_penjualans.created_at AS tanggal_penjualans')
                                                                                             ->join('master_tokos','tokos_id','=','master_tokos.id_tokos')
@@ -45,6 +46,7 @@ class LaporanPenjualanController extends AdminCoreController
                 $data['lihat_tokos']                        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
                                                                                     ->orderBy('nama_tokos')
                                                                                     ->get();
+                $hasil_toko                                 = Auth::user()->tokos_id;
                 $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*,
                                                                                                         transaksi_penjualans.created_at AS tanggal_penjualans')
                                                                                             ->join('master_tokos','tokos_id','=','master_tokos.id_tokos')

@@ -58,7 +58,7 @@
 		@foreach($baca_laporan_stoks as $laporan_stoks)
 	    	<tr>
 	    		<td>{{General::ubahDBKeTanggalwaktu($laporan_stoks->tanggal_transaksi)}}</td>
-	    		<td>{{$laporan_stoks->no_transaksis}}</td>
+	    		<td>{{$laporan_stoks->no_transaksi}}</td>
 	    		<td>{{$laporan_stoks->nama_admin}}</td>
 	    		<td align="right">
 					@if($laporan_stoks->jenis_transaksi == 'masuk')

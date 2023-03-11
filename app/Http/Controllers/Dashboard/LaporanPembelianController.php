@@ -24,11 +24,11 @@ class LaporanPembelianController extends AdminCoreController
             $data['tanggal_mulai']                      = $tanggal_mulai;
             $data['tanggal_selesai']                    = $tanggal_selesai;
             $data['hasil_tanggal']                      = $hasil_tanggal;
-            $hasil_toko                                 = $request->cari_toko;
             if(Auth::user()->tokos_id == null)
             {
                 $data['lihat_tokos']                        = \App\Models\Master_toko::orderBy('nama_tokos')
                                                                                         ->get();
+                $hasil_toko                                 = '';
                 $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*,
                                                                                                         transaksi_pembelians.created_at AS tanggal_pembelians')
                                                                                             ->join('master_tokos','tokos_id','=','master_tokos.id_tokos')
@@ -45,6 +45,7 @@ class LaporanPembelianController extends AdminCoreController
                 $data['lihat_tokos']                        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
                                                                                     ->orderBy('nama_tokos')
                                                                                     ->get();
+                $hasil_toko                                 = Auth::user()->tokos_id;
                 $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*,
                                                                                                         transaksi_pembelians.created_at AS tanggal_pembelians')
                                                                                             ->join('master_tokos','tokos_id','=','master_tokos.id_tokos')

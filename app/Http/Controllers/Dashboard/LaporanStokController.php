@@ -18,7 +18,7 @@ class LaporanStokController extends AdminCoreController
         if(General::hakAkses($link_laporan_stok,'lihat') == 'true')
         {
             $url_sekarang                   = $request->fullUrl();
-            $data['link_laporan_stok']              = $link_laporan_stok;
+            $data['link_laporan_stok']      = $link_laporan_stok;
             $data['hasil_kata']             = '';
 
             if(Auth::user()->tokos_id == null)
@@ -155,7 +155,7 @@ class LaporanStokController extends AdminCoreController
                                                                                     ->first();
             $transaksi_pembelian                        = \App\Models\Transaksi_pembelian_detail::selectRaw('no_pembelians AS no_transaksi,
                                                                                                             transaksi_pembelians.created_at AS tanggal_transaksi,
-                                                                                                            "msauk" AS jenis_transaksi,
+                                                                                                            "masuk" AS jenis_transaksi,
                                                                                                             users.name AS nama_admin,
                                                                                                             jumlah_pembelian_details AS total_transaksi')
                                                                                                 ->join('transaksi_pembelians','transaksi_pembelians.id_pembelians','=','transaksi_pembelians.id_pembelians')
@@ -210,7 +210,7 @@ class LaporanStokController extends AdminCoreController
                                                                                     ->first();
             $transaksi_pembelian                        = \App\Models\Transaksi_pembelian_detail::selectRaw('no_pembelians AS no_transaksi,
                                                                                                             transaksi_pembelians.created_at AS tanggal_transaksi,
-                                                                                                            "msauk" AS jenis_transaksi,
+                                                                                                            "masuk" AS jenis_transaksi,
                                                                                                             users.name AS nama_admin,
                                                                                                             jumlah_pembelian_details AS total_transaksi')
                                                                                                 ->join('transaksi_pembelians','transaksi_pembelians.id_pembelians','=','transaksi_pembelians.id_pembelians')

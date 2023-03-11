@@ -16,10 +16,12 @@ class AdminController extends AdminCoreController
             $data['link_admin']         = $link_admin;
             $data['hasil_kata']         = '';
             $url_sekarang               = $request->fullUrl();
+
         	$data['lihat_admins']    	= \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
                                                             ->leftJoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                             ->orderBy('nama_level_sistems','asc')
                                                             ->paginate(10);
+                                                            
             session()->forget('halaman');
             session()->forget('hasil_kata');
             session(['halaman'          => $url_sekarang]);

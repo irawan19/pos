@@ -14,6 +14,17 @@
 					    	{{ General::pesanSuksesForm(Session::get('setelah_simpan.text')) }}
 					    @endif
 						<div class="form-group">
+							<label class="form-col-form-label" for="tokos_id">Toko <b style="color:red">*</b></label>
+							<select class="form-control select2" id="tokos_id" name="tokos_id">
+								@if(Auth::user()->tokos_id == null)
+									<option value="">Semua Toko</option>
+								@endif
+								@foreach($tambah_tokos as $tokos)
+									<option value="{{$tokos->id_tokos}}" {{ Request::old('tokos_id') == $tokos->id_tokos ? $select='selected' : $select='' }}>{{$tokos->nama_tokos}}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="form-group">
 							<label class="form-col-form-label" for="nama_pembayarans">Nama <b style="color:red">*</b></label>
 							<input class="form-control {{ General::validForm($errors->first('nama_pembayarans')) }}" id="nama_pembayarans" type="text" name="nama_pembayarans" value="{{Request::old('nama_pembayarans')}}">
 							{{General::pesanErrorForm($errors->first('nama_pembayarans'))}}

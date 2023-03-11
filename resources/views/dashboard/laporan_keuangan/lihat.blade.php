@@ -7,17 +7,17 @@
 				<div class="card-header">
 					<div class="row">
 						<div class="col-sm-6">
-							<strong>Baca Laporan Stok</strong>
+							<strong>Baca Laporan Keuangan</strong>
 						</div>
 						<div class="col-sm-6">
 							<div class="right-align">
-								{{ General::cetakexcel($link_laporan_stok,'dashboard/laporan_stok/baca/'.$baca_items->id_items.'/cetakexcel') }}
+								{{ General::cetakexcel($link_laporan_keuangan,'dashboard/laporan_keuangan/cetakexcel') }}
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="card-body">
-					<form method="GET" action="{{ URL('dashboard/laporan_stok/baca/'.$baca_items->id_items.'/cari') }}">
+					<form method="GET" action="{{ URL('dashboard/laporan_keuangan/cari') }}">
 						@csrf
                         <div class="row">
 							<div class="col-sm-12">
@@ -29,29 +29,6 @@
                         </div>
 	                </form>
 	            	<br/>
-                    <table class="table table-responsive-sm table-striped table-sm">
-						<tr>
-							<th width="150px">Toko</th>
-							<th width="1px">:</th>
-							<td>{{$baca_items->nama_tokos}}</td>
-						</tr>
-						<tr>
-							<th>Kategori</th>
-							<th>:</th>
-							<td>{{$baca_items->nama_kategori_items}}</td>
-						</tr>
-						<tr>
-							<th>Item</th>
-							<th>:</th>
-							<td>{{$baca_items->nama_items}}</td>
-						</tr>
-						<tr>
-							<th>Satuan</th>
-							<th>:</th>
-							<td>{{$baca_items->nama_satuans}}</td>
-						</tr>
-					</table>
-                    
                     <table id="tablesort" class="table table-responsive-sm table-bordered table-striped table-sm">
 				    	<thead>
 				    		<tr>
@@ -60,44 +37,43 @@
 				    			<th class="nowrap">Admin</th>
 				    			<th class="nowrap">Masuk</th>
 				    			<th class="nowrap">Keluar</th>
-				    			<th class="nowrap">Sub Total</th>
+				    			<th class="nowrap">Total</th>
 				    		</tr>
 				    	</thead>
 				    	<tbody>
-							@php($sub_total 		= 0)
-							@php($total_stok_masuk 	= 0)
-							@php($total_stok_keluar = 0)
-							@php($total 			= 0)
-				    		@if(!$baca_laporan_stoks->isEmpty())
-		            			@foreach($baca_laporan_stoks as $laporan_stoks)
+							@php($total_keuangan_masuk 	= 0)
+							@php($total_keuangan_keluar = 0)
+							@php($sub_total 			   = 0)
+				    		@if(!$lihat_laporan_keuangans->isEmpty())
+		            			@foreach($lihat_laporan_keuangans as $laporan_keuangans)
 							    	<tr>
-							    		<td class="nowrap">{{General::ubahDBKeTanggalwaktu($laporan_stoks->tanggal_transaksi)}}</td>
-							    		<td class="nowrap">{{$laporan_stoks->no_transaksi}}</td>
-							    		<td class="nowrap">{{$laporan_stoks->nama_admin}}</td>
+							    		<td class="nowrap">{{General::ubahDBKeTanggalwaktu($laporan_keuangans->tanggal_transaksi)}}</td>
+							    		<td class="nowrap">{{$laporan_keuangans->no_transaksi}}</td>
+							    		<td class="nowrap">{{$laporan_keuangans->nama_admin}}</td>
+										@if($laporan_keuangans->jenis_transaksi == 'masuk')
+											@php($keuangan_masuk = $laporan_keuangans->total_transaksi)
+										@else
+											@php($keuangan_masuk = 0)
+										@endif
 							    		<td class="nowrap right-align">
-											@if($laporan_stoks->jenis_transaksi == 'masuk')
-												@php($jumlah_stok_masuk = $laporan_stoks->total_transaksi)
-											@else
-												@php($jumlah_stok_masuk = 0)
-											@endif
-											{{$jumlah_stok_masuk}}
+											{{General::ubahDBkeHarga($keuangan_masuk)}}
 										</td>
+										@if($laporan_keuangans->jenis_transaksi == 'keluar')
+											@php($keuangan_keluar = $laporan_keuangans->total_transaksi)
+										@else
+											@php($keuangan_keluar = 0)
+										@endif
 							    		<td class="nowrap right-align">
-											@if($laporan_stoks->jenis_transaksi == 'keluar')
-												@php($jumlah_stok_keluar = $laporan_stoks->total_transaksi)
-											@else
-												@php($jumlah_stok_keluar = 0)
-											@endif
-											{{$jumlah_stok_keluar}}
+											{{General::ubahDBkeHarga($keuangan_keluar)}}
 										</td>
 										<td class="nowrap right-align">
-											@php($sub_total += $jumlah_stok_masuk - $jumlah_stok_keluar)
-											{{$sub_total}}
+											@php($sub_total += $keuangan_masuk - $keuangan_keluar)
+											{{General::ubahDBkeHarga($sub_total)}}
 										</td>
 							    	</tr>
-							    	@php($total_stok_masuk 	+= $jumlah_stok_masuk)
-							    	@php($total_stok_keluar += $jumlah_stok_keluar)
-							    	@php($total 			= $sub_total)
+							    	@php($total_keuangan_masuk 	+= $keuangan_masuk)
+							    	@php($total_keuangan_keluar += $keuangan_keluar)
+							    	@php($total 			    = $sub_total)
 							    @endforeach
 							@else
 								<tr>
@@ -113,9 +89,9 @@
                         <tfoot>
                             <tr>
                                 <th colspan="3" class="right-align">Total</th>
-                                <th class="right-align">{{$total_stok_masuk}}</th>
-                                <th class="right-align">{{$total_stok_keluar}}</th>
-                                <th class="right-align">{{$total}}</th>
+                                <th class="right-align">{{General::ubahDBkeHarga($total_keuangan_masuk)}}</th>
+                                <th class="right-align">{{General::ubahDBkeHarga($total_keuangan_keluar)}}</th>
+                                <th class="right-align">{{General::ubahDBkeHarga($total)}}</th>
                             </tr>
                         </tfoot>
 				    </table>

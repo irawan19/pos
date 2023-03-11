@@ -233,12 +233,23 @@ class MenuController extends AdminCoreController
             $cek_menus = \App\Models\Master_menu::where('id_menus',$id_menus)->count();
             if($cek_menus != 0)
             {
-            	DB::select(DB::raw("DELETE t1.*, t2.*, t3.*
-        				FROM master_menus t1
-        				LEFT JOIN master_fiturs t2 ON t2.menus_id=t1.id_menus
-        				LEFT JOIN master_akses t3 ON t3.fiturs_id=t2.id_fiturs
-        				WHERE id_menus='$id_menus'
-        				OR menus_id='$id_menus'"));
+                $ambil_sub_menus = \App\Models\Master_menu::where('menus_id',$id_menus)->get();
+                if(!$ambil_sub_menus->isEmpty())
+                {
+                    foreach($ambil_sub_menus as $sub_menus)
+                    {
+                        \App\Models\Master_akses::join('master_fiturs','fiturs_id','=','master_fiturs.id_fiturs')
+                                                ->where('menus_id',$sub_menus->id_menus)
+                                                ->delete();
+                        \App\Models\Master_fitur::where('menus_id',$sub_menus->id_menus)->delete();
+                        \App\Models\Master_menu::where('id_menus',$sub_menus->id_menus)->delete();
+                    }
+                }
+                \App\Models\Master_akses::join('master_fiturs','fiturs_id','=','master_fiturs.id_fiturs')
+                                        ->where('menus_id',$id_menus)
+                                        ->delete();
+                \App\Models\Master_fitur::where('menus_id',$id_menus)->delete();
+                \App\Models\Master_menu::where('id_menus',$id_menus)->delete();
                 return response()->json(["sukses" => "sukses"], 200);
             }
             else
@@ -526,16 +537,11 @@ class MenuController extends AdminCoreController
             $cek_menus = \App\Models\Master_menu::where('id_menus',$id_menus)->count();
             if($cek_menus != 0)
             {
-            	$get_menus 		= \App\Models\Master_menu::where('id_menus',$id_menus)->first();
-                $get_id_menus 	= $get_menus->menus_id;
-
-            	DB::select(DB::raw("DELETE t1.*, t2.*, t3.*
-        				FROM master_menus t1
-        				LEFT JOIN master_fiturs t2 ON t2.menus_id=t1.id_menus
-        				LEFT JOIN master_akses t3 ON t3.fiturs_id=t2.id_fiturs
-        				WHERE id_menus='$id_menus'
-        				OR menus_id='$id_menus'"));
-                	
+                \App\Models\Master_akses::join('master_fiturs','fiturs_id','=','master_fiturs.id_fiturs')
+                                        ->where('menus_id',$id_menus)
+                                        ->delete();
+                \App\Models\Master_fitur::where('menus_id',$id_menus)->delete();
+                \App\Models\Master_menu::where('id_menus',$id_menus)->delete();
                return response()->json(["sukses" => "sukses"], 200);
             }
             else

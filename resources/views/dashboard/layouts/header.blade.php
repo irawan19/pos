@@ -58,7 +58,12 @@
 					@endif
 					@php($total_notifikasi 							= $notifikasi_pesan_baru + $total_notifikasi_stok)
 					<a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="fa fa-bell cursor-pointer"></i> <span>{{$total_notifikasi}}</span>
+						@if($total_notifikasi == 0)
+							<i class="fa fa-bell cursor-pointer"></i>
+						@else
+							<i class="fa fa-bell cursor-pointer" style="color:#ff3d5e"></i>
+						@endif
+						<span>{{$total_notifikasi}}</span>
 					</a>
 					<ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
 						@if($total_notifikasi != 0)
