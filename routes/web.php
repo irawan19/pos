@@ -14,6 +14,9 @@ use App\Http\Controllers\Dashboard\KonfigurasiProfilController as DashboardKonfi
 //Konfigurasi Akun
 use App\Http\Controllers\Dashboard\KonfigurasiAkunController as DashboardKonfigurasiAkun;
 
+//Kasir
+use App\Http\Controllers\Dashboard\KasirController as DashboardKasir;
+
 //Master Data
 use App\Http\Controllers\Dashboard\TokoController as DashboardToko;
 use App\Http\Controllers\Dashboard\SatuanController as DashboardSatuan;
@@ -76,6 +79,11 @@ Route::middleware([
         Route::group(['prefix' => 'konfigurasi_akun'], function() {
             Route::get('/', [DashboardKonfigurasiAkun::class, 'index']);
             Route::post('/prosesedit', [DashboardKonfigurasiAkun::class, 'prosesedit']);
+        });
+
+        //Kasir
+        Route::group(['prefix' => 'kasir'], function(){
+            Route::get('/', [DashboardKasir::class, 'index']);
         });
 
         //Master Data

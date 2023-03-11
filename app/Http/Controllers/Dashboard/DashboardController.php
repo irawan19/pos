@@ -34,11 +34,15 @@ class DashboardController extends AdminCoreController
     public function index()
     {
         $tanggal_hari_ini                       = date('Y-m-d');
-        $data['lihat_konfigurasi_aplikasis']    = \App\Models\Master_konfigurasi_aplikasi::first();
-        $data['total_pesanans']                 = 0;
-        $data['total_items']                    = 0;
-        $data['total_pelanggans']               = 0;
-        $data['total_admins']                   = 0;
+        $data['lihat_konfigurasi_aplikasi']    = \App\Models\Master_konfigurasi_aplikasi::where('id_konfigurasi_aplikasis',1)->first();
+        $data['total_customer']                 = \App\Models\Master_customer::count();
+        $data['total_supplier']                 = \App\Models\Master_supplier::count();
+        $data['total_penjualan']                = \App\Models\Transaksi_penjualan::selectRaw('COUNT(total_penjualans) AS total_penjualan')
+                                                                                ->whereRaw('DATE(created_at) = "'.$tanggal_hari_ini.'"')
+                                                                                ->first();
+        $data['total_pembelian']                = \App\Models\Transaksi_pembelian::selectRaw('COUNT(total_pembelians) AS total_pembelian')
+                                                                                ->whereRaw('DATE(created_at) = "'.$tanggal_hari_ini.'"')
+                                                                                ->first();
         return view('dashboard.dashboard.lihat',$data);
     }
 

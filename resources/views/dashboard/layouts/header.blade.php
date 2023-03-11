@@ -24,6 +24,8 @@
 					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Konfigurasi Profil</li>
 				@elseif(Request::segment(2) == 'pesan')
 					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Pesan</li>
+				@elseif(Request::segment(2) == 'kasir')
+					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Kasir</li>
 				@else
 					<li class="breadcrumb-item text-sm text-dark active" aria-current="page">{{$ambil_sub_menus->nama_menus}}</li>
 				@endif
@@ -36,6 +38,8 @@
 				<h6 class="font-weight-bolder mb-0">Konfigurasi Profil</h6>
 			@elseif(Request::segment(2) == 'pesan')
 				<h6 class="font-weight-bolder mb-0">Pesan</h6>
+			@elseif(Request::segment(2) == 'kasir')
+				<h6 class="font-weight-bolder mb-0">Kasir</h6>
 			@else
 				<h6 class="font-weight-bolder mb-0">{{$ambil_sub_menus->nama_menus}}</h6>
 			@endif
