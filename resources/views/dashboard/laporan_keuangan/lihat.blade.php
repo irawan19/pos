@@ -59,6 +59,9 @@
                     <table id="tablesort" class="table table-responsive-sm table-bordered table-striped table-sm">
 				    	<thead>
 				    		<tr>
+				    			@if(General::totalHakAkses($link_laporan_keuangan) != 0)
+						    		<th width="5px"></th>
+						    	@endif
 				    			<th class="nowrap">Tanggal</th>
 				    			<th class="nowrap">Toko</th>
 				    			<th class="nowrap">No</th>
@@ -76,6 +79,11 @@
 								@php($sub_total 			   = 0)
 		            			@foreach($lihat_laporan_keuangans as $laporan_keuangans)
 							    	<tr>
+								    	@if(General::totalHakAkses($link_laporan_keuangan) != 0)
+								    		<td class="nowrap">
+                                                {{General::bacaButton($link_laporan_keuangan,'dashboard/laporan_keuangan/baca/'.$laporan_keuangans->id_transaksi.'/'.$laporan_keuangans->jenis_transaksi)}}
+										    </td>
+								    	@endif
 							    		<td class="nowrap">{{General::ubahDBKeTanggalwaktu($laporan_keuangans->tanggal_transaksi)}}</td>
 							    		<td class="nowrap">{{$laporan_keuangans->nama_tokos}}</td>
 							    		<td class="nowrap">{{$laporan_keuangans->no_transaksi}}</td>
@@ -107,7 +115,8 @@
 							    @endforeach
 							@else
 								<tr>
-									<td colspan="7" class="center-align">Tidak ada data ditampilkan</td>
+									<td colspan="8" class="center-align">Tidak ada data ditampilkan</td>
+									<td style="display:none"></td>
 									<td style="display:none"></td>
 									<td style="display:none"></td>
 									<td style="display:none"></td>
@@ -119,21 +128,13 @@
 				    	</tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="4" class="right-align">Total</th>
+                                <th colspan="5" class="right-align">Total</th>
                                 <th class="right-align">{{General::ubahDBkeHarga($total_keuangan_masuk)}}</th>
                                 <th class="right-align">{{General::ubahDBkeHarga($total_keuangan_keluar)}}</th>
                                 <th class="right-align">{{General::ubahDBkeHarga($total)}}</th>
                             </tr>
                         </tfoot>
 				    </table>
-				</div>
-				<div class="card-footer right-align">
-				  	@if(request()->session()->get('halaman') != '')
-		           		@php($ambil_kembali = request()->session()->get('halaman'))
-	               	@else
-	               		@php($ambil_kembali = URL('dashboard/admin'))
-	               	@endif
-					{{General::kembali($ambil_kembali)}}
 				</div>
 			</div>
 		</div>

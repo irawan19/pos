@@ -5,7 +5,7 @@
 		<div class="col-sm-12 mb-4">
 			<div class="card">
 				<div class="card-header">
-					<strong>Baca Laporan Pembelian</strong>
+					<strong>Baca Laporan Keuangan</strong>
 				</div>
 				<div class="card-body">
                     <table class="table table-responsive-sm table-striped table-sm">
@@ -110,7 +110,7 @@
 				  	@if(request()->session()->get('halaman') != '')
 		           		@php($ambil_kembali = request()->session()->get('halaman'))
 	               	@else
-	               		@php($ambil_kembali = URL('dashboard/laporan_pembelian'))
+	               		@php($ambil_kembali = URL('dashboard/laporan_keuangan'))
 	               	@endif
 					{{General::kembali($ambil_kembali)}}
 				</div>

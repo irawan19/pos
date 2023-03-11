@@ -110,7 +110,7 @@
 				  	@if(request()->session()->get('halaman') != '')
 		           		@php($ambil_kembali = request()->session()->get('halaman'))
 	               	@else
-	               		@php($ambil_kembali = URL('dashboard/admin'))
+	               		@php($ambil_kembali = URL('dashboard/laporan_penjualan'))
 	               	@endif
 					{{General::kembali($ambil_kembali)}}
 				</div>
