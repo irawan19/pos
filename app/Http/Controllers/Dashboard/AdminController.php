@@ -16,12 +16,21 @@ class AdminController extends AdminCoreController
             $data['link_admin']         = $link_admin;
             $data['hasil_kata']         = '';
             $url_sekarang               = $request->fullUrl();
-
-        	$data['lihat_admins']    	= \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
-                                                            ->leftJoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
-                                                            ->orderBy('nama_level_sistems','asc')
-                                                            ->paginate(10);
-                                                            
+            if(Auth::user()->tokos_id == null)
+            {
+                $data['lihat_admins']    	= \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
+                                                                ->leftJoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                ->orderBy('nama_level_sistems','asc')
+                                                                ->paginate(10);
+            }
+            else
+            {
+                $data['lihat_admins']    	= \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
+                                                                ->leftJoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                ->where('tokos_id',Auth::user()->tokos_id)
+                                                                ->orderBy('nama_level_sistems','asc')
+                                                                ->paginate(10);
+            }
             session()->forget('halaman');
             session()->forget('hasil_kata');
             session(['halaman'          => $url_sekarang]);
@@ -40,16 +49,38 @@ class AdminController extends AdminCoreController
             $url_sekarang               = $request->fullUrl();
             $hasil_kata                 = $request->cari_kata;
             $data['hasil_kata']         = $hasil_kata;
-            $data['lihat_admins']       = \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
-                                                            ->leftJoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
-                                                            ->where('nama_level_sistems', 'LIKE', '%'.$hasil_kata.'%')
-                											->orWhere('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
-                                                            ->where('nama_level_sistems', 'LIKE', '%'.$hasil_kata.'%')
-                											->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
-                											->orWhere('username', 'LIKE', '%'.$hasil_kata.'%')
-                                                            ->orWhere('email', 'LIKE', '%'.$hasil_kata.'%')
-                                                            ->orderBy('nama_level_sistems')
-                                                            ->paginate(10);
+            if(Auth::user()->tokos_id == null)
+            {
+                $data['lihat_admins']       = \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
+                                                                ->leftJoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                ->where('nama_level_sistems', 'LIKE', '%'.$hasil_kata.'%')
+                                                                ->orWhere('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
+                                                                ->orWhere('nama_level_sistems', 'LIKE', '%'.$hasil_kata.'%')
+                                                                ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
+                                                                ->orWhere('username', 'LIKE', '%'.$hasil_kata.'%')
+                                                                ->orWhere('email', 'LIKE', '%'.$hasil_kata.'%')
+                                                                ->orderBy('nama_level_sistems')
+                                                                ->paginate(10);
+            }
+            else
+            {
+                $data['lihat_admins']       = \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
+                                                                ->leftJoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                ->where('nama_level_sistems', 'LIKE', '%'.$hasil_kata.'%')
+                                                                ->where('tokos_id',Auth::user()->tokos_id)
+                                                                ->orWhere('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
+                                                                ->where('tokos_id',Auth::user()->tokos_id)
+                                                                ->orWhere('nama_level_sistems', 'LIKE', '%'.$hasil_kata.'%')
+                                                                ->where('tokos_id',Auth::user()->tokos_id)
+                                                                ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
+                                                                ->where('tokos_id',Auth::user()->tokos_id)
+                                                                ->orWhere('username', 'LIKE', '%'.$hasil_kata.'%')
+                                                                ->where('tokos_id',Auth::user()->tokos_id)
+                                                                ->orWhere('email', 'LIKE', '%'.$hasil_kata.'%')
+                                                                ->where('tokos_id',Auth::user()->tokos_id)
+                                                                ->orderBy('nama_level_sistems')
+                                                                ->paginate(10);
+            }
             session(['halaman'          => $url_sekarang]);
             session(['hasil_kata'		=> $hasil_kata]);
             return view('dashboard.admin.lihat', $data);
@@ -63,8 +94,17 @@ class AdminController extends AdminCoreController
         $link_admin = 'admin';
         if(General::hakAkses($link_admin,'tambah') == 'true')
         {
-            $data['tambah_tokos']               = \App\Models\Master_toko::orderBy('nama_tokos')
-                                                                            ->get();
+            if(Auth::user()->tokos_id == null)
+            {
+                $data['tambah_tokos']               = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                                ->get();
+            }
+            else
+            {
+                $data['tambah_tokos']               = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                                ->orderBy('nama_tokos')
+                                                                                ->get();
+            }
             $data['tambah_level_sistems']       = \App\Models\Master_level_sistem::orderBy('nama_level_sistems')
                                                       					->get();
             return view('dashboard.admin.tambah',$data);
@@ -215,8 +255,17 @@ class AdminController extends AdminCoreController
             $cek_admins = \App\Models\User::where('id',$id_admins)->count();
             if($cek_admins != 0)
             {
-                $data['edit_tokos']             = \App\Models\Master_toko::orderBy('nama_tokos')
+                if(Auth::user()->tokos_id == null)
+                {
+                    $data['edit_tokos']             = \App\Models\Master_toko::orderBy('nama_tokos')
+                                                                                ->get();
+                }
+                else
+                {
+                    $data['edit_tokos']             = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                            ->orderBy('nama_tokos')
                                                                             ->get();
+                }
                 $data['edit_level_sistems']     = \App\Models\Master_level_sistem::orderBy('nama_level_sistems')
                                                           					->get();
                 $data['edit_admins']			= \App\Models\User::where('id',$id_admins)
