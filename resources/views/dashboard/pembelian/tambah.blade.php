@@ -49,11 +49,6 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label class="form-col-form-label" for="keterangan_pembelians">Keterangan </label>
-							<textarea class="form-control {{ General::validForm($errors->first('keterangan_pembelians')) }}" id="keterangan_pembelians" name="keterangan_pembelians" rows="5">{{Request::old('keterangan_pembelians')}}</textarea>
-							{{General::pesanErrorForm($errors->first('keterangan_pembelians'))}}
-						</div>
-						<div class="form-group">
 							<label class="form-col-form-label" for="diskon_pembelians">Diskon </label>
 							<input class="form-control {{ General::validForm($errors->first('diskon_pembelians')) }} right-align" id="diskon_pembelians" type="number" name="diskon_pembelians" value="{{Request::old('diskon_pembelians') == '' ? 0 : Request::old('diskon_pembelians') }}">
 							{{General::pesanErrorForm($errors->first('diskon_pembelians'))}}
@@ -62,6 +57,11 @@
 							<label class="form-col-form-label" for="pajak_pembelians">Pajak</label>
 							<input class="form-control {{ General::validForm($errors->first('pajak_pembelians')) }} right-align" id="pajak_pembelians" type="number" name="pajak_pembelians" value="{{Request::old('pajak_pembelians') == '' ? 0 : Request::old('pajak_pembelians') }}">
 							{{General::pesanErrorForm($errors->first('pajak_pembelians'))}}
+						</div>
+						<div class="form-group">
+							<label class="form-col-form-label" for="keterangan_pembelians">Keterangan </label>
+							<textarea class="form-control {{ General::validForm($errors->first('keterangan_pembelians')) }}" id="keterangan_pembelians" name="keterangan_pembelians" rows="5">{{Request::old('keterangan_pembelians')}}</textarea>
+							{{General::pesanErrorForm($errors->first('keterangan_pembelians'))}}
 						</div>
 					</div>
 				</form>

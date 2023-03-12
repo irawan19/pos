@@ -26,6 +26,23 @@
 					<span class="nav-link-text ms-1">Dashboard</span>
 				</a>
 			</li>
+			
+			@php($active_kasir 						= '')
+			@php($active_icon_kasir 				= '')
+			@if(Request::segment(2) == 'karis')
+				@php($active_kasir 					= 'active')
+				@php($active_icon_kasir 			= 'class=activeicon')
+			@endif
+			<li class="nav-item">
+				<a class="nav-link {{$active_kasir}}" href="{{URL('dashboard/kasir')}}">
+					<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+						<svg class="c-sidebar-nav-icon">
+							<use xlink:href="{{URL::asset('template/back/icons/coreui/free.svg#cil-money')}}" {{$active_icon_kasir}}></use>
+						</svg>
+					</div>
+					<span class="nav-link-text ms-1">Kasir</span>
+				</a>
+			</li>
 
 			@if(Auth::user()->tokos_id == null)
 				@php($active_pesan 						= '')
@@ -45,23 +62,6 @@
 					</a>
 				</li>
 			@endif
-			
-			@php($active_kasir 						= '')
-			@php($active_icon_kasir 				= '')
-			@if(Request::segment(2) == 'karis')
-				@php($active_kasir 					= 'active')
-				@php($active_icon_kasir 			= 'class=activeicon')
-			@endif
-			<li class="nav-item">
-				<a class="nav-link {{$active_kasir}}" href="{{URL('dashboard/kasir')}}">
-					<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-						<svg class="c-sidebar-nav-icon">
-							<use xlink:href="{{URL::asset('template/back/icons/coreui/free.svg#cil-money')}}" {{$active_icon_kasir}}></use>
-						</svg>
-					</div>
-					<span class="nav-link-text ms-1">Kasir</span>
-				</a>
-			</li>
 			@php($id_user               = Auth::user()->id)
 			@php($get_menus             = \App\Models\Master_menu::where('master_menus.menus_id',null)
 															->orderBy('order_menus')

@@ -12,6 +12,7 @@
 						<div class="col-sm-6">
 							<div class="right-align">
 								{{ General::tambah($link_item,'dashboard/item/tambah') }}
+								{{ General::cetak($link_item,'dashboard/item/cetak') }}
 							</div>
 						</div>
 					</div>

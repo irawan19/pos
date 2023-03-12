@@ -131,6 +131,7 @@ Route::middleware([
                 Route::post('/prosesedit/{id}', [DashboardItem::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardItem::class, 'hapus']);
                 Route::get('/cetakbarcode/{id}', [DashboardItem::class, 'cetakbarcode']);
+                Route::get('/cetak', [DashboardItem::class, 'cetak']);
             });
 
             //Pembayaran
