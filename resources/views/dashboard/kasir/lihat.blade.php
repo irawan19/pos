@@ -14,10 +14,10 @@
 								</div>
 							</div>
 							<div class="card-body pt-0 p-3 text-center">
-								<h6 class="text-center mb-0">{{$items->nama_items}}</h6>
+								<h6 class="text-center text-xs mb-0">{{$items->nama_items}}</h6>
 								<span class="text-xs">Stok {{$items->stok_items}}</span>
 								<hr class="horizontal dark my-3">
-								<h5 class="mb-0">Rp. {{General::ubahDBKeHarga($items->harga_items)}}</h5>
+								<h5 class="mb-0 text-xs">Rp. {{General::ubahDBKeHarga($items->harga_items)}}</h5>
 							</div>
 						</div>
 					</div>

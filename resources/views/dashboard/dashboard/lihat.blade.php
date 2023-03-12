@@ -134,7 +134,7 @@
                 <span class="mask bg-gradient-dark"></span>
                 <div class="card-body position-relative z-index-1 p-3">
                     <i class="fas fa-money text-white p-2" aria-hidden="true"></i>
-                    <h5 class="text-white mt-4 mb-5 pb-2 center-align">Untuk mengakses halaman kasir silahkan klik <b>Ke Halaman Kasir</b>dibawah ujung kanan, atau klik <b>Kasir</b> pada menu sidebar</h5>
+                    <h5 class="text-white mt-4 mb-5 pb-2 center-align">Untuk mengakses halaman kasir silahkan klik <b>Ke Halaman Kasir</b> yang berada dibawah ujung kanan, atau klik <b>Kasir</b> pada menu sidebar</h5>
                     <div class="d-flex">
                         <div class="d-flex">&nbsp;</div>
                         <div class="ms-auto w-20 d-flex align-items-end justify-content-end">

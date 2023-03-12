@@ -42,11 +42,35 @@
 					<h6 class="font-weight-bolder mb-0">{{$ambil_sub_menus->nama_menus}}</h6>
 				@endif
 			@else
-			<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+				<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
 					<li class="breadcrumb-item text-sm opacity-5 text-dark" style="margin-right:20px;">
-						<a  style="color:#000 !important" class="text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="{{URL('dashboard')}}">
+						<a style="color:#000 !important" class="text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="{{URL('dashboard')}}">
                             <i class="fas fa-arrow-left text-sm ms-1" aria-hidden="true" style="color:#202739"></i>
                             &nbsp; Kembali Ke Dashboard
+                        </a>
+					</li>
+					<li class="text-sm opacity-5 text-dark" style="margin-right:20px;">
+						<a style="color:#000 !important" class="text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="{{URL('dashboard/customer')}}">
+                            <i class="fas fa-user text-sm ms-1" aria-hidden="true" style="color:#202739"></i>
+                            &nbsp; Customer
+                        </a>
+					</li>
+					<li class="text-sm opacity-5 text-dark" style="margin-right:20px;">
+						<a style="color:#000 !important" class="text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="{{URL('dashboard/supplier')}}">
+							<i class="fas fa-user text-sm ms-1" aria-hidden="true" style="color:#202739"></i>
+							&nbsp; Supplier
+                        </a>
+					</li>
+					<li class="text-sm opacity-5 text-dark" style="margin-right:20px;">
+						<a style="color:#000 !important" class="text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="{{URL('dashboard/penjualan')}}">
+							<i class="fas fa-money text-sm ms-1" aria-hidden="true" style="color:#202739"></i>
+							&nbsp; Penjualan
+                        </a>
+					</li>
+					<li class="text-sm opacity-5 text-dark" style="margin-right:20px;">
+						<a style="color:#000 !important" class="text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="{{URL('dashboard/pembelian')}}">
+							<i class="fas fa-shopping-cart text-sm ms-1" aria-hidden="true" style="color:#202739"></i>
+							&nbsp; Pembelian
                         </a>
 					</li>
 				</ol>

@@ -49,12 +49,12 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label class="form-col-form-label" for="diskon_pembelians">Diskon </label>
+							<label class="form-col-form-label" for="diskon_pembelians">Diskon %</label>
 							<input class="form-control {{ General::validForm($errors->first('diskon_pembelians')) }} right-align" id="diskon_pembelians" type="number" name="diskon_pembelians" value="{{Request::old('diskon_pembelians') == '' ? 0 : Request::old('diskon_pembelians') }}">
 							{{General::pesanErrorForm($errors->first('diskon_pembelians'))}}
 						</div>
 						<div class="form-group">
-							<label class="form-col-form-label" for="pajak_pembelians">Pajak</label>
+							<label class="form-col-form-label" for="pajak_pembelians">Pajak %</label>
 							<input class="form-control {{ General::validForm($errors->first('pajak_pembelians')) }} right-align" id="pajak_pembelians" type="number" name="pajak_pembelians" value="{{Request::old('pajak_pembelians') == '' ? 0 : Request::old('pajak_pembelians') }}">
 							{{General::pesanErrorForm($errors->first('pajak_pembelians'))}}
 						</div>

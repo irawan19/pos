@@ -298,7 +298,7 @@ class General
 			if (General::hakAkses($link_menus, 'baca') == 'true') {
 				echo '<a href="'. URL($link) .'" class="btn bg-gradient-warning mb-0">
 							<i class="fas fa-check" aria-hidden="true"></i>&nbsp;&nbsp;Baca
-						</button>';
+						</a>';
 			}
 		}
 

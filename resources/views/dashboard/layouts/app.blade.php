@@ -406,6 +406,16 @@
 			        "scrollX": true
 	            });
 
+				$('#tablesearch').DataTable({
+	                "paging": false,
+	                "ordering": true,
+	                "info": false,
+	                "searching": true,
+					"oLanguage": {
+						"sSearch": "Cari :"
+						}
+				});
+
 	        //Sweet Alert
 	            $('.showModalHapus').click(function () {
 	                var that = this;
