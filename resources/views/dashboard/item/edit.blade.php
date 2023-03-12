@@ -98,7 +98,7 @@
 								</div>
 								<div class="form-group">
 									<label class="form-col-form-label" for="stok_items">Stok <b style="color:red">*</b></label>
-									<input class="form-control {{ General::validForm($errors->first('stok_items')) }} right-align" id="stok_items" type="number" name="stok_items" value="{{Request::old('stok_items') == '' ? $edit_items->stok_items : Request::old('stok_items')}}">
+									<input readonly class="form-control {{ General::validForm($errors->first('stok_items')) }} right-align" id="stok_items" type="number" name="stok_items" value="{{Request::old('stok_items') == '' ? $edit_items->stok_items : Request::old('stok_items')}}">
 									{{General::pesanErrorForm($errors->first('stok_items'))}}
 								</div>
 							</div>

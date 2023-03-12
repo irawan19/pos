@@ -237,7 +237,8 @@ class ItemController extends AdminCoreController
                 'nama_items'                            => $request->nama_items,
                 'kode_items'                            => $request->kode_items,
                 'harga_items'                           => General::ubahHargaKeDB($request->harga_items),
-                'stok_items'                           => $request->stok_items,
+                'stok_items'                            => $request->stok_items,
+                'stok_awal_items'                       => $request->stok_items,
                 'deskripsi_items'                       => $deskripsi_items,
                 'created_at'                            => date('Y-m-d H:i:s'),
             ];
@@ -339,7 +340,6 @@ class ItemController extends AdminCoreController
                         'nama_items'                            => 'required',
                         'kode_items'                            => 'required|unique:master_items,kode_items,'.$id_items.',id_items',
                         'harga_items'                           => 'required',
-                        'stok_items'                           => 'required',
                     ];
         
                     $error_pesan = [
@@ -351,7 +351,6 @@ class ItemController extends AdminCoreController
                         'kode_items.required'                   => 'Form Kode Harus Diisi.',
                         'kode_items.unique'                     => 'Kode Sudah Terdaftar.',
                         'harga_items.required'                  => 'Form Harga Harus Diisi.',
-                        'stok_items.required'                  => 'Fkorm Stok Harus Diisi.',
                     ];
                     $this->validate($request, $aturan, $error_pesan);
 
@@ -375,7 +374,6 @@ class ItemController extends AdminCoreController
                         'nama_items'                            => $request->nama_items,
                         'kode_items'                            => $request->kode_items,
                         'harga_items'                           => General::ubahHargaKeDB($request->harga_items),
-                        'stok_items'                           => $request->stok_items,
                         'deskripsi_items'                       => $deskripsi_items,
                         'updated_at'                            => date('Y-m-d H:i:s'),
                     ];
@@ -389,7 +387,6 @@ class ItemController extends AdminCoreController
                         'nama_items'                            => 'required',
                         'kode_items'                            => 'required|unique:master_items,kode_items,'.$id_items.',id_items',
                         'harga_items'                           => 'required',
-                        'stok_items'                           => 'required',
                     ];
         
                     $error_pesan = [
@@ -400,7 +397,6 @@ class ItemController extends AdminCoreController
                         'kode_items.required'                   => 'Form Kode Harus Diisi.',
                         'kode_items.unique'                     => 'Kode Sudah Terdaftar.',
                         'harga_items.required'                  => 'Form Harga Harus Diisi.',
-                        'stok_items.required'                  => 'Fkorm Stok Harus Diisi.',
                     ];
                     $this->validate($request, $aturan, $error_pesan);
         
@@ -415,7 +411,6 @@ class ItemController extends AdminCoreController
                         'nama_items'                            => $request->nama_items,
                         'kode_items'                            => $request->kode_items,
                         'harga_items'                           => General::ubahHargaKeDB($request->harga_items),
-                        'stok_items'                           => $request->stok_items,
                         'deskripsi_items'                       => $deskripsi_items,
                         'updated_at'                            => date('Y-m-d H:i:s'),
                     ];

@@ -328,6 +328,12 @@ class PembelianController extends AdminCoreController
                             'created_at'                    => date('Y-m-d H:i:s'),
                         ];
                         \App\Models\Transaksi_pembelian_detail::insert($pembelians_details_data);
+
+                        $ambil_items = \App\Models\Master_item::where('id_items',$id_items)->first();
+                        $update_items_data = [
+                            'stok_items'    => $ambil_items->stok_items + $jumlah_pembelian_details
+                        ];
+                        \App\Models\Master_item::where('id_items',$id_items)->update($update_items_data);
                     }
                 }
             }
@@ -501,7 +507,18 @@ class PembelianController extends AdminCoreController
                 \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)
                                                 ->update($pembelians_data);
 
-                \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)->delete();
+                $ambil_pemesanan_details = \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)->get();
+                foreach($ambil_pemesanan_details as $pemesanan_details)
+                {
+                    $ambil_items = \App\Models\Master_item::where('id_items',$pemesanan_details->items_id)->first();
+                    $update_items_data = [
+                        'stok_items'    => $ambil_items->stok_items - $pemesanan_details->jumlah_pembelian_details
+                    ];
+                    \App\Models\Master_item::where('id_items',$ambil_items->id_items)->update($update_items_data);
+                    \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)
+                                                            ->where('items_id',$ambil_items->id_items)
+                                                            ->delete();
+                }
 
                 if(!empty($request->id_items))
                 {
@@ -522,6 +539,12 @@ class PembelianController extends AdminCoreController
                                 'created_at'                    => date('Y-m-d H:i:s'),
                             ];
                             \App\Models\Transaksi_pembelian_detail::insert($pembelians_details_data);
+
+                            $ambil_items = \App\Models\Master_item::where('id_items',$id_items)->first();
+                            $update_items_data = [
+                                'stok_items'    => $ambil_items->stok_items + $jumlah_pembelian_details
+                            ];
+                            \App\Models\Master_item::where('id_items',$id_items)->update($update_items_data);
                         }
                     }
                 }

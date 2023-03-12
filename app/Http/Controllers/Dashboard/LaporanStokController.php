@@ -152,6 +152,7 @@ class LaporanStokController extends AdminCoreController
             $data['baca_items']                         = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                                     ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
+                                                                                    ->where('id_items',$id_items)
                                                                                     ->first();
             $transaksi_pembelian                        = \App\Models\Transaksi_pembelian_detail::selectRaw('no_pembelians AS no_transaksi,
                                                                                                             transaksi_pembelians.tanggal_pembelians AS tanggal_transaksi,
@@ -207,6 +208,7 @@ class LaporanStokController extends AdminCoreController
             $data['baca_items']                         = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                                     ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
+                                                                                    ->where('id_items',$id_items)
                                                                                     ->first();
             $transaksi_pembelian                        = \App\Models\Transaksi_pembelian_detail::selectRaw('no_pembelians AS no_transaksi,
                                                                                                             transaksi_pembelians.tanggal_pembelians AS tanggal_transaksi,

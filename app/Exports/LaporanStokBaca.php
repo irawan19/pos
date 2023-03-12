@@ -41,10 +41,11 @@ class LaporanStokBaca implements FromView, ShouldQueue
         $data['baca_items']                         = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                                 ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                                 ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
+                                                                                ->where('id_items',$id_items)
                                                                                 ->first();
         $transaksi_pembelian                        = \App\Models\Transaksi_pembelian_detail::selectRaw('no_pembelians AS no_transaksi,
                                                                                                         transaksi_pembelians.tanggal_pembelians AS tanggal_transaksi,
-                                                                                                        "msauk" AS jenis_transaksi,
+                                                                                                        "masuk" AS jenis_transaksi,
                                                                                                         users.name AS nama_admin,
                                                                                                         jumlah_pembelian_details AS total_transaksi')
                                                                                             ->join('transaksi_pembelians','transaksi_pembelians.id_pembelians','=','transaksi_pembelians.id_pembelians')
