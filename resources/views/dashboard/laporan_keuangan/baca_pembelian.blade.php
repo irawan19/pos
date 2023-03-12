@@ -93,11 +93,11 @@
                             </tr>
                             <tr>
                                 <th colspan="6" class="right-align">Pajak</th>
-                                <th class="right-align">{{General::ubahDBKeHarga($baca_laporan_pembelians->pajak_pembelians)}}</th>
+                                <th class="right-align">{{General::ubahDBKeHarga($sub_total_pembelians * $baca_laporan_pembelians->pajak_pembelians/100)}}</th>
                             </tr>
                             <tr>
                                 <th colspan="6" class="right-align">Diskon</th>
-                                <th class="right-align">{{General::ubahDBKeHarga($baca_laporan_pembelians->diskon_pembelians)}}</th>
+                                <th class="right-align">{{General::ubahDBKeHarga($sub_total_pembelians * $baca_laporan_pembelians->diskon_pembelians/100)}}</th>
                             </tr>
                             <tr>
                                 <th colspan="6" class="right-align">Total</th>

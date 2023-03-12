@@ -5,44 +5,44 @@
 		<div class="col-sm-12 mb-4">
 			<div class="card">
 				<div class="card-header">
-					<strong>Baca Laporan Pembelian</strong>
+					<strong>Baca Penjualan</strong>
 				</div>
 				<div class="card-body">
                     <table class="table table-responsive-sm table-striped table-sm">
 						<tr>
 							<th width="150px">Toko</th>
 							<th width="1px">:</th>
-							<td>{{$baca_laporan_pembelians->nama_tokos}}</td>
+							<td>{{$baca_penjualans->nama_tokos}}</td>
 						</tr>
 						<tr>
 							<th>Tanggal</th>
 							<th>:</th>
-							<td>{{General::ubahDBKeTanggalwaktu($baca_laporan_pembelians->tanggal_pembelians)}}</td>
+							<td>{{General::ubahDBKeTanggalwaktu($baca_penjualans->tanggal_penjualans)}}</td>
 						</tr>
 						<tr>
 							<th>No</th>
 							<th>:</th>
-							<td>{{$baca_laporan_pembelians->no_pembelians}}</td>
+							<td>{{$baca_penjualans->no_penjualans}}</td>
 						</tr>
 						<tr>
-							<th>Supplier</th>
+							<th>Customer</th>
 							<th>:</th>
-							<td>{{$baca_laporan_pembelians->nama_suppliers}}</td>
+							<td>{{$baca_penjualans->nama_customers}}</td>
 						</tr>
 						<tr>
 							<th>Admin</th>
 							<th>:</th>
-							<td>{{$baca_laporan_pembelians->name}}</td>
+							<td>{{$baca_penjualans->name}}</td>
 						</tr>
 						<tr>
 							<th>Pembayaran</th>
 							<th>:</th>
-							<td>{{$baca_laporan_pembelians->nama_pembayarans}}</td>
+							<td>{{$baca_penjualans->nama_pembayarans}}</td>
 						</tr>
 						<tr>
 							<th>Keterangan</th>
 							<th>:</th>
-							<td>{!! $baca_laporan_pembelians->keterangan_pembelians !!}</td>
+							<td>{!! $baca_penjualans->keterangan_penjualans !!}</td>
 						</tr>
 					</table>
                     <table id="tablesort" class="table table-responsive-sm table-bordered table-striped table-sm">
@@ -58,20 +58,20 @@
 				    		</tr>
 				    	</thead>
 				    	<tbody>
-                            @php($sub_total_pembelians = 0)
-				    		@if(!$baca_laporan_pembelian_details->isEmpty())
+                            @php($sub_total_penjualans = 0)
+				    		@if(!$baca_penjualan_details->isEmpty())
 								@php($no = 1)
-		            			@foreach($baca_laporan_pembelian_details as $laporan_pembelian_details)
+		            			@foreach($baca_penjualan_details as $penjualan_details)
 							    	<tr>
 							    		<td class="nowrap">{{$no}}</td>
-							    		<td class="nowrap">{{$laporan_pembelian_details->nama_kategori_items}}</td>
-							    		<td class="nowrap">{{$laporan_pembelian_details->nama_items}}</td>
-							    		<td class="nowrap">{{$laporan_pembelian_details->nama_satuans}}</td>
-							    		<td class="nowrap">{{$laporan_pembelian_details->jumlah_pembelian_details}}</td>
-							    		<td class="nowrap right-align">{{General::ubahDBKeHarga($laporan_pembelian_details->harga_pembelian_details)}}</td>
-							    		<td class="nowrap right-align">{{General::ubahDBKeHarga($laporan_pembelian_details->total_pembelian_details)}}</td>
+							    		<td class="nowrap">{{$penjualan_details->nama_kategori_items}}</td>
+							    		<td class="nowrap">{{$penjualan_details->nama_items}}</td>
+							    		<td class="nowrap">{{$penjualan_details->nama_satuans}}</td>
+							    		<td class="nowrap">{{$penjualan_details->jumlah_penjualan_details}}</td>
+							    		<td class="nowrap right-align">{{General::ubahDBKeHarga($penjualan_details->harga_penjualan_details)}}</td>
+							    		<td class="nowrap right-align">{{General::ubahDBKeHarga($penjualan_details->total_penjualan_details)}}</td>
 							    	</tr>
-                                    @php($sub_total_pembelians += $laporan_pembelian_details->total_pembelian_details)
+                                    @php($sub_total_penjualans += $penjualan_details->total_penjualan_details)
 									@php($no++)
 							    @endforeach
 							@else
@@ -89,19 +89,19 @@
                         <tfoot>
                             <tr>
                                 <th colspan="6" class="right-align">Sub Total</th>
-                                <th class="right-align">{{General::ubahDBKeHarga($sub_total_pembelians)}}</th>
+                                <th class="right-align">{{General::ubahDBKeHarga($sub_total_penjualans)}}</th>
                             </tr>
                             <tr>
                                 <th colspan="6" class="right-align">Pajak</th>
-                                <th class="right-align">{{General::ubahDBKeHarga($sub_total_pembelians * $baca_laporan_pembelians->pajak_pembelians/100)}}</th>
+                                <th class="right-align">{{General::ubahDBKeHarga($sub_total_penjualans * $baca_penjualans->pajak_penjualans/100)}}</th>
                             </tr>
                             <tr>
                                 <th colspan="6" class="right-align">Diskon</th>
-                                <th class="right-align">{{General::ubahDBKeHarga($sub_total_pembelians * $baca_laporan_pembelians->diskon_pembelians/100)}}</th>
+                                <th class="right-align">{{General::ubahDBKeHarga($sub_total_penjualans * $baca_penjualans->diskon_penjualans/100)}}</th>
                             </tr>
                             <tr>
                                 <th colspan="6" class="right-align">Total</th>
-                                <th class="right-align">{{General::ubahDBKeHarga($baca_laporan_pembelians->total_pembelians)}}</th>
+                                <th class="right-align">{{General::ubahDBKeHarga($baca_penjualans->total_penjualans)}}</th>
                             </tr>
                         </tfoot>
 				    </table>
@@ -110,7 +110,7 @@
 				  	@if(request()->session()->get('halaman') != '')
 		           		@php($ambil_kembali = request()->session()->get('halaman'))
 	               	@else
-	               		@php($ambil_kembali = URL('dashboard/laporan_pembelian'))
+	               		@php($ambil_kembali = URL('dashboard/penjualan'))
 	               	@endif
 					{{General::kembali($ambil_kembali)}}
 				</div>

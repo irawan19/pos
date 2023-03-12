@@ -7,17 +7,17 @@
 				<div class="card-header">
 					<div class="row">
 						<div class="col-sm-6">
-							<strong>Pembelian</strong>
+							<strong>Penjualan</strong>
 						</div>
 						<div class="col-sm-6">
 							<div class="right-align">
-								{{ General::tambah($link_pembelian,'dashboard/pembelian/tambah') }}
+								{{ General::tambah($link_penjualan,'dashboard/penjualan/tambah') }}
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="card-body">
-					<form method="GET" action="{{ URL('dashboard/pembelian/cari') }}">
+					<form method="GET" action="{{ URL('dashboard/penjualan/cari') }}">
 						@csrf
                         <div class="row">
 							<div class="col-sm-3">
@@ -60,48 +60,48 @@
                         <table id="tablesort" class="table table-responsive-sm table-bordered table-striped table-sm">
 				    		<thead>
 				    			<tr>
-				    				@if(General::totalHakAkses($link_pembelian) != 0)
+				    				@if(General::totalHakAkses($link_penjualan) != 0)
 						    			<th width="5px"></th>
 						    		@endif
 				    				<th class="nowrap" width="50px">Tanggal</th>
 				    				<th class="nowrap" width="50px">Toko</th>
-				    				<th class="nowrap">No Pembelian</th>
+				    				<th class="nowrap">No Penjualan</th>
 				    				<th class="nowrap">Referensi Nota</th>
-				    				<th class="nowrap">Supplier</th>
+				    				<th class="nowrap">Customer</th>
 				    				<th class="nowrap">Admin</th>
 				    				<th class="nowrap">Total</th>
 				    			</tr>
 				    		</thead>
 				    		<tbody>
-				    			@if(!$lihat_pembelians->isEmpty())
-		            				@foreach($lihat_pembelians as $pembelians)
+				    			@if(!$lihat_penjualans->isEmpty())
+		            				@foreach($lihat_penjualans as $penjualans)
 								    	<tr>
-								    		@if(General::totalHakAkses($link_pembelian) != 0)
+								    		@if(General::totalHakAkses($link_penjualan) != 0)
 								    			<td class="nowrap">
 											      	<div class="dropdown">
 														<button class="btn btn-sm bg-gradient-success mb-0 dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih</button>
 										            	<div class="dropdown-menu" aria-labelledby="dropdownMenu2" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
-										            		{{General::baca($link_pembelian,'dashboard/pembelian/baca/'.$pembelians->id_pembelians)}}
+										            		{{General::baca($link_penjualan,'dashboard/penjualan/baca/'.$penjualans->id_penjualans)}}
 										            		<div class="dropdown-divider"></div>
-										            		{{General::edit($link_pembelian,'dashboard/pembelian/edit/'.$pembelians->id_pembelians)}}
+										            		{{General::edit($link_penjualan,'dashboard/penjualan/edit/'.$penjualans->id_penjualans)}}
 										            		<div class="dropdown-divider"></div>
-										            		{{General::hapus($link_pembelian,'dashboard/pembelian/hapus/'.$pembelians->id_pembelians, $pembelians->no_pembelians)}}
+										            		{{General::hapus($link_penjualan,'dashboard/penjualan/hapus/'.$penjualans->id_penjualans, $penjualans->no_penjualans)}}
 										            	</div>
 										            </div>
 											    </td>
 								    		@endif
-								    		<td class="nowrap">{{General::ubahDBKeTanggalwaktu($pembelians->tanggal_pembelians)}}</td>
-								    		<td class="nowrap">{{$pembelians->nama_tokos}}</td>
-								    		<td class="nowrap">{{$pembelians->no_pembelians}}</td>
-								    		<td class="nowrap">{{$pembelians->no_referensi_nota_pembelians}}</td>
-								    		<td class="nowrap">{{$pembelians->nama_suppliers}}</td>
-								    		<td class="nowrap">{{$pembelians->name}}</td>
-								    		<td class="nowrap right-align">{{General::ubahDBKeHarga($pembelians->total_pembelians)}}</td>
+								    		<td class="nowrap">{{General::ubahDBKeTanggalwaktu($penjualans->tanggal_penjualans)}}</td>
+								    		<td class="nowrap">{{$penjualans->nama_tokos}}</td>
+								    		<td class="nowrap">{{$penjualans->no_penjualans}}</td>
+								    		<td class="nowrap">{{$penjualans->no_referensi_nota_penjualans}}</td>
+								    		<td class="nowrap">{{$penjualans->nama_customers}}</td>
+								    		<td class="nowrap">{{$penjualans->name}}</td>
+								    		<td class="nowrap right-align">{{General::ubahDBKeHarga($penjualans->total_penjualans)}}</td>
 								    	</tr>
 								    @endforeach
 								@else
 									<tr>
-										@if(General::totalHakAkses($link_pembelian) != 0)
+										@if(General::totalHakAkses($link_penjualan) != 0)
 											<td colspan="8" class="center-align">Tidak ada data ditampilkan</td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
@@ -125,7 +125,7 @@
 				    	</table>
 				    </div>
 					<br/>
-				   	{{ $lihat_pembelians->appends(Request::except('page'))->links('vendor.pagination.custom') }}
+				   	{{ $lihat_penjualans->appends(Request::except('page'))->links('vendor.pagination.custom') }}
 				</div>
 			</div>
 		</div>

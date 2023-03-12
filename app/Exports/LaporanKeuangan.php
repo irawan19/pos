@@ -40,44 +40,44 @@ class LaporanKeuangan implements FromView, ShouldQueue
             {
                 $transaksi_pembelian                        = \App\Models\Transaksi_pembelian::selectRaw('no_pembelians AS no_transaksi,
                                                                                                         nama_tokos,
-                                                                                                        transaksi_pembelians.created_at AS tanggal_transaksi,
+                                                                                                        transaksi_pembelians.tanggal_pembelians AS tanggal_transaksi,
                                                                                                         "keluar" AS jenis_transaksi,
                                                                                                         users.name AS nama_admin,
                                                                                                         total_pembelians AS total_transaksi')
                                                                                                 ->join('users','users_id','=','users.id')
                                                                                                 ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                                 ->where('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                                 ->where('id_tokos',$hasil_toko)
                                                                                                 ->orWhere('no_pembelians', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                                 ->where('id_tokos',$hasil_toko)
                                                                                                 ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                                 ->where('id_tokos',$hasil_toko)
-                                                                                                ->orderBy('transaksi_pembelians.created_at','asc');
+                                                                                                ->orderBy('transaksi_pembelians.tanggal_pembelians','asc');
                 $transaksi_penjualan                        = \App\Models\Transaksi_penjualan::selectRaw('no_penjualans AS no_transaksi,
                                                                                                         nama_tokos,
-                                                                                                        transaksi_penjualans.created_at AS tanggal_transaksi,
+                                                                                                        transaksi_penjualans.tanggal_penjualans AS tanggal_transaksi,
                                                                                                         "masuk" as jenis_transaksi,
                                                                                                         users.name AS nama_admin,
                                                                                                         total_penjualans AS total_transaksi')
                                                                                             ->join('users','users_id','=','users.id')
                                                                                             ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                             ->where('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                             ->where('id_tokos',$hasil_toko)
                                                                                             ->orWhere('no_penjualans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                             ->where('id_tokos',$hasil_toko)
                                                                                             ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                             ->where('id_tokos',$hasil_toko)
                                                                                             ->union($transaksi_pembelian)
                                                                                             ->orderBy('tanggal_transaksi')
@@ -87,39 +87,39 @@ class LaporanKeuangan implements FromView, ShouldQueue
             {
                 $transaksi_pembelian                        = \App\Models\Transaksi_pembelian::selectRaw('no_pembelians AS no_transaksi,
                                                                                                         nama_tokos,
-                                                                                                        transaksi_pembelians.created_at AS tanggal_transaksi,
+                                                                                                        transaksi_pembelians.tanggal_pembelians AS tanggal_transaksi,
                                                                                                         "keluar" AS jenis_transaksi,
                                                                                                         users.name AS nama_admin,
                                                                                                         total_pembelians AS total_transaksi')
                                                                                                 ->join('users','users_id','=','users.id')
                                                                                                 ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                                 ->where('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                                 ->orWhere('no_pembelians', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                                 ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                                ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
-                                                                                                ->orderBy('transaksi_pembelians.created_at','asc');
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                                ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
+                                                                                                ->orderBy('transaksi_pembelians.tanggal_pembelians','asc');
                 $transaksi_penjualan                        = \App\Models\Transaksi_penjualan::selectRaw('no_penjualans AS no_transaksi,
                                                                                                         nama_tokos,
-                                                                                                        transaksi_penjualans.created_at AS tanggal_transaksi,
+                                                                                                        transaksi_penjualans.tanggal_penjualans AS tanggal_transaksi,
                                                                                                         "masuk" as jenis_transaksi,
                                                                                                         users.name AS nama_admin,
                                                                                                         total_penjualans AS total_transaksi')
                                                                                             ->join('users','users_id','=','users.id')
                                                                                             ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                             ->where('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                             ->orWhere('no_penjualans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                             ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                             ->union($transaksi_pembelian)
                                                                                             ->orderBy('tanggal_transaksi')
                                                                                             ->get();
@@ -129,44 +129,44 @@ class LaporanKeuangan implements FromView, ShouldQueue
         {
             $transaksi_pembelian                        = \App\Models\Transaksi_pembelian::selectRaw('no_pembelians AS no_transaksi,
                                                                                                     nama_tokos,
-                                                                                                    transaksi_pembelians.created_at AS tanggal_transaksi,
+                                                                                                    transaksi_pembelians.tanggal_pembelians AS tanggal_transaksi,
                                                                                                     "keluar" AS jenis_transaksi,
                                                                                                     users.name AS nama_admin,
                                                                                                     total_pembelians AS total_transaksi')
                                                                                             ->join('users','users_id','=','users.id')
                                                                                             ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                             ->where('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                            ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                            ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                             ->where('id_tokos',$hasil_toko)
                                                                                             ->orWhere('no_pembelians', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                            ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                            ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                             ->where('id_tokos',$hasil_toko)
                                                                                             ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                            ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                            ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                             ->where('id_tokos',$hasil_toko)
-                                                                                            ->orderBy('transaksi_pembelians.created_at','asc');
+                                                                                            ->orderBy('transaksi_pembelians.tanggal_pembelians','asc');
             $transaksi_penjualan                        = \App\Models\Transaksi_penjualan::selectRaw('no_penjualans AS no_transaksi,
                                                                                                     nama_tokos,
-                                                                                                    transaksi_penjualans.created_at AS tanggal_transaksi,
+                                                                                                    transaksi_penjualans.tanggal_penjualans AS tanggal_transaksi,
                                                                                                     "masuk" as jenis_transaksi,
                                                                                                     users.name AS nama_admin,
                                                                                                     total_penjualans AS total_transaksi')
                                                                                         ->join('users','users_id','=','users.id')
                                                                                         ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                         ->where('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->whereRaw('DATE(transaksi_penjualans.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                        ->whereRaw('DATE(transaksi_penjualans.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                         ->where('id_tokos',$hasil_toko)
                                                                                         ->orWhere('no_penjualans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->whereRaw('DATE(transaksi_penjualans.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                        ->whereRaw('DATE(transaksi_penjualans.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                         ->where('id_tokos',$hasil_toko)
                                                                                         ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->whereRaw('DATE(transaksi_penjualans.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                        ->whereRaw('DATE(transaksi_penjualans.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                         ->where('id_tokos',$hasil_toko)
                                                                                         ->union($transaksi_pembelian)
                                                                                         ->orderBy('tanggal_transaksi')

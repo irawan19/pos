@@ -1,18 +1,18 @@
 @extends('dashboard.layouts.app')
 @section('content')
 
-	<div class="row">
-		<div class="col-sm-4 mb-4">
-			<div class="card">
-				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/pembelian/prosestambah') }}" method="POST">
-					{{ csrf_field() }}
+	<form class="form-horizontal m-t-40" action="{{ URL('dashboard/pembelian/prosestambah') }}" method="POST">
+		{{ csrf_field() }}
+		<div class="row">
+			<div class="col-sm-4 mb-4">
+				<div class="card">
 					<div class="card-header">
 						<strong>Nota Pembelian</strong>
 					</div>
 					<div class="card-body">
 						@if (Session::get('setelah_simpan.alert') == 'sukses')
-					    	{{ General::pesanSuksesForm(Session::get('setelah_simpan.text')) }}
-					    @endif
+							{{ General::pesanSuksesForm(Session::get('setelah_simpan.text')) }}
+						@endif
 						<div class="form-group">
 							<label class="form-col-form-label" for="tokos_id">Toko <b style="color:red">*</b></label>
 							<select class="form-control select2" id="tokos_id" name="tokos_id">
@@ -22,12 +22,12 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label class="form-col-form-label" for="created_at">Tanggal <b style="color:red">*</b></label>
-							<input readonly class="form-control {{ General::validForm($errors->first('created_at')) }} getDateTime" id="created_at" type="text" name="created_at" value="{{Request::old('created_at') == '' ? General::ubahDBKeTanggalwaktu(date('Y-m-d H:i:s')) : Request::old('created_at') }}">
-							{{General::pesanErrorForm($errors->first('referensi_no_nota_pembelians'))}}
+							<label class="form-col-form-label" for="tanggal_pembelians">Tanggal <b style="color:red">*</b></label>
+							<input readonly class="form-control {{ General::validForm($errors->first('tanggal_pembelians')) }} getDateTime" id="tanggal_pembelians" type="text" name="tanggal_pembelians" value="{{Request::old('tanggal_pembelians') == '' ? General::ubahDBKeTanggalwaktu(date('Y-m-d H:i:s')) : Request::old('tanggal_pembelians') }}">
+							{{General::pesanErrorForm($errors->first('tanggal_pembelians'))}}
 						</div>
 						<div class="form-group">
-							<label class="form-col-form-label" for="referensi_no_nota_pembelians">Referensi No Nota <b style="color:red">*</b></label>
+							<label class="form-col-form-label" for="referensi_no_nota_pembelians">Referensi No Nota </label>
 							<input class="form-control {{ General::validForm($errors->first('referensi_no_nota_pembelians')) }}" id="referensi_no_nota_pembelians" type="text" name="referensi_no_nota_pembelians" value="{{Request::old('referensi_no_nota_pembelians')}}">
 							{{General::pesanErrorForm($errors->first('referensi_no_nota_pembelians'))}}
 						</div>
@@ -64,14 +64,11 @@
 							{{General::pesanErrorForm($errors->first('keterangan_pembelians'))}}
 						</div>
 					</div>
-				</form>
+				</div>
 			</div>
-		</div>
         
-		<div class="col-sm-8 mb-4">
-			<div class="card">
-				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/pembelian/prosestambah') }}" method="POST">
-					{{ csrf_field() }}
+			<div class="col-sm-8 mb-4">
+				<div class="card">
 					<div class="card-header">
 						<strong>Detail Pembelian</strong>
 					</div>
@@ -80,6 +77,7 @@
 					</div>
 			        <div class="card-footer right-align">
 						{{General::simpan()}}
+						{{General::simpankembali()}}
 			          	@if(request()->session()->get('halaman') != '')
 		            		@php($ambil_kembali = request()->session()->get('halaman'))
 	                    @else
@@ -87,19 +85,19 @@
 	                    @endif
 						{{General::batal($ambil_kembali)}}
 			        </div>
-				</form>
+				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 
 	<script type="text/javascript">
 		idtoko = $('#tokos_id :selected').val();
-		$('.listitem').load('{{URL("/dashboard/pembelian/listitem")}}/'+idtoko);
+		$('.listitem').load('{{URL("/dashboard/pembelian/listitem")}}/'+idtoko+'/0');
 
 		$('.tokos_id').on('change', async function() {
 			idtoko = $('#tokos_id :selected').val();
-			$('.listitem').load('{{URL("/dashboard/pembelian/listitem")}}/'+idtoko);
-        });
+			$('.listitem').load('{{URL("/dashboard/pembelian/listitem")}}/'+idtoko+'/0');
+		});
 	</script>
 
 @endsection

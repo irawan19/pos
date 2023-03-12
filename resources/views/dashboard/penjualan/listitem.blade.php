@@ -12,15 +12,15 @@
 		@if(!$lihat_items->isEmpty())
 			@php($no = 1)
 			@foreach($lihat_items as $items)
-				@php($jumlah_pembelian_details = 0)
-				@php($harga_pembelian_details = 0)
-				@if($id_pembelians != 0)
-					@php($ambil_pembelian_details = \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)
+				@php($jumlah_penjualan_details = 0)
+				@php($harga_penjualan_details = 0)
+				@if($id_penjualans != 0)
+					@php($ambil_penjualan_details = \App\Models\Transaksi_penjualan_detail::where('penjualans_id',$id_penjualans)
 																							->where('items_id',$items->id_items)
 																							->first())
-					@if(!empty($ambil_pembelian_details))
-						@php($jumlah_pembelian_details = $ambil_pembelian_details->jumlah_pembelian_details)
-						@php($harga_pembelian_details = $ambil_pembelian_details->harga_pembelian_details)
+					@if(!empty($ambil_penjualan_details))
+						@php($jumlah_penjualan_details = $ambil_penjualan_details->jumlah_penjualan_details)
+						@php($harga_penjualan_details = $ambil_penjualan_details->harga_penjualan_details)
 					@endif
 				@endif
 		    	<tr>
@@ -31,14 +31,14 @@
 		    		<td>{{$items->nama_items}}</td>
 		    		<td class="nowrap right-align">
 						<div class="form-group">
-							<input class="form-control {{ General::validForm($errors->first('jumlah_pembelian_details')) }} right-align" id="jumlah_pembelian_details{{$items->id_items}}" type="number" name="jumlah_pembelian_details[]" value="{{Request::old('jumlah_pembelian_details') == '' ? $jumlah_pembelian_details : Request::old('jumlah_pembelian_details') }}">
-							{{General::pesanErrorForm($errors->first('jumlah_pembelian_details'))}}
+							<input class="form-control {{ General::validForm($errors->first('jumlah_penjualan_details')) }} right-align" id="jumlah_penjualan_details{{$items->id_items}}" type="number" name="jumlah_penjualan_details[]" value="{{Request::old('jumlah_penjualan_details') == '' ? $jumlah_penjualan_details : Request::old('jumlah_penjualan_details') }}">
+							{{General::pesanErrorForm($errors->first('jumlah_penjualan_details'))}}
 						</div>
 					</td>
 		    		<td class="nowrap right-align">
 						<div class="form-group">
-							<input class="form-control {{ General::validForm($errors->first('harga_pembelian_details')) }} right-align price-format" id="harga_pembelian_details{{$items->id_items}}" type="text" name="harga_pembelian_details[]" value="{{Request::old('harga_pembelian_details') == '' ? General::ubahDBKeHarga($harga_pembelian_details) : Request::old('harga_pembelian_details') }}">
-							{{General::pesanErrorForm($errors->first('harga_pembelian_details'))}}
+							<input class="form-control {{ General::validForm($errors->first('harga_penjualan_details')) }} right-align price-format" id="harga_penjualan_details{{$items->id_items}}" type="text" name="harga_penjualan_details[]" value="{{Request::old('harga_penjualan_details') == '' ? General::ubahDBKeHarga($harga_penjualan_details) : Request::old('harga_penjualan_details') }}">
+							{{General::pesanErrorForm($errors->first('harga_penjualan_details'))}}
 						</div>
 					</td>
 					<td class="center-align">
@@ -64,7 +64,7 @@
 <script type="text/javascript">
 	$('.buttonreset').on('click', async function() {
 		iditem = $(this).data('iditem');
-		$('#jumlah_pembelian_details'+iditem).val('0');
-		$('#harga_pembelian_details'+iditem).val('0.00');
+		$('#jumlah_penjualan_details'+iditem).val('0');
+		$('#harga_penjualan_details'+iditem).val('0.00');
 	});
 </script>

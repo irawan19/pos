@@ -27,6 +27,7 @@ use App\Http\Controllers\Dashboard\PembayaranController as DashboardPembayaran;
 //Transaksi
 use App\Http\Controllers\Dashboard\CustomerController as DashboardCustomer;
 use App\Http\Controllers\Dashboard\SupplierController as DashboardSupplier;
+use App\Http\Controllers\Dashboard\PenjualanController as DashboardPenjualan;
 use App\Http\Controllers\Dashboard\PembelianController as DashboardPembelian;
 
 //Laporan
@@ -34,7 +35,6 @@ use App\Http\Controllers\Dashboard\LaporanPenjualanController as DashboardLapora
 use App\Http\Controllers\Dashboard\LaporanPembelianController as DashboardLaporanPembelian;
 use App\Http\Controllers\Dashboard\LaporanStokController as DashboardLaporanStok;
 use App\Http\Controllers\Dashboard\LaporanKeuanganController as DashboardLaporanKeuangan;
-
 
 //Konfigurasi Aplikasi
 use App\Http\Controllers\Dashboard\MenuController as DashboardMenu;
@@ -168,6 +168,19 @@ Route::middleware([
                 Route::get('/hapus/{id}', [DashboardSupplier::class, 'hapus']);
             });
 
+            //Penjualan
+            Route::group(['prefix' =>  'penjualan'], function() {
+                Route::get('/', [DashboardPenjualan::class, 'index']);
+                Route::get('/cari', [DashboardPenjualan::class, 'cari']);
+                Route::get('/tambah', [DashboardPenjualan::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardPenjualan::class, 'prosestambah']);
+                Route::get('/baca/{id}', [DashboardPenjualan::class, 'baca']);
+                Route::get('/edit/{id}', [DashboardPenjualan::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardPenjualan::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardPenjualan::class, 'hapus']);
+                Route::get('/listitem/{id_item}/{id_penjualan}', [DashboardPenjualan::class, 'listitem']);
+            });
+
             //Pembelian
             Route::group(['prefix' =>  'pembelian'], function() {
                 Route::get('/', [DashboardPembelian::class, 'index']);
@@ -178,7 +191,7 @@ Route::middleware([
                 Route::get('/edit/{id}', [DashboardPembelian::class, 'edit']);
                 Route::post('/prosesedit/{id}', [DashboardPembelian::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardPembelian::class, 'hapus']);
-                Route::get('/listitem/{id}', [DashboardPembelian::class, 'listitem']);
+                Route::get('/listitem/{id_item}/{id_pembelian}', [DashboardPembelian::class, 'listitem']);
             });
 
         //Laporan

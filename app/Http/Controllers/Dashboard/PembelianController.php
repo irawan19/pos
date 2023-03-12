@@ -29,9 +29,10 @@ class PembelianController extends AdminCoreController
                 $hasil_toko                 = '';
                 $data['lihat_pembelians']           = \App\Models\Transaksi_pembelian::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
+                                                                                    ->join('users','users_id','=','users.id')
                                                                                     ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
-                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                     ->paginate(10);
             }
             else
@@ -42,10 +43,11 @@ class PembelianController extends AdminCoreController
                 $hasil_toko                 = Auth::user()->tokos_id;
                 $data['lihat_pembelians']           = \App\Models\Transaksi_pembelian::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
+                                                                                    ->join('users','users_id','=','users.id')
                                                                                     ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
                                                                                     ->where('tokos_id',$hasil_toko)
-                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                     ->paginate(10);
             }
             $data['hasil_toko']             = $hasil_toko;
@@ -87,28 +89,46 @@ class PembelianController extends AdminCoreController
                 {
                     $data['lihat_pembelians']           = \App\Models\Transaksi_pembelian::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                                         ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
+                                                                                        ->join('users','users_id','=','users.id')
                                                                                         ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
                                                                                         ->where('no_pembelians', 'LIKE', '%'.$hasil_kata.'%')
                                                                                         ->where('tokos_id',$hasil_toko)
-                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                         ->orWhere('referensi_no_nota_pembelians', 'LIKE', '%'.$hasil_kata.'%')
                                                                                         ->where('tokos_id',$hasil_toko)
-                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
+                                                                                        ->orWhere('nama_suppliers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
+                                                                                        ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                         ->paginate(10);
                 }
                 else
                 {
                     $data['lihat_pembelians']           = \App\Models\Transaksi_pembelian::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                                         ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
+                                                                                        ->join('users','users_id','=','users.id')
                                                                                         ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
                                                                                         ->where('no_pembelians', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                         ->orWhere('referensi_no_nota_pembelians', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                        ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
+                                                                                        ->orWhere('nama_suppliers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
+                                                                                        ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                        ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                         ->paginate(10);
                 }
             }
@@ -119,15 +139,24 @@ class PembelianController extends AdminCoreController
                                                                         ->get();
                 $data['lihat_pembelians']           = \App\Models\Transaksi_pembelian::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
+                                                                                    ->join('users','users_id','=','users.id')
                                                                                     ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
                                                                                     ->where('no_pembelians', 'LIKE', '%'.$hasil_kata.'%')
                                                                                     ->where('tokos_id',$hasil_toko)
-                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                     ->orWhere('referensi_no_nota_pembelians', 'LIKE', '%'.$hasil_kata.'%')
                                                                                     ->where('tokos_id',$hasil_toko)
-                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                    ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
+                                                                                    ->orWhere('nama_suppliers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
+                                                                                    ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                    ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                     ->paginate(10);
             }
             $data['hasil_toko']             = $hasil_toko;
@@ -170,7 +199,7 @@ class PembelianController extends AdminCoreController
             return redirect('dashboard/pembelian');
     }
 
-    public function listitem($id_tokos=0, Request $request)
+    public function listitem($id_tokos=0, $id_pembelians=0, Request $request)
     {
         if($id_tokos != 0)
         {
@@ -178,10 +207,27 @@ class PembelianController extends AdminCoreController
                                                 ->count();
             if($cek_tokos != 0)
             {
-                $data['lihat_items']    = \App\Models\Master_item::where('tokos_id',$id_tokos)
-                                                                ->orderBy('nama_items')
-                                                                ->get();
-                return view('dashboard.pembelian.listitem',$data);
+                if($id_pembelians == 0)
+                {
+                    $data['lihat_items']    = \App\Models\Master_item::where('tokos_id',$id_tokos)
+                                                                    ->orderBy('nama_items')
+                                                                    ->get();
+                    return view('dashboard.pembelian.listitem',$data);
+                }
+                else
+                {
+                    $cek_pembelians = \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)->count();
+                    if($cek_pembelians != 0)
+                    {
+                        $data['lihat_items']    = \App\Models\Master_item::where('tokos_id',$id_tokos)
+                                                                        ->orderBy('nama_items')
+                                                                        ->get();
+                        $data['id_pembelians']  = $id_pembelians;
+                        return view('dashboard.pembelian.listitem',$data);
+                    }
+                    else
+                        return 'anda tidak boleh mengakses halaman ini.';
+                }
             }
             else
                 return 'anda tidak boleh mengakses halaman ini.';
@@ -201,19 +247,105 @@ class PembelianController extends AdminCoreController
         if(General::hakAkses($link_pembelian,'tambah') == 'true')
         {
             $aturan = [
-                'nama_pembelians'                              => 'required',
+                'tokos_id'                          => 'required',
+                'tanggal_pembelians'                => 'required',
+                'pembayarans_id'                    => 'required',
             ];
 
             $error_pesan = [
-                'nama_pembelians.required'                     => 'Form Nama Harus Diisi.',
+                'tokos_id.required'                 => 'Form Toko Harus Diisi.',
+                'tanggal_pembelians.required'       => 'Form Tanggal Harus Diisi.',
+                'pembayarans_id.required'           => 'Form Pembayaran Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
+            $suppliers_id = null;
+            if(!empty($request->suppliers_id))
+            {
+                $cek_suppliers = \App\Models\Master_supplier::where('id_suppliers',$request->suppliers_id)
+                                                            ->count();
+                if($cek_suppliers != 0)
+                    $suppliers_id = $request->suppliers_id;
+                else
+                {
+                    $suppliers_data = [
+                        'nama_suppliers'    => $request->suppliers_id,
+                    ];
+                    $suppliers_id = \App\Models\Master_supplier::insertGetId($suppliers_data);
+                }
+            }
+
+            $referensi_no_nota_pembelians = '';
+            if(!empty($request->referensi_no_nota_pembelians))
+                $referensi_no_nota_pembelians = $request->referensi_no_nota_pembelians;
+
+            $pajak_pembelians = 0;
+            if(!empty($request->pajak_pembelians))
+                $pajak_pembelians = $request->pajak_pembelians;
+
+            $diskon_pembelians = 0;
+            if(!empty($request->diskon_pembelians))
+                $diskon_pembelians = $request->diskon_pembelians;
+
+            $keterangan_pembelians = '';
+            if(!empty($request->keterangan_pembelians))
+                $keterangan_pembelians = $request->keterangan_pembelians;
+
             $pembelians_data = [
-                'nama_pembelians'                              => $request->nama_pembelians,
-                'created_at'                                => date('Y-m-d H:i:s'),
+                'tokos_id'                          => $request->tokos_id,
+                'suppliers_id'                      => $suppliers_id,
+                'pembayarans_id'                    => $request->pembayarans_id,
+                'users_id'                          => Auth::user()->id,
+                'no_pembelians'                     => General::noPembelian(),
+                'referensi_no_nota_pembelians'      => $referensi_no_nota_pembelians,
+                'tanggal_pembelians'                => General::ubahTanggalKeDB($request->tanggal_pembelians),
+                'keterangan_pembelians'             => $keterangan_pembelians,
+                'pembayarans_id'                    => $request->pembayarans_id,
+                'sub_total_pembelians'              => 0,
+                'pajak_pembelians'                  => $pajak_pembelians,
+                'diskon_pembelians'                 => $diskon_pembelians,
+                'total_pembelians'                  => 0,
+                'created_at'                        => date('Y-m-d H:i:s'),
             ];
-            \App\Models\Transaksi_pembelian::insert($pembelians_data);
+            $id_pembelians = \App\Models\Transaksi_pembelian::insertGetId($pembelians_data);
+
+            if(!empty($request->id_items))
+            {
+                foreach($request->id_items as $key => $id_items)
+                {
+                    if($request->jumlah_pembelian_details[$key] != 0)
+                    {
+                        $jumlah_pembelian_details   = $request->jumlah_pembelian_details[$key];
+                        $harga_pembelian_details    = General::ubahHargaKeDB($request->harga_pembelian_details[$key]);
+                        $total_pembelian_details    = $jumlah_pembelian_details * $harga_pembelian_details;
+
+                        $pembelians_details_data = [
+                            'pembelians_id'                 => $id_pembelians,
+                            'items_id'                      => $id_items,
+                            'jumlah_pembelian_details'      => $jumlah_pembelian_details,
+                            'harga_pembelian_details'       => $harga_pembelian_details,
+                            'total_pembelian_details'       => $total_pembelian_details,
+                            'created_at'                    => date('Y-m-d H:i:s'),
+                        ];
+                        \App\Models\Transaksi_pembelian_detail::insert($pembelians_details_data);
+                    }
+                }
+            }
+
+            $ambil_total_pembelian_details = \App\Models\Transaksi_pembelian_detail::selectRaw("SUM(total_pembelian_details) AS total_detail_pembelians")
+                                                                                    ->where('pembelians_id',$id_pembelians)
+                                                                                    ->first();
+            $sub_total = 0;
+            if(!empty($ambil_total_pembelian_details))
+                $sub_total = $ambil_total_pembelian_details->total_detail_pembelians;
+            
+            $hitung_total = $sub_total + ($sub_total * $pajak_pembelians/100) - ($sub_total * $diskon_pembelians/100);
+            $pembelians_update_data = [
+                'sub_total_pembelians'  => $sub_total,
+                'total_pembelians'      => $hitung_total,
+            ];
+            \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)
+                                            ->update($pembelians_update_data);
 
             $simpan           = $request->simpan;
             $simpan_kembali   = $request->simpan_kembali;
@@ -239,6 +371,34 @@ class PembelianController extends AdminCoreController
             return redirect('dashboard/pembelian');
     }
 
+    public function baca($id_pembelians=0)
+    {
+        $link_pembelian = 'pembelian';
+        if(General::hakAkses($link_pembelian,'edit') == 'true')
+        {
+            $cek_pembelians = \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)->count();
+            if($cek_pembelians != 0)
+            {
+                $data['baca_pembelians']        = \App\Models\Transaksi_pembelian::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                            ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
+                                                                            ->join('users','users_id','=','users.id')
+                                                                            ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
+                                                                            ->where('id_pembelians',$id_pembelians)
+                                                                            ->first();
+                $data['baca_pembelian_details'] = \App\Models\Transaksi_pembelian_detail::join('master_items','items_id','=','master_items.id_items')
+                                                                                        ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
+                                                                                        ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
+                                                                                        ->where('pembelians_id',$id_pembelians)
+                                                                                        ->get();
+                return view('dashboard.pembelian.baca',$data);
+            }
+            else
+                return redirect('dashboard/pembelian');
+        }
+        else
+            return redirect('dashboard/pembelian');
+    }
+
     public function edit($id_pembelians=0)
     {
         $link_pembelian = 'pembelian';
@@ -247,6 +407,21 @@ class PembelianController extends AdminCoreController
             $cek_pembelians = \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)->first();
             if(!empty($cek_pembelians))
             {
+                if(Auth::user()->tokos_id == null)
+                {
+                    $data['edit_tokos']   = \App\Models\Master_toko::orderBy('nama_tokos','asc')
+                                                                    ->get();
+                }
+                else
+                {
+                    $data['edit_tokos']   = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                        ->orderBy('nama_tokos','asc')
+                                                                        ->get();
+                }
+                $data['edit_suppliers']   = \App\Models\Master_supplier::orderBy('nama_suppliers')
+                                                                        ->get();
+                $data['edit_pembayarans'] = \App\Models\Master_pembayaran::orderBy('nama_pembayarans')
+                                                                            ->get();
                 $data['edit_pembelians']           = $cek_pembelians;
                 return view('dashboard.pembelian.edit',$data);
             }
@@ -266,20 +441,105 @@ class PembelianController extends AdminCoreController
             if(!empty($cek_pembelians))
             {
                 $aturan = [
-                    'nama_pembelians'                          => 'required',
+                    'tokos_id'                          => 'required',
+                    'tanggal_pembelians'                => 'required',
+                    'pembayarans_id'                    => 'required',
                 ];
-        
+    
                 $error_pesan = [
-                    'nama_pembelians.required'                 => 'Form Nama Harus Diisi.',
+                    'tokos_id.required'                 => 'Form Toko Harus Diisi.',
+                    'tanggal_pembelians.required'       => 'Form Tanggal Harus Diisi.',
+                    'pembayarans_id.required'           => 'Form Pembayaran Harus Diisi.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
-        
+    
+                $suppliers_id = null;
+                if(!empty($request->suppliers_id))
+                {
+                    $cek_suppliers = \App\Models\Master_supplier::where('id_suppliers',$request->suppliers_id)
+                                                                ->count();
+                    if($cek_suppliers != 0)
+                        $suppliers_id = $request->suppliers_id;
+                    else
+                    {
+                        $suppliers_data = [
+                            'nama_suppliers'    => $request->suppliers_id,
+                        ];
+                        $suppliers_id = \App\Models\Master_supplier::insertGetId($suppliers_data);
+                    }
+                }
+    
+                $referensi_no_nota_pembelians = '';
+                if(!empty($request->referensi_no_nota_pembelians))
+                    $referensi_no_nota_pembelians = $request->referensi_no_nota_pembelians;
+    
+                $pajak_pembelians = 0;
+                if(!empty($request->pajak_pembelians))
+                    $pajak_pembelians = $request->pajak_pembelians;
+    
+                $diskon_pembelians = 0;
+                if(!empty($request->diskon_pembelians))
+                    $diskon_pembelians = $request->diskon_pembelians;
+    
+                $keterangan_pembelians = '';
+                if(!empty($request->keterangan_pembelians))
+                    $keterangan_pembelians = $request->keterangan_pembelians;
+    
                 $pembelians_data = [
-                    'nama_pembelians'                          => $request->nama_pembelians,
-                    'updated_at'                            => date('Y-m-d H:i:s'),
+                    'tokos_id'                          => $request->tokos_id,
+                    'suppliers_id'                      => $suppliers_id,
+                    'pembayarans_id'                    => $request->pembayarans_id,
+                    'users_id'                          => Auth::user()->id,
+                    'referensi_no_nota_pembelians'      => $referensi_no_nota_pembelians,
+                    'tanggal_pembelians'                => General::ubahTanggalKeDB($request->tanggal_pembelians),
+                    'keterangan_pembelians'             => $keterangan_pembelians,
+                    'pembayarans_id'                    => $request->pembayarans_id,
+                    'pajak_pembelians'                  => $pajak_pembelians,
+                    'diskon_pembelians'                 => $diskon_pembelians,
+                    'updated_at'                        => date('Y-m-d H:i:s'),
                 ];
                 \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)
                                                 ->update($pembelians_data);
+
+                \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)->delete();
+
+                if(!empty($request->id_items))
+                {
+                    foreach($request->id_items as $key => $id_items)
+                    {
+                        if($request->jumlah_pembelian_details[$key] != 0)
+                        {
+                            $jumlah_pembelian_details   = $request->jumlah_pembelian_details[$key];
+                            $harga_pembelian_details    = General::ubahHargaKeDB($request->harga_pembelian_details[$key]);
+                            $total_pembelian_details    = $jumlah_pembelian_details * $harga_pembelian_details;
+
+                            $pembelians_details_data = [
+                                'pembelians_id'                 => $id_pembelians,
+                                'items_id'                      => $id_items,
+                                'jumlah_pembelian_details'      => $jumlah_pembelian_details,
+                                'harga_pembelian_details'       => $harga_pembelian_details,
+                                'total_pembelian_details'       => $total_pembelian_details,
+                                'created_at'                    => date('Y-m-d H:i:s'),
+                            ];
+                            \App\Models\Transaksi_pembelian_detail::insert($pembelians_details_data);
+                        }
+                    }
+                }
+
+                $ambil_total_pembelian_details = \App\Models\Transaksi_pembelian_detail::selectRaw("SUM(total_pembelian_details) AS total_detail_pembelians")
+                                                                                        ->where('pembelians_id',$id_pembelians)
+                                                                                        ->first();
+                $sub_total = 0;
+                if(!empty($ambil_total_pembelian_details))
+                    $sub_total = $ambil_total_pembelian_details->total_detail_pembelians;
+                
+                $hitung_total = $sub_total + ($sub_total * $pajak_pembelians/100) - ($sub_total * $diskon_pembelians/100);
+                $pembelians_update_data = [
+                    'sub_total_pembelians'  => $sub_total,
+                    'total_pembelians'      => $hitung_total,
+                ];
+                \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)
+                                                ->update($pembelians_update_data);
 
                 if(request()->session()->get('halaman') != '')
                     $redirect_halaman    = request()->session()->get('halaman');
@@ -303,6 +563,8 @@ class PembelianController extends AdminCoreController
             $cek_pembelians = \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)->first();
             if(!empty($cek_pembelians))
             {
+                \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)
+                                                        ->delete();
                 \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)
                                         ->delete();
                 return response()->json(["sukses" => "sukses"], 200);

@@ -43,25 +43,25 @@ class LaporanStokBaca implements FromView, ShouldQueue
                                                                                 ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
                                                                                 ->first();
         $transaksi_pembelian                        = \App\Models\Transaksi_pembelian_detail::selectRaw('no_pembelians AS no_transaksi,
-                                                                                                        transaksi_pembelians.created_at AS tanggal_transaksi,
+                                                                                                        transaksi_pembelians.tanggal_pembelians AS tanggal_transaksi,
                                                                                                         "msauk" AS jenis_transaksi,
                                                                                                         users.name AS nama_admin,
                                                                                                         jumlah_pembelian_details AS total_transaksi')
                                                                                             ->join('transaksi_pembelians','transaksi_pembelians.id_pembelians','=','transaksi_pembelians.id_pembelians')
                                                                                             ->join('users','users_id','=','users.id')
-                                                                                            ->whereRaw('DATE(transaksi_pembelians.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                            ->whereRaw('DATE(transaksi_pembelians.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                             ->where('items_id',$id_items)
-                                                                                            ->orderBy('transaksi_pembelians.created_at','asc');
+                                                                                            ->orderBy('transaksi_pembelians.tanggal_pembelians','asc');
         $transaksi_penjualan                        = \App\Models\Transaksi_penjualan_detail::selectRaw('no_penjualans AS no_transaksi,
-                                                                                                        transaksi_penjualans.created_at AS tanggal_transaksi,
+                                                                                                        transaksi_penjualans.tanggal_penjualans AS tanggal_transaksi,
                                                                                                         "keluar" as jenis_transaksi,
                                                                                                         users.name AS nama_admin,
                                                                                                         jumlah_penjualan_details AS total_transaksi')
                                                                                             ->join('transaksi_penjualans','penjualans_id','=','transaksi_penjualans.id_penjualans')
                                                                                             ->join('users','users_id','=','users.id')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) >= "'.$tanggal_mulai.'"')
-                                                                                            ->whereRaw('DATE(transaksi_penjualans.created_at) <= "'.$tanggal_selesai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
+                                                                                            ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                             ->where('items_id',$id_items)
                                                                                             ->union($transaksi_pembelian)
                                                                                             ->orderBy('tanggal_transaksi')
