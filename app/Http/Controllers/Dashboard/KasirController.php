@@ -15,7 +15,7 @@ class KasirController extends AdminCoreController
         {
             $data['tambah_tokos']   = \App\Models\Master_toko::orderBy('nama_tokos')
                                                             ->get();
-            $data['tambah_pembayarans'] = \App\Models\MAster_pembayaran::orderBy('nama_pembayarans')
+            $data['tambah_pembayarans'] = \App\Models\Master_pembayaran::orderBy('nama_pembayarans')
                                                                         ->get();
             $data['lihat_konfigurasi_aplikasi'] = \App\Models\Master_konfigurasi_aplikasi::where('id_konfigurasi_aplikasis',1)->first();
         }
@@ -24,7 +24,7 @@ class KasirController extends AdminCoreController
             $data['tambah_tokos']       = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
                                                             ->orderBy('nama_tokos')
                                                             ->get();
-            $data['tambah_pembayarans'] = \App\Models\MAster_pembayaran::orderBy('nama_pembayarans')
+            $data['tambah_pembayarans'] = \App\Models\Master_pembayaran::orderBy('nama_pembayarans')
                                                                         ->get();
             $data['lihat_tokos']        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)->first();
         }
