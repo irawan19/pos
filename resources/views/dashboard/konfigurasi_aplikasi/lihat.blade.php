@@ -168,7 +168,7 @@
 				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/konfigurasi_aplikasi/proseseditbackgroundwebsite') }}" enctype="multipart/form-data" method="POST">
 					{{ csrf_field() }}
 					<div class="card-header">
-						<strong>Background Website</strong>
+						<strong>Background Website (1920x1080)</strong>
 					</div>
 					<div class="card-body">
 						@if (Session::get('setelah_simpan_background_website.alert') == 'sukses')
