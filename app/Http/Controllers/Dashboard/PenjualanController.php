@@ -269,6 +269,7 @@ class PenjualanController extends AdminCoreController
                 else
                 {
                     $customers_data = [
+                        'tokos_id'          => $request->tokos_id,
                         'nama_customers'    => $request->customers_id,
                     ];
                     $customers_id = \App\Models\Master_customer::insertGetId($customers_data);
@@ -469,6 +470,7 @@ class PenjualanController extends AdminCoreController
                     else
                     {
                         $customers_data = [
+                            'tokos_id'          => $request->tokos_id,
                             'nama_customers'    => $request->customers_id,
                         ];
                         $customers_id = \App\Models\Master_customer::insertGetId($customers_data);

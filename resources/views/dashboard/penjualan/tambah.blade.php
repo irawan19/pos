@@ -27,11 +27,6 @@
 							{{General::pesanErrorForm($errors->first('tanggal_penjualans'))}}
 						</div>
 						<div class="form-group">
-							<label class="form-col-form-label" for="referensi_no_nota_penjualans">Referensi No Nota </label>
-							<input class="form-control {{ General::validForm($errors->first('referensi_no_nota_penjualans')) }}" id="referensi_no_nota_penjualans" type="text" name="referensi_no_nota_penjualans" value="{{Request::old('referensi_no_nota_penjualans')}}">
-							{{General::pesanErrorForm($errors->first('referensi_no_nota_penjualans'))}}
-						</div>
-						<div class="form-group">
 							<label class="form-col-form-label" for="customers_id">Customer</label>
 							<select class="form-control select2creation" id="customers_id" name="customers_id">
 								<option value="">-</option>
