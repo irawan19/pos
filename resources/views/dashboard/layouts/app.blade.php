@@ -189,8 +189,8 @@
 	<script src="{{ URL::asset('template/back/vendors/jqueryui/jquery-ui.js') }}"></script>
     <script src="{{URL::asset('template/back/js/core/popper.min.js')}}"></script>
     <script src="{{URL::asset('template/back/js/core/bootstrap.min.js')}}"></script>
-    <script src="{{URL::asset('template/back/js/plugins/perfect-scrollbar.min.js')}}"></script>
-    <script src="{{URL::asset('template/back/js/plugins/smooth-scrollbar.min.js')}}"></script>
+  	<script src="{{URL::asset('template/back/js/plugins/perfect-scrollbar.min.js')}}"></script>
+	<script src="{{URL::asset('template/back/js/plugins/smooth-scrollbar.min.js')}}"></script>
 	<script src="{{URL::asset('template/back/vendors/pace-progress/js/pace.min.js')}}"></script>
 	<script src="{{URL::asset('template/back/vendors/@coreui/coreui-pro/js/coreui.bundle.min.js')}}"></script>
 	<script src="{{URL::asset('template/back/vendors/fancybox/jquery.fancybox.min.js')}}"></script>
@@ -211,7 +211,7 @@
 	<script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
     <script type="text/javascript" src="{{ URL::asset('template/back/vendors/codemirror/js/codemirror.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('template/back/vendors/codemirror/js/xml.js') }}"></script>
-  	<script src="{{URL::asset('template/back/js/soft-ui-dashboard.min.js?v=1.0.6')}}"></script>
+  	<script src="{{URL::asset('template/back/js/soft-ui-dashboard.js?v=1.0.6')}}"></script>
 	<script type="text/javascript">
 		$(function() {
 		   	$(".scrolltable").mousewheel(function(event, delta) {
@@ -219,6 +219,34 @@
 		    	event.preventDefault();
 		   	});
 		});
+		
+		(function() {
+			var isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
+			if (isWindows) {
+				// if we are on windows OS we activate the perfectScrollbar function
+				if (document.getElementsByClassName('main-content')[0]) {
+				var mainpanel = document.querySelector('.main-content');
+				var ps = new PerfectScrollbar(mainpanel);
+				};
+
+				@if(Request::segment(2) != 'kasir')
+					if (document.getElementsByClassName('sidenav')[0]) {
+					var sidebar = document.querySelector('.sidenav');
+					var ps1 = new PerfectScrollbar(sidebar);
+					};
+					if (document.getElementsByClassName('navbar-collapse')[0]) {
+					var fixedplugin = document.querySelector('.navbar:not(.navbar-expand-lg) .navbar-collapse');
+					var ps2 = new PerfectScrollbar(fixedplugin);
+					};
+
+					if (document.getElementsByClassName('fixed-plugin')[0]) {
+					var fixedplugin = document.querySelector('.fixed-plugin');
+					var ps3 = new PerfectScrollbar(fixedplugin);
+					};
+				@endif
+			};
+		})();
+
 	    jQuery(document).ready(function () {
 			//Scrollbar
 				var win = navigator.platform.indexOf('Win') > -1;

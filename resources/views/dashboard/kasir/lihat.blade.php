@@ -1,17 +1,16 @@
 @extends('dashboard.layouts.app')
 @section('content')
 
-	<style type="text/css">
-		video {
-			filter: grayscale(100%) brightness(100%);
-		}
-	</style>
-    <script src="{{ URL::asset('template/back/vendors/scanner/instascan.min.js') }}"></script>
 	<div class="row">
 		<div class="col-xl-9 col-md-6 col-sm-6 mb-4">
 			<div class="listitem"></div>
 		</div>
 		<div class="col-xl-3 col-md-6 col-sm-6 mb-4">
+			<div class="card mb-4">
+				<div class="card-body">
+					<div id="reader" width="100%" height="100px"></div>
+				</div>
+			</div>
 			<form action="{{ URL('dashboard/kasir/proses') }}" method="POST">
 				{{ csrf_field() }}
 				<div class="card">
@@ -32,9 +31,6 @@
 								</a>
 							</div>
 						@endif
-						<figure>
-							<video height="150" id="preview" style="width: 100%; padding-top:25px"></video>
-						</figure>
 						<div class="form-group">
 							<select class="form-control select2" id="tokos_id" name="tokos_id">
 								@foreach($tambah_tokos as $tokos)
@@ -175,29 +171,169 @@
 		</div>
     </div>
 
+    <script type="text/javascript" src="{{ URL::asset('template/back/vendors/scanner/html5-qrcode.min.js') }}"></script>
 	<script type="text/javascript">
-		let scanner = new Instascan.Scanner({
-			video: document.getElementById('preview'),
-			backgroundScan: true,
-		});
-		scanner.addListener('scan', function (content) {
-			iditem       = content.split('-')[0];
-			namaitem     = content.split('-')[1];
-			hargaitem    = content.split('-')[2];
+		function onScanSuccess(decodedText, decodedResult) {
+			iditem       = decodedText.split('-')[0];
+			namaitem     = decodedText.split('-')[1];
+			hargaitem    = decodedText.split('-')[2];
 			tambahItemList(iditem,namaitem,hargaitem);
 			const rollSound = new Audio("{{URL::asset('storage/scanner/beep.mp3')}}");
 			rollSound.play();
-		});
-		Instascan.Camera.getCameras().then(function (cameras) {
-			if (cameras.length > 0)
+		}
+
+		function onScanFailure(error) {
+			// console.warn(`Code scan error = ${error}`);
+		}
+
+		let html5QrcodeScanner = new Html5QrcodeScanner(
+		"reader",
+		{ fps: 1, qrbox: {width: 250, height: 250} },
+		/* verbose= */ false);
+		html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+		function tambahItemList(iditem,namaitem,hargaitem)
+		{
+			tambahDetailPemesanan   = jQuery('<div id="list'+iditem+'" class="row">'+
+												'<div class="col-sm-4">'+
+													'<p style="font-weight: bold; font-size: 14px; margin-top: 5px">'+namaitem+'</p>'+
+													'<input id="items_id'+iditem+'" class="items_id" type="hidden" name="items_id[]" value="'+iditem+'">'+
+												'</div>'+
+												'<div class="col-sm-2">'+
+													'<input id="jumlah_penjualan_details'+iditem+'" onkeyup="kalkulasiJumlah(\''+iditem+'\')" type="text" style="text-align: right" class="form-control jumlah_penjualan_details" name="jumlah_penjualan_details['+iditem+']" value="1">'+
+												'</div>'+
+												'<div class="col-sm-4">'+
+													'<input id="harga_penjualan_details'+iditem+'" onkeyup="kalkulasiHarga(\''+iditem+'\')" type="text" style="text-align: right;" class="form-control harga_penjualan_details" name="harga_penjualan_details['+iditem+']" value="'+hargaitem+'">'+
+												'</div>'+
+												'<div class="col-sm-2">'+
+													'<button type="button" onclick="deleteItemList(\''+iditem+'\')" class="btn-sm bg-gradient-danger mb-0" style="color:white">'+
+														'<i class="fas fa-trash" aria-hidden="true"></i>'+
+													'</button>'+
+												'</div>'+
+												'<input id="sub_total_penjualan_details'+iditem+'" type="hidden" class="form-control sub_total_penjualan_details" name="sub_total_penjualan_details['+iditem+']" value="'+hargaitem+'">'+
+											'</div>'+
+											'<hr id="hrlist'+iditem+'"  style="border:2px solid #202739"/>');
+			tambahDetailPemesanan.find('.jumlah_penjualan_details').keyup(function() {
+				this.value = this.value.replace(/[^0-9\.]/g,'');
+			});
+			tambahDetailPemesanan.find('.harga_penjualan_details').keyup(function() {
+				this.value = this.value.replace(/[^0-9\.]/g,'');
+			});
+			
+			if($('#items_id'+iditem).val() == undefined)
 			{
-				scanner.start(cameras[0]);
-			} else {
-				alert('Kamera tidak ditemukan.');
+				jQuery('.detailpemesanan').append(tambahDetailPemesanan);
+
+				kalkulasiSubTotal = 0;
+				$('.sub_total_penjualan_details').each(function() {
+					var subTotal = parseFloat($(this).val().replace(/[^\d\.]/g,''));
+					kalkulasiSubTotal += subTotal;
+				});
+				$('.sub_total_penjualans').val(kalkulasiSubTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+
+				diskon 			= parseFloat($('.diskon_penjualans').val());
+				pajak 			= parseFloat($('.pajak_penjualans').val());
+				kalkulasiTotal 	= kalkulasiSubTotal - diskon + pajak;
+				convertTotal 	= kalkulasiTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+				$('.total_penjualans').val(convertTotal);
+				pembayaran 			= parseFloat($('.pembayaran_penjualans').val());
+				hitungKembalian		= pembayaran - kalkulasiTotal;
+				$('.kembalian_penjualans').val(hitungKembalian.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
 			}
-		}).catch(function (e) {
-			alert(e);
-		});
+			else
+			{
+				var kalkulasiJumlah = parseFloat($('#jumlah_penjualan_details'+iditem).val()) + 1;
+				$('#jumlah_penjualan_details'+iditem).val(kalkulasiJumlah);
+				var harga  = parseFloat($('#harga_penjualan_details'+iditem).val());
+				var kalkulasiHarga = kalkulasiJumlah * harga;
+				$('#sub_total_penjualan_details'+iditem).val(kalkulasiHarga.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+
+				kalkulasiSubTotal = 0;
+				$('.sub_total_penjualan_details').each(function() {
+					var subTotal = parseFloat($(this).val().replace(/[^\d\.]/g,''));
+					kalkulasiSubTotal += subTotal;
+				});
+				$('.sub_total_penjualans').val(kalkulasiSubTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+
+				diskon 			= parseFloat($('.diskon_penjualans').val());
+				pajak 			= parseFloat($('.pajak_penjualans').val());
+				kalkulasiTotal 	= kalkulasiSubTotal - diskon + pajak;
+				convertTotal 	= kalkulasiTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+				$('.total_penjualans').val(convertTotal);
+				pembayaran 			= parseFloat($('.pembayaran_penjualans').val());
+				hitungKembalian		= pembayaran - kalkulasiTotal;
+				$('.kembalian_penjualans').val(hitungKembalian.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+			}
+		}
+
+		function kalkulasiJumlah(iditem)
+		{
+			jumlah 			= parseFloat($('#jumlah_penjualan_details'+iditem).val());
+			harga  			= parseFloat($('#harga_penjualan_details'+iditem).val());
+			subTotalItem 	= jumlah * harga;
+			$('#sub_total_penjualan_details'+iditem).val(subTotalItem.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+
+			kalkulasiSubTotal = 0;
+			$('.sub_total_penjualan_details').each(function() {
+				var subTotal = parseFloat($(this).val().replace(/[^\d\.]/g,''));
+				kalkulasiSubTotal += subTotal;
+			});
+			$('.sub_total_penjualans').val(kalkulasiSubTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+
+			diskon 			= parseFloat($('.diskon_penjualans').val());
+			pajak 			= parseFloat($('.pajak_penjualans').val());
+			kalkulasiTotal 	= kalkulasiSubTotal - diskon + pajak;
+			convertTotal 	= kalkulasiTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+			$('.total_penjualans').val(convertTotal);
+			pembayaran 			= parseFloat($('.pembayaran_penjualans').val());
+			hitungKembalian		= pembayaran - kalkulasiTotal;
+			$('.kembalian_penjualans').val(hitungKembalian.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+		}
+
+		function kalkulasiHarga(iditem)
+		{
+			jumlah 			= parseFloat($('#jumlah_penjualan_details'+iditem).val());
+			harga  			= parseFloat($('#harga_penjualan_details'+iditem).val());
+			subTotalItem 	= jumlah * harga;
+			$('#sub_total_penjualan_details'+iditem).val(subTotalItem.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+
+			kalkulasiSubTotal = 0;
+			$('.sub_total_penjualan_details').each(function() {
+				var subTotal = parseFloat($(this).val().replace(/[^\d\.]/g,''));
+				kalkulasiSubTotal += subTotal;
+			});
+			$('.sub_total_penjualans').val(kalkulasiSubTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+
+			diskon 			= parseFloat($('.diskon_penjualans').val());
+			pajak 			= parseFloat($('.pajak_penjualans').val());
+			kalkulasiTotal 	= kalkulasiSubTotal - diskon + pajak;
+			convertTotal 	= kalkulasiTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+			$('.total_penjualans').val(convertTotal);
+			pembayaran 			= parseFloat($('.pembayaran_penjualans').val());
+			hitungKembalian		= pembayaran - kalkulasiTotal;
+			$('.kembalian_penjualans').val(hitungKembalian.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+		}
+
+		function deleteItemList(iditem)
+		{
+			$('#list'+iditem).remove();
+			$('#hrlist'+iditem).remove();
+			kalkulasiSubTotal = 0;
+			$('.sub_total_penjualan_details').each(function() {
+				var subTotal = parseFloat($(this).val().replace(/[^\d\.]/g,''));
+				kalkulasiSubTotal += subTotal;
+			});
+			$('.sub_total_penjualans').val(kalkulasiSubTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+
+			diskon 			= parseFloat($('.diskon_penjualans').val());
+			pajak 			= parseFloat($('.pajak_penjualans').val());
+			kalkulasiTotal 	= kalkulasiSubTotal - diskon + pajak;
+			convertTotal 	= kalkulasiTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+			$('.total_penjualans').val(convertTotal);
+			pembayaran 			= parseFloat($('.pembayaran_penjualans').val());
+			hitungKembalian		= pembayaran - kalkulasiTotal;
+			$('.kembalian_penjualans').val(hitungKembalian.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
+		}
 
 		jQuery(document).ready(async function() {
 			idtoko = $('#tokos_id :selected').val();
@@ -356,149 +492,6 @@
 				$('.kembalian_penjualans').val(hitungKembalian.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
 			});
 		});
-
-		function tambahItemList(iditem,namaitem,hargaitem)
-        {
-            tambahDetailPemesanan   = jQuery('<div id="list'+iditem+'" class="row">'+
-												'<div class="col-sm-4">'+
-													'<p style="font-weight: bold; font-size: 14px; margin-top: 5px">'+namaitem+'</p>'+
-													'<input id="items_id'+iditem+'" class="items_id" type="hidden" name="items_id[]" value="'+iditem+'">'+
-												'</div>'+
-												'<div class="col-sm-2">'+
-													'<input id="jumlah_penjualan_details'+iditem+'" onkeyup="kalkulasiJumlah(\''+iditem+'\')" type="text" style="text-align: right" class="form-control jumlah_penjualan_details" name="jumlah_penjualan_details['+iditem+']" value="1">'+
-												'</div>'+
-												'<div class="col-sm-4">'+
-													'<input id="harga_penjualan_details'+iditem+'" onkeyup="kalkulasiHarga(\''+iditem+'\')" type="text" style="text-align: right;" class="form-control harga_penjualan_details" name="harga_penjualan_details['+iditem+']" value="'+hargaitem+'">'+
-												'</div>'+
-												'<div class="col-sm-2">'+
-													'<button type="button" onclick="deleteItemList(\''+iditem+'\')" class="btn-sm bg-gradient-danger mb-0" style="color:white">'+
-														'<i class="fas fa-trash" aria-hidden="true"></i>'+
-													'</button>'+
-												'</div>'+
-												'<input id="sub_total_penjualan_details'+iditem+'" type="hidden" class="form-control sub_total_penjualan_details" name="sub_total_penjualan_details['+iditem+']" value="'+hargaitem+'">'+
-											'</div>'+
-											'<hr id="hrlist'+iditem+'"  style="border:2px solid #202739"/>');
-           	tambahDetailPemesanan.find('.jumlah_penjualan_details').keyup(function() {
-                this.value = this.value.replace(/[^0-9\.]/g,'');
-            });
-            tambahDetailPemesanan.find('.harga_penjualan_details').keyup(function() {
-                this.value = this.value.replace(/[^0-9\.]/g,'');
-            });
-            
-            if($('#items_id'+iditem).val() == undefined)
-            {
-	        	jQuery('.detailpemesanan').append(tambahDetailPemesanan);
-
-	        	kalkulasiSubTotal = 0;
-	            $('.sub_total_penjualan_details').each(function() {
-	                var subTotal = parseFloat($(this).val().replace(/[^\d\.]/g,''));
-	                kalkulasiSubTotal += subTotal;
-	            });
-	        	$('.sub_total_penjualans').val(kalkulasiSubTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-
-	        	diskon 			= parseFloat($('.diskon_penjualans').val());
-	        	pajak 			= parseFloat($('.pajak_penjualans').val());
-	        	kalkulasiTotal 	= kalkulasiSubTotal - diskon + pajak;
-	        	convertTotal 	= kalkulasiTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-	        	$('.total_penjualans').val(convertTotal);
-	        	pembayaran 			= parseFloat($('.pembayaran_penjualans').val());
-    			hitungKembalian		= pembayaran - kalkulasiTotal;
-    			$('.kembalian_penjualans').val(hitungKembalian.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-	        }
-	        else
-	        {
-	        	var kalkulasiJumlah = parseFloat($('#jumlah_penjualan_details'+iditem).val()) + 1;
-                $('#jumlah_penjualan_details'+iditem).val(kalkulasiJumlah);
-                var harga  = parseFloat($('#harga_penjualan_details'+iditem).val());
-                var kalkulasiHarga = kalkulasiJumlah * harga;
-                $('#sub_total_penjualan_details'+iditem).val(kalkulasiHarga.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-
-	        	kalkulasiSubTotal = 0;
-	            $('.sub_total_penjualan_details').each(function() {
-	                var subTotal = parseFloat($(this).val().replace(/[^\d\.]/g,''));
-	                kalkulasiSubTotal += subTotal;
-	            });
-	        	$('.sub_total_penjualans').val(kalkulasiSubTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-
-	        	diskon 			= parseFloat($('.diskon_penjualans').val());
-	        	pajak 			= parseFloat($('.pajak_penjualans').val());
-	        	kalkulasiTotal 	= kalkulasiSubTotal - diskon + pajak;
-	        	convertTotal 	= kalkulasiTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-	        	$('.total_penjualans').val(convertTotal);
-	        	pembayaran 			= parseFloat($('.pembayaran_penjualans').val());
-    			hitungKembalian		= pembayaran - kalkulasiTotal;
-    			$('.kembalian_penjualans').val(hitungKembalian.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-	        }
-        }
-
-		function kalkulasiJumlah(iditem)
-        {
-        	jumlah 			= parseFloat($('#jumlah_penjualan_details'+iditem).val());
-        	harga  			= parseFloat($('#harga_penjualan_details'+iditem).val());
-        	subTotalItem 	= jumlah * harga;
-        	$('#sub_total_penjualan_details'+iditem).val(subTotalItem.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-
-        	kalkulasiSubTotal = 0;
-	        $('.sub_total_penjualan_details').each(function() {
-	            var subTotal = parseFloat($(this).val().replace(/[^\d\.]/g,''));
-	            kalkulasiSubTotal += subTotal;
-	        });
-	        $('.sub_total_penjualans').val(kalkulasiSubTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-
-	        diskon 			= parseFloat($('.diskon_penjualans').val());
-	        pajak 			= parseFloat($('.pajak_penjualans').val());
-	        kalkulasiTotal 	= kalkulasiSubTotal - diskon + pajak;
-	        convertTotal 	= kalkulasiTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-	        $('.total_penjualans').val(convertTotal);
-	        pembayaran 			= parseFloat($('.pembayaran_penjualans').val());
-    		hitungKembalian		= pembayaran - kalkulasiTotal;
-    		$('.kembalian_penjualans').val(hitungKembalian.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-        }
-
-        function kalkulasiHarga(iditem)
-        {
-        	jumlah 			= parseFloat($('#jumlah_penjualan_details'+iditem).val());
-        	harga  			= parseFloat($('#harga_penjualan_details'+iditem).val());
-        	subTotalItem 	= jumlah * harga;
-        	$('#sub_total_penjualan_details'+iditem).val(subTotalItem.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-
-        	kalkulasiSubTotal = 0;
-	        $('.sub_total_penjualan_details').each(function() {
-	            var subTotal = parseFloat($(this).val().replace(/[^\d\.]/g,''));
-	            kalkulasiSubTotal += subTotal;
-	        });
-	        $('.sub_total_penjualans').val(kalkulasiSubTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-
-	        diskon 			= parseFloat($('.diskon_penjualans').val());
-	        pajak 			= parseFloat($('.pajak_penjualans').val());
-	        kalkulasiTotal 	= kalkulasiSubTotal - diskon + pajak;
-	        convertTotal 	= kalkulasiTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-	        $('.total_penjualans').val(convertTotal);
-	        pembayaran 			= parseFloat($('.pembayaran_penjualans').val());
-    		hitungKembalian		= pembayaran - kalkulasiTotal;
-    		$('.kembalian_penjualans').val(hitungKembalian.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-        }
-
-        function deleteItemList(iditem)
-        {
-        	$('#list'+iditem).remove();
-        	$('#hrlist'+iditem).remove();
-        	kalkulasiSubTotal = 0;
-            $('.sub_total_penjualan_details').each(function() {
-                var subTotal = parseFloat($(this).val().replace(/[^\d\.]/g,''));
-                kalkulasiSubTotal += subTotal;
-            });
-        	$('.sub_total_penjualans').val(kalkulasiSubTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-
-        	diskon 			= parseFloat($('.diskon_penjualans').val());
-        	pajak 			= parseFloat($('.pajak_penjualans').val());
-        	kalkulasiTotal 	= kalkulasiSubTotal - diskon + pajak;
-        	convertTotal 	= kalkulasiTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-        	$('.total_penjualans').val(convertTotal);
-	        pembayaran 			= parseFloat($('.pembayaran_penjualans').val());
-    		hitungKembalian		= pembayaran - kalkulasiTotal;
-    		$('.kembalian_penjualans').val(hitungKembalian.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-        }
 	</script>
 
 @endsection

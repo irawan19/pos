@@ -120,8 +120,8 @@
 								    		<td class="nowrap right-align">{{General::ubahDBKeHarga($items->harga_items)}}</td>
 								    		<td class="nowrap right-align">{{$items->stok_items}}</td>
 								    		<td class="nowrap center-align">
-												<a data-fancybox="gallery" href="data:image/png;base64,{{DNS2D::getBarcodePNG($items->id_items.'-'.$items->nama_items.'-'.$items->harga_items, 'QRCODE')}}">
-													<img src="data:image/png;base64,{{DNS2D::getBarcodePNG($items->id_items.'-'.$items->nama_items.'-'.$items->harga_items, 'QRCODE')}}" alt="barcode" width="32px">
+												<a data-fancybox="gallery" href="data:image/jpg;base64,{{DNS2D::getBarcodePNG($items->id_items.'-'.$items->nama_items.'-'.$items->harga_items, 'QRCODE', 10, 10)}}" style="background-color:white">
+													<img src="data:image/jpg;base64,{{DNS2D::getBarcodePNG($items->id_items.'-'.$items->nama_items.'-'.$items->harga_items, 'QRCODE')}}" alt="barcode" width="32px">
 												</a>
 												{{General::cetakBarcode($link_item,'dashboard/item/cetakbarcode/'.$items->id_items)}}
 								    		</td>

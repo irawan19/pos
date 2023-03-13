@@ -29,7 +29,7 @@
             @foreach($lihat_items as $items)
                 <td class="text-center">
                     <p>{{$items->nama_items}}</p>
-                    <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($items->id_items.'-'.$items->nama_items.'-'.$items->sale_price_items, 'QRCODE')}}" alt="barcode" width="80px"/>
+                    <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($items->id_items.'-'.$items->nama_items.'-'.$items->harga_items, 'QRCODE', 2, 2)}}" alt="barcode"/>
                     <br/>
                     <br/>
                     {{$items->kode_items}}
