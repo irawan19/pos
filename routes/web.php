@@ -85,6 +85,7 @@ Route::middleware([
         Route::group(['prefix' => 'kasir'], function(){
             Route::get('/', [DashboardKasir::class, 'index']);
             Route::get('/listitem/{id}', [DashboardKasir::class, 'listitem']);
+            Route::get('/listitem/{id}/{cari}', [DashboardKasir::class, 'listitem']);
             Route::get('/listcustomer/{id}', [DashboardKasir::class, 'listcustomer']);
             Route::get('/listpembayaran/{id}', [DashboardKasir::class, 'listpembayaran']);
             Route::post('/proses', [DashboardKasir::class, 'proses']);

@@ -31,14 +31,28 @@ class KasirController extends AdminCoreController
         return view('dashboard.kasir.lihat',$data);
     }
 
-    public function listitem($id_tokos=0)
+    public function listitem($id_tokos=0, $cari='')
     {
         $cek_tokos = \App\Models\Master_toko::where('id_tokos',$id_tokos)->count();
         if($cek_tokos != 0)
         {
-            $data['lihat_items'] = \App\Models\Master_item::join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
-                                                    ->orderBy('nama_items')
-                                                    ->get();
+            if($cari == '')
+            {
+                $data['lihat_items'] = \App\Models\Master_item::join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
+                                                        ->where('tokos_id',$id_tokos)
+                                                        ->orderBy('nama_kategori_items')
+                                                        ->orderBy('nama_items')
+                                                        ->get();
+            }
+            else
+            {
+                $data['lihat_items'] = \App\Models\Master_item::join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
+                                                        ->where('nama_items', 'LIKE', '%'.$cari.'%')
+                                                        ->where('tokos_id',$id_tokos)
+                                                        ->orderBy('nama_kategori_items')
+                                                        ->orderBy('nama_items')
+                                                        ->get();
+            }
             return view('dashboard.kasir.listitem',$data);
         }
         else

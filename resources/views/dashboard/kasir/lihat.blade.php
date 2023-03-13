@@ -3,6 +3,12 @@
 
 	<div class="row">
 		<div class="col-xl-9 col-md-6 col-sm-6 mb-4">
+			<div class="card-body">
+				<div class="input-group">
+	            	<input class="form-control carikata" id="input2-group2" type="text" name="cari_kata" placeholder="Cari" value="">
+	            	<button class="btn btn-primary btncarikata" type="button"> Cari</button>
+	            </div>
+			</div>
 			<div class="listitem"></div>
 		</div>
 		<div class="col-xl-3 col-md-6 col-sm-6 mb-4">
@@ -194,7 +200,7 @@
 
 		function tambahItemList(iditem,namaitem,hargaitem)
 		{
-			tambahDetailPemesanan   = jQuery('<div id="list'+iditem+'" class="row">'+
+			tambahDetailPemesanan   = jQuery('<div id="list'+iditem+'" class="row listitemdetailpemesanans">'+
 												'<div class="col-sm-4">'+
 													'<p style="font-weight: bold; font-size: 14px; margin-top: 5px">'+namaitem+'</p>'+
 													'<input id="items_id'+iditem+'" class="items_id" type="hidden" name="items_id[]" value="'+iditem+'">'+
@@ -212,7 +218,7 @@
 												'</div>'+
 												'<input id="sub_total_penjualan_details'+iditem+'" type="hidden" class="form-control sub_total_penjualan_details" name="sub_total_penjualan_details['+iditem+']" value="'+hargaitem+'">'+
 											'</div>'+
-											'<hr id="hrlist'+iditem+'"  style="border:2px solid #202739"/>');
+											'<hr class="hrlistitemdetailpemesanans" id="hrlist'+iditem+'"  style="border:2px solid #202739"/>');
 			tambahDetailPemesanan.find('.jumlah_penjualan_details').keyup(function() {
 				this.value = this.value.replace(/[^0-9\.]/g,'');
 			});
@@ -339,6 +345,18 @@
 			idtoko = $('#tokos_id :selected').val();
 			$('.listitem').load('{{URL("/dashboard/kasir/listitem")}}/'+idtoko);
 
+			$('.btncarikata').on('click', function(){
+				ambilcarikata = $('.carikata').val();
+				if(ambilcarikata != '')
+				{
+					$('.listitem').load('{{URL("/dashboard/kasir/listitem")}}/'+idtoko+'/'+ambilcarikata);
+				}
+				else
+				{
+					$('.listitem').load('{{URL("/dashboard/kasir/listitem")}}/'+idtoko);
+				}
+			});
+
 			$('#customers_id').select2({
 				width: '100%',
               	placeholder: '-',
@@ -399,6 +417,18 @@
 
 			$('#tokos_id').on('change', function(){
 				idtoko = $('#tokos_id :selected').val();
+				$('#customers_id').val("").trigger('change');
+				$('#pembayarans_id').val("").trigger('change');
+				$('.listitemdetailpemesanans').remove();
+				$('.hrlistitemdetailpemesanans').remove();
+				$('.sub_total_penjualans').val('0.00');
+				$('.pajak_penjualans').val('0');
+				$('.diskon_penjualans').val('0');
+				$('.total_penjualans').val('0.00');
+				$('.pembayaran_penjualans').val('0.00');
+				$('.kembalian_penjualans').val('0.00');
+				$('#keterangan_penjualans').val('');
+				
 				$('.listitem').load('{{URL("/dashboard/kasir/listitem")}}/'+idtoko);
 				
 				$('#customers_id').select2({
