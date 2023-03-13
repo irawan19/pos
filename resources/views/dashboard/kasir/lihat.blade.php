@@ -3,10 +3,10 @@
 
     <script src="{{ URL::asset('template/back/vendors/scanner/instascan.min.js') }}"></script>
 	<div class="row">
-		<div class="col-sm-9 mb-4">
+		<div class="col-xl-9 col-md-6 col-sm-6 mb-4">
 			<div class="row">
 				@foreach($lihat_items as $items)
-					<div class="col-sm-2 mb-4">
+					<div class="col-xl-2 col-md-6 col-sm-6 mb-4">
 						<div class="card">
 							<div class="card-header mx-4 p-3 text-center">
 								<div class="shadow text-center border-radius-lg">
@@ -24,7 +24,7 @@
 				@endforeach
 			</div>
         </div>
-		<div class="col-sm-3 mb-4">
+		<div class="col-xl-3 col-md-6 col-sm-6 mb-4">
 			<div class="card">
 				<div class="card-body">
                     @if (Session::get('setelah_simpan.alert') == 'sukses')
