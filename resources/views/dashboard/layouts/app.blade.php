@@ -49,6 +49,15 @@
 	    	.jam{
 	    		display: none;
 	    	}
+			.listheadercustomer{
+				display:none;
+			}
+		}
+		@media (max-width: 1024px)
+	    {
+			.listheadercustomer{
+				display:none;
+			}
 		}
 		.g-sidenav-show.g-sidenav-pinned .sidenav {
 			z-index: 1;

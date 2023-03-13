@@ -49,25 +49,25 @@
                             &nbsp; Kembali Ke Dashboard
                         </a>
 					</li>
-					<li class="text-sm opacity-5 text-dark" style="margin-right:20px;">
+					<li class="text-sm opacity-5 text-dark listheadercustomer" style="margin-right:20px;">
 						<a style="color:#000 !important" class="text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="{{URL('dashboard/customer')}}">
                             <i class="fas fa-user text-sm ms-1" aria-hidden="true" style="color:#202739"></i>
                             &nbsp; Customer
                         </a>
 					</li>
-					<li class="text-sm opacity-5 text-dark" style="margin-right:20px;">
+					<li class="text-sm opacity-5 text-dark listheadercustomer" style="margin-right:20px;">
 						<a style="color:#000 !important" class="text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="{{URL('dashboard/supplier')}}">
 							<i class="fas fa-user text-sm ms-1" aria-hidden="true" style="color:#202739"></i>
 							&nbsp; Supplier
                         </a>
 					</li>
-					<li class="text-sm opacity-5 text-dark" style="margin-right:20px;">
+					<li class="text-sm opacity-5 text-dark listheadercustomer" style="margin-right:20px;">
 						<a style="color:#000 !important" class="text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="{{URL('dashboard/penjualan')}}">
 							<i class="fas fa-money text-sm ms-1" aria-hidden="true" style="color:#202739"></i>
 							&nbsp; Penjualan
                         </a>
 					</li>
-					<li class="text-sm opacity-5 text-dark" style="margin-right:20px;">
+					<li class="text-sm opacity-5 text-dark listheadercustomer" style="margin-right:20px;">
 						<a style="color:#000 !important" class="text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="{{URL('dashboard/pembelian')}}">
 							<i class="fas fa-shopping-cart text-sm ms-1" aria-hidden="true" style="color:#202739"></i>
 							&nbsp; Pembelian
@@ -293,15 +293,17 @@
 						</li>
 					</ul>
 				</li>
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                </div>
-              </a>
-            </li>
+				@if(Request::segment(2) != 'kasir')
+					<li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+						<a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+							<div class="sidenav-toggler-inner">
+							<i class="sidenav-toggler-line"></i>
+							<i class="sidenav-toggler-line"></i>
+							<i class="sidenav-toggler-line"></i>
+							</div>
+						</a>
+					</li>
+				@endif
 			</ul>
 		</div>
   	</div>
