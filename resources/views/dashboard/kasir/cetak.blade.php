@@ -61,7 +61,7 @@
 				<td>{{$penjualan_details->nama_items}}</td>
 				<td style="text-align: right">{{$penjualan_details->jumlah_penjualan_details}}</td>
 				<td style="text-align: right">{{General::ubahDBKeHarga($penjualan_details->harga_penjualan_details)}}</td>
-				<td style="text-align: right">{{General::ubahDBKeHarga($penjualan_details->sub_total_penjualan_details)}}</td>
+				<td style="text-align: right">{{General::ubahDBKeHarga($penjualan_details->jumlah_penjualan_details * $penjualan_details->harga_penjualan_details)}}</td>
 			</tr>
 			@php($no++)
 		@endforeach

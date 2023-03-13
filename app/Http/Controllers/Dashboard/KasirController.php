@@ -142,14 +142,14 @@ class KasirController extends AdminCoreController
             ];
             $id_penjualans = \App\Models\Transaksi_penjualan::insertGetId($penjualans_data);
 
-            if(!empty($request->id_items))
+            if(!empty($request->items_id))
             {
-                foreach($request->id_items as $key => $id_items)
+                foreach($request->items_id as $key => $id_items)
                 {
-                    if($request->jumlah_penjualan_details[$key] != 0)
+                    if($request->jumlah_penjualan_details[$id_items] != 0)
                     {
-                        $jumlah_penjualan_details   = $request->jumlah_penjualan_details[$key];
-                        $harga_penjualan_details    = General::ubahHargaKeDB($request->harga_penjualan_details[$key]);
+                        $jumlah_penjualan_details   = $request->jumlah_penjualan_details[$id_items];
+                        $harga_penjualan_details    = General::ubahHargaKeDB($request->harga_penjualan_details[$id_items]);
                         $total_penjualan_details    = $jumlah_penjualan_details * $harga_penjualan_details;
 
                         $penjualans_details_data = [
