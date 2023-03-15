@@ -162,13 +162,12 @@ class PembelianController extends AdminCoreController
                                                                                     ->paginate(10);
             }
             $data['hasil_toko']             = $hasil_toko;
-            session()->forget('halaman');
-            session()->forget('hasil_toko');
-            session()->forget('hasil_kata');
-            session()->forget('tanggal_mulai');
-            session()->forget('tanggal_selesai');
-            session()->forget('hasil_tanggal');
             session(['halaman'              => $url_sekarang]);
+            session(['hasil_toko'		    => $hasil_toko]);
+            session(['tanggal_mulai'	    => $tanggal_mulai]);
+            session(['tanggal_selesai'	    => $tanggal_selesai]);
+            session(['hasil_tanggal'	    => $hasil_tanggal]);
+            session(['hasil_kata'		    => $hasil_kata]);
             return view('dashboard.pembelian.lihat', $data);
         }
         else
@@ -214,6 +213,7 @@ class PembelianController extends AdminCoreController
                     $data['lihat_items']    = \App\Models\Master_item::where('tokos_id',$id_tokos)
                                                                     ->orderBy('nama_items')
                                                                     ->get();
+                    $data['id_pembelians']  = $id_pembelians;
                     return view('dashboard.pembelian.listitem',$data);
                 }
                 else
@@ -243,6 +243,47 @@ class PembelianController extends AdminCoreController
         }
     }
 
+    public function listsupplier($id_tokos=0)
+    {
+        $cek_tokos = \App\Models\Master_toko::where('id_tokos',$id_tokos)->count();
+        if($cek_tokos != 0)
+        {
+            $ambil_supplier = \App\Models\Master_supplier::where('tokos_id',$id_tokos)
+                                                        ->orderBy('nama_suppliers')
+                                                        ->get();
+            return json_encode($ambil_supplier);
+        }
+        else
+            return 'anda tidak boleh mengakses halaman ini.';
+    }
+
+    public function teleponsupplier($id_suppliers=0)
+    {
+        $cek_suppliers = \App\Models\Master_supplier::where('id_suppliers',$id_suppliers)->count();
+        if($cek_suppliers != 0)
+        {
+            $ambil_supplier = \App\Models\Master_supplier::where('id_suppliers',$id_suppliers)
+                                                        ->first();
+            return json_encode($ambil_supplier);
+        }
+        else
+            return 'anda tidak boleh mengakses halaman ini.';
+    }
+
+    public function listpembayaran($id_tokos=0)
+    {
+        $cek_tokos = \App\Models\Master_toko::where('id_tokos',$id_tokos)->count();
+        if($cek_tokos != 0)
+        {
+            $ambil_pembayaran = \App\Models\Master_pembayaran::where('tokos_id',$id_tokos)
+                                                        ->orWhere('tokos_id',null)
+                                                        ->get();
+            return json_encode($ambil_pembayaran);
+        }
+        else
+            return 'anda tidak boleh mengakses halaman ini.';
+    }
+
     public function prosestambah(Request $request)
     {
         $link_pembelian = 'pembelian';
@@ -260,6 +301,24 @@ class PembelianController extends AdminCoreController
                 'pembayarans_id.required'           => 'Form Pembayaran Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
+            
+            $total_item = 0;
+            foreach($request->id_items as $key => $id_items)
+            {
+                if($request->jumlah_pembelian_details[$key] != 0)
+                {
+                    $total_item += 1;
+                }
+            }
+            
+            if($total_item == 0)
+            {
+                $setelah_simpan = [
+                    'alert' => 'error',
+                    'text'  => 'Tidak ada item dengan jumlah lebih dari 0'
+                ];
+                return redirect()->back()->with('setelah_simpan',$setelah_simpan)->withInput($request->all());
+            }
 
             $suppliers_id = null;
             if(!empty($request->suppliers_id))
@@ -267,12 +326,28 @@ class PembelianController extends AdminCoreController
                 $cek_suppliers = \App\Models\Master_supplier::where('id_suppliers',$request->suppliers_id)
                                                             ->count();
                 if($cek_suppliers != 0)
+                {
                     $suppliers_id = $request->suppliers_id;
+                    $telepon_suppliers = '';
+                    if(!empty($request->telepon_suppliers))
+                        $telepon_suppliers = $request->telepon_suppliers;
+
+                    $suppliers_data = [
+                        'telepon_suppliers' => $telepon_suppliers,
+                    ];
+                    \App\Models\Master_supplier::where('id_suppliers',$suppliers_id)
+                                                ->update($suppliers_data);
+                }
                 else
                 {
+                    $telepon_suppliers = '';
+                    if(!empty($request->telepon_suppliers))
+                        $telepon_suppliers = $request->telepon_suppliers;
+
                     $suppliers_data = [
                         'tokos_id'          => $request->tokos_id,
                         'nama_suppliers'    => $request->suppliers_id,
+                        'telepon_suppliers' => $telepon_suppliers,
                     ];
                     $suppliers_id = \App\Models\Master_supplier::insertGetId($suppliers_data);
                 }
@@ -427,9 +502,11 @@ class PembelianController extends AdminCoreController
                                                                         ->orderBy('nama_tokos','asc')
                                                                         ->get();
                 }
-                $data['edit_suppliers']   = \App\Models\Master_supplier::orderBy('nama_suppliers')
+                $data['edit_suppliers']   = \App\Models\Master_supplier::where('tokos_id',$cek_pembelians->tokos_id)
+                                                                        ->orderBy('nama_suppliers')
                                                                         ->get();
-                $data['edit_pembayarans'] = \App\Models\Master_pembayaran::orderBy('nama_pembayarans')
+                $data['edit_pembayarans'] = \App\Models\Master_pembayaran::where('tokos_id',$cek_pembelians->tokos_id)
+                                                                            ->orderBy('nama_pembayarans')
                                                                             ->get();
                 $data['edit_pembelians']           = $cek_pembelians;
                 return view('dashboard.pembelian.edit',$data);
@@ -461,6 +538,24 @@ class PembelianController extends AdminCoreController
                     'pembayarans_id.required'           => 'Form Pembayaran Harus Diisi.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
+            
+                $total_item = 0;
+                foreach($request->id_items as $key => $id_items)
+                {
+                    if($request->jumlah_pembelian_details[$key] != 0)
+                    {
+                        $total_item += 1;
+                    }
+                }
+                
+                if($total_item == 0)
+                {
+                    $setelah_simpan = [
+                        'alert' => 'error',
+                        'text'  => 'Tidak ada item dengan jumlah lebih dari 0'
+                    ];
+                    return redirect()->back()->with('setelah_simpan',$setelah_simpan)->withInput($request->all());
+                }
     
                 $suppliers_id = null;
                 if(!empty($request->suppliers_id))
@@ -468,12 +563,28 @@ class PembelianController extends AdminCoreController
                     $cek_suppliers = \App\Models\Master_supplier::where('id_suppliers',$request->suppliers_id)
                                                                 ->count();
                     if($cek_suppliers != 0)
+                    {
                         $suppliers_id = $request->suppliers_id;
+                        $telepon_suppliers = '';
+                        if(!empty($request->telepon_suppliers))
+                            $telepon_suppliers = $request->telepon_suppliers;
+
+                        $suppliers_data = [
+                            'telepon_suppliers' => $telepon_suppliers,
+                        ];
+                        \App\Models\Master_supplier::where('id_suppliers',$suppliers_id)
+                                                    ->update($suppliers_data);
+                    }
                     else
                     {
+                        $telepon_suppliers = '';
+                        if(!empty($request->telepon_suppliers))
+                            $telepon_suppliers = $request->telepon_suppliers;
+
                         $suppliers_data = [
                             'tokos_id'          => $request->tokos_id,
                             'nama_suppliers'    => $request->suppliers_id,
+                            'telepon_suppliers' => $telepon_suppliers,
                         ];
                         $suppliers_id = \App\Models\Master_supplier::insertGetId($suppliers_data);
                     }

@@ -73,6 +73,19 @@ class KasirController extends AdminCoreController
             return 'anda tidak boleh mengakses halaman ini.';
     }
 
+    public function teleponcustomer($id_customers=0)
+    {
+        $cek_customers = \App\Models\Master_customer::where('id_customers',$id_customers)->count();
+        if($cek_customers != 0)
+        {
+            $ambil_customer = \App\Models\Master_customer::where('id_customers',$id_customers)
+                                                        ->first();
+            return json_encode($ambil_customer);
+        }
+        else
+            return 'anda tidak boleh mengakses halaman ini.';
+    }
+
     public function listpembayaran($id_tokos=0)
     {
         $cek_tokos = \App\Models\Master_toko::where('id_tokos',$id_tokos)->count();
@@ -116,12 +129,28 @@ class KasirController extends AdminCoreController
                 $cek_customers = \App\Models\Master_customer::where('id_customers',$request->customers_id)
                                                             ->count();
                 if($cek_customers != 0)
+                {
                     $customers_id = $request->customers_id;
+                    $telepon_customers = '';
+                    if(!empty($request->telepon_customers))
+                        $telepon_customers = $request->telepon_customers;
+
+                    $customers_data = [
+                        'telepon_customers' => $telepon_customers,
+                    ];
+                    \App\Models\Master_customer::where('id_customers',$customers_id)
+                                                ->update($customers_data);
+                }
                 else
                 {
+                    $telepon_customers = '';
+                    if(!empty($request->telepon_customers))
+                        $telepon_customers = $request->telepon_customers;
+
                     $customers_data = [
                         'tokos_id'          => $request->tokos_id,
                         'nama_customers'    => $request->customers_id,
+                        'telepon_customers' => $telepon_customers,
                     ];
                     $customers_id = \App\Models\Master_customer::insertGetId($customers_data);
                 }

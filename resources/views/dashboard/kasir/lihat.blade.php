@@ -46,12 +46,27 @@
 						</div>
 						<div class="form-group">
 							<select class="form-control select2creation" id="customers_id" name="customers_id">
-								
+								@if(Request::old('customers_id') != NULL)
+                            	    <option value="{{Request::old('customers_id')}}">
+                            	        @php($ambil_customers = \App\Models\Master_customer::where('id_customers',intval(Request::old('customers_id')))
+                            	                                                				->first())
+                            	        {{$ambil_customers->nama_customers}}
+                            	    </option>
+                            	@endif
 							</select>
 						</div>
 						<div class="form-group">
+							<input placeholder="Telepon Customer" class="form-control {{ General::validForm($errors->first('telepon_customers')) }}" id="telepon_customers" type="number" name="telepon_customers" value="{{Request::old('telepon_customers')}}">
+						</div>
+						<div class="form-group">
 							<select class="form-control select2" id="pembayarans_id" name="pembayarans_id">
-								
+								@if(Request::old('pembayarans_id') != NULL)
+                            	    <option value="{{Request::old('pembayarans_id')}}">
+                            	        @php($ambil_pembayarans = \App\Models\Master_pembayaran::where('id_pembayarans',intval(Request::old('pembayarans_id')))
+                            	                                                				->first())
+                            	        {{$ambil_pembayarans->nama_pembayarans}}
+                            	    </option>
+                            	@endif
 							</select>
 							{{General::pesanErrorForm($errors->first('pembayarans_id'))}}
 						</div>
@@ -359,7 +374,7 @@
 
 			$('#customers_id').select2({
 				width: '100%',
-              	placeholder: '-',
+              	placeholder: 'Pilih Customer',
 				tags: true,
               	ajax: {
               	    url: '{{URL("dashboard/kasir/listcustomer")}}/'+idtoko,
@@ -384,6 +399,40 @@
               	    },
               	    cache: true
               	}
+			});
+			
+			idcustomer = $('#customers_id :selected').val();
+			if (idcustomer != '')
+			{
+				$.ajax({
+						url: '{{URL("dashboard/kasir/teleponcustomer")}}/'+idcustomer,
+						type: "GET",
+						dataType: 'JSON',
+						success: function(data)
+						{
+							$('#telepon_customers').val(data.telepon_customers);
+						},
+						error: function(data) {
+						}
+				});
+			}
+			$('#customers_id').on('change', function() {
+				idcustomer = $('#customers_id :selected').val();
+				$('#telepon_customers').attr("placeholder", "Masukkan telepon customer");
+				if(idcustomer != '')
+				{
+					$.ajax({
+						url: '{{URL("dashboard/kasir/teleponcustomer")}}/'+idcustomer,
+						type: "GET",
+						dataType: 'JSON',
+						success: function(data)
+						{
+							$('#telepon_customers').val(data.telepon_customers);
+						},
+						error: function(data) {
+						}
+				});
+				}
 			});
 
 			$('#pembayarans_id').select2({
@@ -459,6 +508,8 @@
 						cache: true
 					}
 				});
+
+				$('#telepon_customers').val('');
 
 				$('#pembayarans_id').select2({
 					width: '100%',

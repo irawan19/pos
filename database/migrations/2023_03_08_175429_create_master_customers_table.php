@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('tokos_id')->unsigned()->index()->nullable();
             $table->foreign('tokos_id')->references('id_tokos')->on('master_tokos')->onUpdate('set null')->onDelete('set null');
             $table->string('nama_customers');
+            $table->string('telepon_customers');
             $table->timestamps();
             $table->softDeletes();
         });

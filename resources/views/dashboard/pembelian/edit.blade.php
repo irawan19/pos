@@ -45,37 +45,58 @@
                             <label class="form-col-form-label" for="suppliers_id">Supplier</label>
                             <select class="form-control select2creation" id="suppliers_id" name="suppliers_id">
                                 <option value="">-</option>
-                                @foreach($edit_suppliers as $suppliers)
-				                    @php($selected = '')
-					                @if(Request::old('suppliers_id') == '')
-					                	@if($suppliers->id_suppliers == $edit_pembelians->suppliers_id)
-					                		@php($selected = 'selected')
-					                	@endif
-					                @else
-					                	@if($suppliers->id_suppliers == Request::old('suppliers_id'))
-					                		@php($selected = 'selected')
-					                	@endif
-					                @endif
-                                    <option value="{{$suppliers->id_suppliers}}" {{ $selected }}>{{$suppliers->nama_suppliers}}</option>
-                                @endforeach
+                                @if(Request::old('suppliers_id') != NULL)
+                            	    <option value="{{Request::old('suppliers_id')}}" selected>
+                            	        @php($ambil_suppliers = \App\Models\Master_supplier::where('id_suppliers',intval(Request::old('suppliers_id')))
+                            	                                                				->first())
+                            	        {{$ambil_suppliers->nama_suppliers}}
+                            	    </option>
+                            	@else
+                                    @foreach($edit_suppliers as $suppliers)
+                                        @php($selected = '')
+                                        @if(Request::old('suppliers_id') == '')
+                                            @if($suppliers->id_suppliers == $edit_pembelians->suppliers_id)
+                                                @php($selected = 'selected')
+                                            @endif
+                                        @else
+                                            @if($suppliers->id_suppliers == Request::old('suppliers_id'))
+                                                @php($selected = 'selected')
+                                            @endif
+                                        @endif
+                                        <option value="{{$suppliers->id_suppliers}}" {{ $selected }}>{{$suppliers->nama_suppliers}}</option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
+						<div class="form-group">
+							<label class="form-col-form-label" for="telepon_suppliers">Telepon</label>
+							<input class="form-control {{ General::validForm($errors->first('telepon_suppliers')) }}" id="telepon_suppliers" type="number" name="telepon_suppliers" value="{{Request::old('telepon_suppliers')}}">
+							{{General::pesanErrorForm($errors->first('telepon_suppliers'))}}
+						</div>
                         <div class="form-group">
                             <label class="form-col-form-label" for="pembayarans_id">Pembayaran <b style="color:red">*</b></label>
                             <select class="form-control select2" id="pembayarans_id" name="pembayarans_id">
-                                @foreach($edit_pembayarans as $pembayarans)
-				                    @php($selected = '')
-					                @if(Request::old('pembayarans_id') == '')
-					                	@if($pembayarans->id_pembayarans == $edit_pembelians->pembayarans_id)
-					                		@php($selected = 'selected')
-					                	@endif
-					                @else
-					                	@if($pembayarans->id_pembayarans == Request::old('pembayarans_id'))
-					                		@php($selected = 'selected')
-					                	@endif
-					                @endif
-                                    <option value="{{$pembayarans->id_pembayarans}}" {{ $selected }}>{{$pembayarans->nama_pembayarans}}</option>
-                                @endforeach
+                                @if(Request::old('pembayarans_id') != NULL)
+                            	    <option value="{{Request::old('pembayarans_id')}}" selected>
+                            	        @php($ambil_pembayarans = \App\Models\Master_pembayaran::where('id_pembayarans',intval(Request::old('pembayarans_id')))
+                            	                                                				->first())
+                            	        {{$ambil_pembayarans->nama_pembayarans}}
+                            	    </option>
+                            	@else
+                                    @foreach($edit_pembayarans as $pembayarans)
+                                        @php($selected = '')
+                                        @if(Request::old('pembayarans_id') == '')
+                                            @if($pembayarans->id_pembayarans == $edit_pembelians->pembayarans_id)
+                                                @php($selected = 'selected')
+                                            @endif
+                                        @else
+                                            @if($pembayarans->id_pembayarans == Request::old('pembayarans_id'))
+                                                @php($selected = 'selected')
+                                            @endif
+                                        @endif
+                                        <option value="{{$pembayarans->id_pembayarans}}" {{ $selected }}>{{$pembayarans->nama_pembayarans}}</option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                         <div class="form-group">
@@ -102,6 +123,10 @@
                         <strong>Detail Pembelian</strong>
                     </div>
                     <div class="card-body">
+						@if (Session::get('setelah_simpan.alert') == 'error')
+							{{ General::pesanFlashErrorForm(Session::get('setelah_simpan.text')) }}
+						@endif
+						<br/>
                         <div class="listitem"></div>
                     </div>
                     <div class="card-footer right-align">
@@ -119,12 +144,169 @@
     </form>
 
     <script type="text/javascript">
+        jQuery(document).ready(function() {
         idtoko = $('#tokos_id :selected').val();
-        $('.listitem').load('{{URL("/dashboard/pembelian/listitem")}}/'+idtoko+'/{{$edit_pembelians->id_pembelians}}');
-
-        $('.tokos_id').on('change', async function() {
-            idtoko = $('#tokos_id :selected').val();
             $('.listitem').load('{{URL("/dashboard/pembelian/listitem")}}/'+idtoko+'/{{$edit_pembelians->id_pembelians}}');
+
+            $('#suppliers_id').select2({
+                width: '100%',
+                placeholder: 'Pilih Supplier',
+                tags: true,
+                ajax: {
+                    url: '{{URL("dashboard/pembelian/listsupplier")}}/'+idtoko,
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        var queryParameters = {
+                            term: params.term
+                        }
+                        return queryParameters;
+                    },
+                    processResults: function (data) {
+                        return {
+                            results:  $.map(data, function (item) {
+                                return {
+                                    text: item.nama_suppliers,
+                                    id: item.id_suppliers,
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            idsupplier = $('#suppliers_id :selected').val();
+			if(idsupplier != '')
+			{
+				$.ajax({
+						url: '{{URL("dashboard/pembelian/teleponsupplier")}}/'+idsupplier,
+						type: "GET",
+						dataType: 'JSON',
+						success: function(data)
+						{
+							$('#telepon_suppliers').val(data.telepon_suppliers);
+						},
+						error: function(data) {
+						}
+				});
+			}
+            $('#suppliers_id').on('change', function() {
+                idsupplier = $('#suppliers_id :selected').val();
+				$('#telepon_suppliers').attr("placeholder", "Masukkan telepon supplier");
+                if(idsupplier != '')
+			    {
+                    $.ajax({
+                            url: '{{URL("dashboard/pembelian/teleponsupplier")}}/'+idsupplier,
+                            type: "GET",
+                            dataType: 'JSON',
+                            success: function(data)
+                            {
+                                $('#telepon_suppliers').val(data.telepon_suppliers);
+                            },
+                            error: function(data) {
+                            }
+                    });
+                }
+            });
+
+            $('#pembayarans_id').select2({
+                width: '100%',
+                placeholder: 'Pilih Pembayaran',
+                tags: true,
+                ajax: {
+                    url: '{{URL("dashboard/pembelian/listpembayaran")}}/'+idtoko,
+                    dataType: 'json',
+                    delay: 250,
+                    type: "GET",
+                    data: function (params) {
+                        var queryParameters = {
+                            term: params.term
+                        }
+                        return queryParameters;
+                    },
+                    processResults: function (data) {
+                        return {
+                            results:  $.map(data, function (item) {
+                                return {
+                                    text: item.nama_pembayarans,
+                                    id: item.id_pembayarans,
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            $('#tokos_id').on('change', function() {
+                idtoko = $('#tokos_id :selected').val();
+                $('#suppliers_id').val('').trigger('change');
+                $('#pembayarans_id').val('').trigger('change');
+                $('#telepon_suppliers').val('');
+                $('.listitem').load('{{URL("/dashboard/pembelian/listitem")}}/'+idtoko+'/{{$edit_pembelians->id_pembelians}}');
+
+                $('#suppliers_id').select2({
+                    width: '100%',
+                    placeholder: 'Pilih Supplier',
+                    tags: true,
+                    ajax: {
+                        url: '{{URL("dashboard/pembelian/listsupplier")}}/'+idtoko,
+                        dataType: 'json',
+                        delay: 250,
+                        type: "GET",
+                        data: function (params) {
+                            var queryParameters = {
+                                term: params.term
+                            }
+                            return queryParameters;
+                        },
+                        processResults: function (data) {
+                            return {
+                                results:  $.map(data, function (item) {
+                                    return {
+                                        text: item.nama_suppliers,
+                                        id: item.id_suppliers,
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
+
+                $('#telepon_suppliers').val('');
+
+                $('#pembayarans_id').select2({
+                    width: '100%',
+                    placeholder: 'Pilih Pembayaran',
+                    tags: true,
+                    ajax: {
+                        url: '{{URL("dashboard/pembelian/listpembayaran")}}/'+idtoko,
+                        dataType: 'json',
+                        delay: 250,
+                        type: "GET",
+                        data: function (params) {
+                            var queryParameters = {
+                                term: params.term
+                            }
+                            return queryParameters;
+                        },
+                        processResults: function (data) {
+                            return {
+                                results:  $.map(data, function (item) {
+                                    return {
+                                        text: item.nama_pembayarans,
+                                        id: item.id_pembayarans,
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
+            });
         });
     </script>
 

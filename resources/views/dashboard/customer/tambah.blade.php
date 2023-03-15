@@ -26,6 +26,11 @@
 							<input class="form-control {{ General::validForm($errors->first('nama_customers')) }}" id="nama_customers" type="text" name="nama_customers" value="{{Request::old('nama_customers')}}">
 							{{General::pesanErrorForm($errors->first('nama_customers'))}}
 						</div>
+						<div class="form-group">
+							<label class="form-col-form-label" for="telepon_customers">Telepon <b style="color:red">*</b></label>
+							<input class="form-control {{ General::validForm($errors->first('telepon_customers')) }}" id="telepon_customers" type="number" name="telepon_customers" value="{{Request::old('telepon_customers')}}">
+							{{General::pesanErrorForm($errors->first('telepon_customers'))}}
+						</div>
 					</div>
 			        <div class="card-footer right-align">
 						{{General::simpan()}}

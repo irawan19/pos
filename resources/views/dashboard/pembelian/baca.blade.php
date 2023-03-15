@@ -30,6 +30,11 @@
 							<td>{{$baca_pembelians->nama_suppliers}}</td>
 						</tr>
 						<tr>
+							<th>Telepon Supplier</th>
+							<th>:</th>
+							<td>{{$baca_pembelians->telepon_suppliers}}</td>
+						</tr>
+						<tr>
 							<th>Admin</th>
 							<th>:</th>
 							<td>{{$baca_pembelians->name}}</td>

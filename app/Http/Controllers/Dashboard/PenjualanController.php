@@ -95,10 +95,6 @@ class PenjualanController extends AdminCoreController
                                                                                         ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
-                                                                                        ->orWhere('referensi_no_nota_penjualans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('transaksi_penjualans.tokos_id',$hasil_toko)
-                                                                                        ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
-                                                                                        ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                         ->orWhere('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
                                                                                         ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
@@ -116,9 +112,6 @@ class PenjualanController extends AdminCoreController
                                                                                         ->join('users','users_id','=','users.id')
                                                                                         ->leftJoin('master_customers','customers_id','=','master_customers.id_customers')
                                                                                         ->where('no_penjualans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
-                                                                                        ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
-                                                                                        ->orWhere('referensi_no_nota_penjualans', 'LIKE', '%'.$hasil_kata.'%')
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                         ->orWhere('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
@@ -145,10 +138,6 @@ class PenjualanController extends AdminCoreController
                                                                                     ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
-                                                                                    ->orWhere('referensi_no_nota_penjualans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                    ->where('transaksi_penjualans.tokos_id',$hasil_toko)
-                                                                                    ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
-                                                                                    ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                     ->orWhere('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
                                                                                     ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
@@ -160,13 +149,12 @@ class PenjualanController extends AdminCoreController
                                                                                     ->paginate(10);
             }
             $data['hasil_toko']             = $hasil_toko;
-            session()->forget('halaman');
-            session()->forget('hasil_toko');
-            session()->forget('hasil_kata');
-            session()->forget('tanggal_mulai');
-            session()->forget('tanggal_selesai');
-            session()->forget('hasil_tanggal');
             session(['halaman'              => $url_sekarang]);
+            session(['hasil_toko'		    => $hasil_toko]);
+            session(['tanggal_mulai'	    => $tanggal_mulai]);
+            session(['tanggal_selesai'	    => $tanggal_selesai]);
+            session(['hasil_tanggal'	    => $hasil_tanggal]);
+            session(['hasil_kata'		    => $hasil_kata]);
             return view('dashboard.penjualan.lihat', $data);
         }
         else
@@ -189,10 +177,6 @@ class PenjualanController extends AdminCoreController
                                                                     ->orderBy('nama_tokos','asc')
                                                                     ->get();
             }
-            $data['tambah_customers']   = \App\Models\Master_customer::orderBy('nama_customers')
-                                                                    ->get();
-            $data['tambah_pembayarans'] = \App\Models\Master_pembayaran::orderBy('nama_pembayarans')
-                                                                        ->get();
             return view('dashboard.penjualan.tambah',$data);
         }
         else
@@ -212,6 +196,7 @@ class PenjualanController extends AdminCoreController
                     $data['lihat_items']    = \App\Models\Master_item::where('tokos_id',$id_tokos)
                                                                     ->orderBy('nama_items')
                                                                     ->get();
+                    $data['id_penjualans']  = $id_penjualans;
                     return view('dashboard.penjualan.listitem',$data);
                 }
                 else
@@ -241,6 +226,47 @@ class PenjualanController extends AdminCoreController
         }
     }
 
+    public function listcustomer($id_tokos=0)
+    {
+        $cek_tokos = \App\Models\Master_toko::where('id_tokos',$id_tokos)->count();
+        if($cek_tokos != 0)
+        {
+            $ambil_customer = \App\Models\Master_customer::where('tokos_id',$id_tokos)
+                                                        ->orderBy('nama_customers')
+                                                        ->get();
+            return json_encode($ambil_customer);
+        }
+        else
+            return 'anda tidak boleh mengakses halaman ini.';
+    }
+
+    public function teleponcustomer($id_customers=0)
+    {
+        $cek_customers = \App\Models\Master_customer::where('id_customers',$id_customers)->count();
+        if($cek_customers != 0)
+        {
+            $ambil_customer = \App\Models\Master_customer::where('id_customers',$id_customers)
+                                                        ->first();
+            return json_encode($ambil_customer);
+        }
+        else
+            return 'anda tidak boleh mengakses halaman ini.';
+    }
+
+    public function listpembayaran($id_tokos=0)
+    {
+        $cek_tokos = \App\Models\Master_toko::where('id_tokos',$id_tokos)->count();
+        if($cek_tokos != 0)
+        {
+            $ambil_pembayaran = \App\Models\Master_pembayaran::where('tokos_id',$id_tokos)
+                                                        ->orWhere('tokos_id',null)
+                                                        ->get();
+            return json_encode($ambil_pembayaran);
+        }
+        else
+            return 'anda tidak boleh mengakses halaman ini.';
+    }
+
     public function prosestambah(Request $request)
     {
         $link_penjualan = 'penjualan';
@@ -258,6 +284,24 @@ class PenjualanController extends AdminCoreController
                 'pembayarans_id.required'           => 'Form Pembayaran Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
+            
+            $total_item = 0;
+            foreach($request->id_items as $key => $id_items)
+            {
+                if($request->jumlah_penjualan_details[$key] != 0)
+                {
+                    $total_item += 1;
+                }
+            }
+            
+            if($total_item == 0)
+            {
+                $setelah_simpan = [
+                    'alert' => 'error',
+                    'text'  => 'Tidak ada item dengan jumlah lebih dari 0'
+                ];
+                return redirect()->back()->with('setelah_simpan',$setelah_simpan)->withInput($request->all());
+            }
 
             $customers_id = null;
             if(!empty($request->customers_id))
@@ -265,20 +309,32 @@ class PenjualanController extends AdminCoreController
                 $cek_customers = \App\Models\Master_customer::where('id_customers',$request->customers_id)
                                                             ->count();
                 if($cek_customers != 0)
+                {
                     $customers_id = $request->customers_id;
+                    $telepon_customers = '';
+                    if(!empty($request->telepon_customers))
+                        $telepon_customers = $request->telepon_customers;
+
+                    $customers_data = [
+                        'telepon_customers' => $telepon_customers,
+                    ];
+                    \App\Models\Master_customer::where('id_customers',$customers_id)
+                                                ->update($customers_data);
+                }
                 else
                 {
+                    $telepon_customers = '';
+                    if(!empty($request->telepon_customers))
+                        $telepon_customers = $request->telepon_customers;
+
                     $customers_data = [
                         'tokos_id'          => $request->tokos_id,
                         'nama_customers'    => $request->customers_id,
+                        'telepon_customers' => $telepon_customers,
                     ];
                     $customers_id = \App\Models\Master_customer::insertGetId($customers_data);
                 }
             }
-
-            $referensi_no_nota_penjualans = '';
-            if(!empty($request->referensi_no_nota_penjualans))
-                $referensi_no_nota_penjualans = $request->referensi_no_nota_penjualans;
 
             $pajak_penjualans = 0;
             if(!empty($request->pajak_penjualans))
@@ -298,7 +354,6 @@ class PenjualanController extends AdminCoreController
                 'pembayarans_id'                    => $request->pembayarans_id,
                 'users_id'                          => Auth::user()->id,
                 'no_penjualans'                     => General::noPenjualan(),
-                'referensi_no_nota_penjualans'      => $referensi_no_nota_penjualans,
                 'tanggal_penjualans'                => General::ubahTanggalKeDB($request->tanggal_penjualans),
                 'keterangan_penjualans'             => $keterangan_penjualans,
                 'pembayarans_id'                    => $request->pembayarans_id,
@@ -425,10 +480,13 @@ class PenjualanController extends AdminCoreController
                                                                         ->orderBy('nama_tokos','asc')
                                                                         ->get();
                 }
-                $data['edit_customers']   = \App\Models\Master_customer::orderBy('nama_customers')
+                $data['edit_customers']   = \App\Models\Master_customer::where('tokos_id',$cek_penjualans->tokos_id)
+                                                                        ->orderBy('nama_customers')
                                                                         ->get();
-                $data['edit_pembayarans'] = \App\Models\Master_pembayaran::orderBy('nama_pembayarans')
-                                                                            ->get();
+                $data['edit_pembayarans'] = \App\Models\Master_pembayaran::where('tokos_id',$cek_penjualans->tokos_id)
+                                                                        ->orWhere('tokos_id',null)
+                                                                        ->orderBy('nama_pembayarans')
+                                                                        ->get();
                 $data['edit_penjualans']           = $cek_penjualans;
                 return view('dashboard.penjualan.edit',$data);
             }
@@ -459,6 +517,24 @@ class PenjualanController extends AdminCoreController
                     'pembayarans_id.required'           => 'Form Pembayaran Harus Diisi.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
+            
+                $total_item = 0;
+                foreach($request->id_items as $key => $id_items)
+                {
+                    if($request->jumlah_penjualan_details[$key] != 0)
+                    {
+                        $total_item += 1;
+                    }
+                }
+                
+                if($total_item == 0)
+                {
+                    $setelah_simpan = [
+                        'alert' => 'error',
+                        'text'  => 'Tidak ada item dengan jumlah lebih dari 0'
+                    ];
+                    return redirect()->back()->with('setelah_simpan',$setelah_simpan)->withInput($request->all());
+                }
     
                 $customers_id = null;
                 if(!empty($request->customers_id))
@@ -466,20 +542,32 @@ class PenjualanController extends AdminCoreController
                     $cek_customers = \App\Models\Master_customer::where('id_customers',$request->customers_id)
                                                                 ->count();
                     if($cek_customers != 0)
+                    {
                         $customers_id = $request->customers_id;
+                        $telepon_customers = '';
+                        if(!empty($request->telepon_customers))
+                            $telepon_customers = $request->telepon_customers;
+
+                        $customers_data = [
+                            'telepon_customers' => $telepon_customers,
+                        ];
+                        \App\Models\Master_customer::where('id_customers',$customers_id)
+                                                    ->update($customers_data);
+                    }
                     else
                     {
+                        $telepon_customers = '';
+                        if(!empty($request->telepon_customers))
+                            $telepon_customers = $request->telepon_customers;
+
                         $customers_data = [
                             'tokos_id'          => $request->tokos_id,
                             'nama_customers'    => $request->customers_id,
+                            'telepon_customers' => $telepon_customers,
                         ];
                         $customers_id = \App\Models\Master_customer::insertGetId($customers_data);
                     }
                 }
-    
-                $referensi_no_nota_penjualans = '';
-                if(!empty($request->referensi_no_nota_penjualans))
-                    $referensi_no_nota_penjualans = $request->referensi_no_nota_penjualans;
     
                 $pajak_penjualans = 0;
                 if(!empty($request->pajak_penjualans))
@@ -498,7 +586,6 @@ class PenjualanController extends AdminCoreController
                     'customers_id'                      => $customers_id,
                     'pembayarans_id'                    => $request->pembayarans_id,
                     'users_id'                          => Auth::user()->id,
-                    'referensi_no_nota_penjualans'      => $referensi_no_nota_penjualans,
                     'tanggal_penjualans'                => General::ubahTanggalKeDB($request->tanggal_penjualans),
                     'keterangan_penjualans'             => $keterangan_penjualans,
                     'pembayarans_id'                    => $request->pembayarans_id,

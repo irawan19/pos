@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 13, 2023 at 05:07 AM
+-- Generation Time: Mar 15, 2023 at 06:02 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.9
 
@@ -139,6 +139,7 @@ CREATE TABLE `master_customers` (
   `id_customers` int UNSIGNED NOT NULL,
   `tokos_id` int UNSIGNED DEFAULT NULL,
   `nama_customers` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telepon_customers` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -453,6 +454,7 @@ CREATE TABLE `master_suppliers` (
   `id_suppliers` int UNSIGNED NOT NULL,
   `tokos_id` int UNSIGNED DEFAULT NULL,
   `nama_suppliers` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telepon_suppliers` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL

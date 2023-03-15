@@ -65,11 +65,13 @@ class SupplierController extends AdminCoreController
                     $data['lihat_suppliers']            = \App\Models\Master_supplier::join('master_tokos','master_suppliers.tokos_id','=','master_tokos.id_tokos')
                                                                                     ->where('nama_suppliers', 'LIKE', '%'.$hasil_kata.'%')
                                                                                     ->where('id_tokos',$hasil_toko)
+                                                                                    ->orWhere('telepon_suppliers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                    ->where('id_tokos',$hasil_toko)
                                                                                     ->paginate(10);
                 }
                 else
                 {
-                    $data['lihat_suppliers']            = \App\Models\Master_supplier::join('master_tokos','master_suppliers.tokos_id','=','master_tokos.id_tokos')
+                    $data['lihat_suppliers']            = \App\Models\Master_supplier::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
                                                                                     ->where('nama_suppliers', 'LIKE', '%'.$hasil_kata.'%')
                                                                                     ->paginate(10);
                 }
@@ -81,6 +83,8 @@ class SupplierController extends AdminCoreController
                                                                         ->get();
                 $data['lihat_suppliers']            = \App\Models\Master_supplier::join('master_tokos','master_suppliers.tokos_id','=','master_tokos.id_tokos')
                                                                                 ->where('nama_suppliers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                ->where('id_tokos',$hasil_toko)
+                                                                                ->orWhere('telepon_suppliers', 'LIKE', '%'.$hasil_kata.'%')
                                                                                 ->where('id_tokos',$hasil_toko)
                                                                                 ->paginate(10);
             }
@@ -131,9 +135,14 @@ class SupplierController extends AdminCoreController
             ];
             $this->validate($request, $aturan, $error_pesan);
 
+            $telepon_suppliers = '';
+            if(!empty($request->telepon_suppliers))
+                $telepon_suppliers = $request->telepon_suppliers;
+
             $suppliers_data = [
                 'tokos_id'                                    => $request->tokos_id,
                 'nama_suppliers'                              => $request->nama_suppliers,
+                'telepon_suppliers'                           => $telepon_suppliers,
                 'created_at'                                  => date('Y-m-d H:i:s'),
             ];
             $id_suppliers = \App\Models\Master_supplier::insertGetId($suppliers_data);
@@ -209,10 +218,15 @@ class SupplierController extends AdminCoreController
                     'nama_suppliers.required'                     => 'Form Nama Harus Diisi.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
+
+                $telepon_suppliers = '';
+                if(!empty($request->telepon_suppliers))
+                    $telepon_suppliers = $request->telepon_suppliers;
         
                 $suppliers_data = [
                     'tokos_id'                                    => $request->tokos_id,
                     'nama_suppliers'                              => $request->nama_suppliers,
+                    'telepon_suppliers'                           => $telepon_suppliers,
                     'updated_at'                                  => date('Y-m-d H:i:s'),
                 ];
                 \App\Models\Master_supplier::where('id_suppliers',$id_suppliers)

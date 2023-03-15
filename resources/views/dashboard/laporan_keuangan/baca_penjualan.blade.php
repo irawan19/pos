@@ -30,6 +30,11 @@
 							<td>{{$baca_laporan_penjualans->nama_customers}}</td>
 						</tr>
 						<tr>
+							<th>Telepon Customer</th>
+							<th>:</th>
+							<td>{{$baca_laporan_penjualans->telepon_customers}}</td>
+						</tr>
+						<tr>
 							<th>Admin</th>
 							<th>:</th>
 							<td>{{$baca_laporan_penjualans->name}}</td>

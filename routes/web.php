@@ -91,6 +91,7 @@ Route::middleware([
             Route::get('/listitem/{id}', [DashboardKasir::class, 'listitem']);
             Route::get('/listitem/{id}/{cari}', [DashboardKasir::class, 'listitem']);
             Route::get('/listcustomer/{id}', [DashboardKasir::class, 'listcustomer']);
+            Route::get('/teleponcustomer/{id}', [DashboardKasir::class, 'teleponcustomer']);
             Route::get('/listpembayaran/{id}', [DashboardKasir::class, 'listpembayaran']);
             Route::post('/proses', [DashboardKasir::class, 'proses']);
             Route::get('/cetak_penjualan/{id}', [DashboardKasir::class, 'cetak_penjualan']);
@@ -189,6 +190,9 @@ Route::middleware([
                 Route::post('/prosesedit/{id}', [DashboardPenjualan::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardPenjualan::class, 'hapus']);
                 Route::get('/listitem/{id_item}/{id_penjualan}', [DashboardPenjualan::class, 'listitem']);
+                Route::get('/listcustomer/{id}', [DashboardPenjualan::class, 'listcustomer']);
+                Route::get('/teleponcustomer/{id}', [DashboardPenjualan::class, 'teleponcustomer']);
+                Route::get('/listpembayaran/{id}', [DashboardPenjualan::class, 'listpembayaran']);
             });
 
             //Pembelian
@@ -202,6 +206,9 @@ Route::middleware([
                 Route::post('/prosesedit/{id}', [DashboardPembelian::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardPembelian::class, 'hapus']);
                 Route::get('/listitem/{id_item}/{id_pembelian}', [DashboardPembelian::class, 'listitem']);
+                Route::get('/listsupplier/{id}', [DashboardPembelian::class, 'listsupplier']);
+                Route::get('/teleponsupplier/{id}', [DashboardPembelian::class, 'teleponsupplier']);
+                Route::get('/listpembayaran/{id}', [DashboardPembelian::class, 'listpembayaran']);
             });
 
         //Laporan

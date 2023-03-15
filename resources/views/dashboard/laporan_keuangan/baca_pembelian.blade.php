@@ -30,6 +30,11 @@
 							<td>{{$baca_laporan_pembelians->nama_suppliers}}</td>
 						</tr>
 						<tr>
+							<th>Telepon Supplier</th>
+							<th>:</th>
+							<td>{{$baca_laporan_pembelians->telepon_suppliers}}</td>
+						</tr>
+						<tr>
 							<th>Admin</th>
 							<th>:</th>
 							<td>{{$baca_laporan_pembelians->name}}</td>

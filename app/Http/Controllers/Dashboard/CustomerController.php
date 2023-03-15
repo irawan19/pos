@@ -65,6 +65,8 @@ class CustomerController extends AdminCoreController
                     $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','master_customers.tokos_id','=','master_tokos.id_tokos')
                                                                                     ->where('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
                                                                                     ->where('id_tokos',$hasil_toko)
+                                                                                    ->orWhere('telepon_customers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                    ->where('id_tokos',$hasil_toko)
                                                                                     ->paginate(10);
                 }
                 else
@@ -81,6 +83,8 @@ class CustomerController extends AdminCoreController
                                                                         ->get();
                 $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','master_customers.tokos_id','=','master_tokos.id_tokos')
                                                                                 ->where('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                ->where('id_tokos',$hasil_toko)
+                                                                                ->orWhere('telepon_customers', 'LIKE', '%'.$hasil_kata.'%')
                                                                                 ->where('id_tokos',$hasil_toko)
                                                                                 ->paginate(10);
             }
@@ -131,9 +135,14 @@ class CustomerController extends AdminCoreController
             ];
             $this->validate($request, $aturan, $error_pesan);
 
+            $telepon_customers = '';
+            if(!empty($request->telepon_customers))
+                $telepon_customers = $request->telepon_customers;
+
             $customers_data = [
                 'tokos_id'                                    => $request->tokos_id,
                 'nama_customers'                              => $request->nama_customers,
+                'telepon_customers'                           => $telepon_customers,
                 'created_at'                                  => date('Y-m-d H:i:s'),
             ];
             $id_customers = \App\Models\Master_customer::insertGetId($customers_data);
@@ -209,10 +218,15 @@ class CustomerController extends AdminCoreController
                     'nama_customers.required'                     => 'Form Nama Harus Diisi.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
+
+                $telepon_customers = '';
+                if(!empty($request->telepon_customers))
+                    $telepon_customers = $request->telepon_customers;
         
                 $customers_data = [
                     'tokos_id'                                    => $request->tokos_id,
                     'nama_customers'                              => $request->nama_customers,
+                    'telepon_customers'                           => $telepon_customers,
                     'updated_at'                                  => date('Y-m-d H:i:s'),
                 ];
                 \App\Models\Master_customer::where('id_customers',$id_customers)

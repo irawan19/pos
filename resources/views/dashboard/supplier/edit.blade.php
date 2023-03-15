@@ -33,6 +33,11 @@
 							<input class="form-control {{ General::validForm($errors->first('nama_suppliers')) }}" id="nama_suppliers" type="text" name="nama_suppliers" value="{{Request::old('nama_suppliers') == '' ? $edit_suppliers->nama_suppliers : Request::old('nama_suppliers')}}">
 							{{General::pesanErrorForm($errors->first('nama_suppliers'))}}
 						</div>
+						<div class="form-group">
+							<label class="form-col-form-label" for="telepon_suppliers">Telepon <b style="color:red">*</b></label>
+							<input class="form-control {{ General::validForm($errors->first('telepon_suppliers')) }}" id="telepon_suppliers" type="number" name="telepon_suppliers" value="{{Request::old('telepon_suppliers') == '' ? $edit_suppliers->telepon_suppliers : Request::old('telepon_suppliers')}}">
+							{{General::pesanErrorForm($errors->first('telepon_suppliers'))}}
+						</div>
 					</div>
 			        <div class="card-footer right-align">
 						{{General::perbarui()}}
