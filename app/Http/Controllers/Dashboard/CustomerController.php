@@ -21,7 +21,7 @@ class CustomerController extends AdminCoreController
                 $data['lihat_tokos']                = \App\Models\Master_toko::orderBy('nama_tokos')
                                                                         ->get();
                 $hasil_toko                         = '';
-        	    $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+        	    $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','master_customers.tokos_id','=','master_tokos.id_tokos')
                                                                                 ->paginate(10);
             }
             else
@@ -30,8 +30,8 @@ class CustomerController extends AdminCoreController
                                                                                 ->orderBy('nama_tokos')
                                                                                 ->get();
                 $hasil_toko                         = Auth::user()->tokos_id;
-        	    $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
-                                                                                    ->where('tokos_id',$hasil_toko)
+        	    $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','master_customers.tokos_id','=','master_tokos.id_tokos')
+                                                                                    ->where('id_tokos',$hasil_toko)
                                                                                     ->paginate(10);
             }
             $data['hasil_toko']             = $hasil_toko;
@@ -62,9 +62,9 @@ class CustomerController extends AdminCoreController
                                                                         ->get();
                 if($hasil_toko != '')
                 {
-                    $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                    $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','master_customers.tokos_id','=','master_tokos.id_tokos')
                                                                                     ->where('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->where('id_tokos',$hasil_toko)
                                                                                     ->paginate(10);
                 }
                 else
@@ -79,9 +79,9 @@ class CustomerController extends AdminCoreController
                 $data['lihat_tokos']        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
                                                                         ->orderBy('nama_tokos')
                                                                         ->get();
-                $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                $data['lihat_customers']            = \App\Models\Master_customer::join('master_tokos','master_customers.tokos_id','=','master_tokos.id_tokos')
                                                                                 ->where('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                ->where('tokos_id',$hasil_toko)
+                                                                                ->where('id_tokos',$hasil_toko)
                                                                                 ->paginate(10);
             }
             session(['halaman'              => $url_sekarang]);

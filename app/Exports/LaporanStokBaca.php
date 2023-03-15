@@ -38,7 +38,7 @@ class LaporanStokBaca implements FromView, ShouldQueue
         $data['tanggal_mulai'] 	    = $tanggal_mulai;
         $data['tanggal_selesai']	= $tanggal_selesai;
 
-        $data['baca_items']                         = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+        $data['baca_items']                         = \App\Models\Master_item::join('master_tokos','master_items.tokos_id','=','master_tokos.id_tokos')
                                                                                 ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                                 ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
                                                                                 ->where('id_items',$id_items)

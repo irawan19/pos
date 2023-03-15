@@ -27,7 +27,7 @@ class PenjualanController extends AdminCoreController
                 $data['lihat_tokos']        = \App\Models\Master_toko::orderBy('nama_tokos')
                                                                         ->get();
                 $hasil_toko                 = '';
-                $data['lihat_penjualans']           = \App\Models\Transaksi_penjualan::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                $data['lihat_penjualans']           = \App\Models\Transaksi_penjualan::join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                     ->join('users','users_id','=','users.id')
                                                                                     ->leftJoin('master_customers','customers_id','=','master_customers.id_customers')
@@ -41,11 +41,11 @@ class PenjualanController extends AdminCoreController
                                                                         ->orderBy('nama_tokos')
                                                                         ->get();
                 $hasil_toko                 = Auth::user()->tokos_id;
-                $data['lihat_penjualans']           = \App\Models\Transaksi_penjualan::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                $data['lihat_penjualans']           = \App\Models\Transaksi_penjualan::join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                     ->join('users','users_id','=','users.id')
                                                                                     ->leftJoin('master_customers','customers_id','=','master_customers.id_customers')
-                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                     ->paginate(10);
@@ -87,31 +87,31 @@ class PenjualanController extends AdminCoreController
                                                                         ->get();
                 if($hasil_toko != '')
                 {
-                    $data['lihat_penjualans']           = \App\Models\Transaksi_penjualan::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                    $data['lihat_penjualans']           = \App\Models\Transaksi_penjualan::join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                         ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                         ->join('users','users_id','=','users.id')
                                                                                         ->leftJoin('master_customers','customers_id','=','master_customers.id_customers')
                                                                                         ->where('no_penjualans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                         ->orWhere('referensi_no_nota_penjualans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                         ->orWhere('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                         ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                         ->paginate(10);
                 }
                 else
                 {
-                    $data['lihat_penjualans']           = \App\Models\Transaksi_penjualan::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                    $data['lihat_penjualans']           = \App\Models\Transaksi_penjualan::join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                         ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                         ->join('users','users_id','=','users.id')
                                                                                         ->leftJoin('master_customers','customers_id','=','master_customers.id_customers')
@@ -122,11 +122,11 @@ class PenjualanController extends AdminCoreController
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                         ->orWhere('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                         ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                         ->paginate(10);
@@ -137,24 +137,24 @@ class PenjualanController extends AdminCoreController
                 $data['lihat_tokos']        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
                                                                         ->orderBy('nama_tokos')
                                                                         ->get();
-                $data['lihat_penjualans']           = \App\Models\Transaksi_penjualan::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                $data['lihat_penjualans']           = \App\Models\Transaksi_penjualan::join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                     ->join('users','users_id','=','users.id')
                                                                                     ->leftJoin('master_customers','customers_id','=','master_customers.id_customers')
                                                                                     ->where('no_penjualans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                     ->orWhere('referensi_no_nota_penjualans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                     ->orWhere('nama_customers', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                     ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                     ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
                                                                                     ->paginate(10);
@@ -386,7 +386,7 @@ class PenjualanController extends AdminCoreController
             $cek_penjualans = \App\Models\Transaksi_penjualan::where('id_penjualans',$id_penjualans)->count();
             if($cek_penjualans != 0)
             {
-                $data['baca_penjualans']        = \App\Models\Transaksi_penjualan::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                $data['baca_penjualans']        = \App\Models\Transaksi_penjualan::join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                             ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                             ->join('users','users_id','=','users.id')
                                                                             ->leftJoin('master_customers','customers_id','=','master_customers.id_customers')

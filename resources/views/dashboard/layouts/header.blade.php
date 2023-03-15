@@ -144,9 +144,9 @@
 
 							@if($total_notifikasi_stok != 0)
 								@if(Auth::user()->tokos_id == null)
-									@php($ambil_notifikasi_stok = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')->where('stok_items',0)->orderBy('nama_items','asc')->get())
+									@php($ambil_notifikasi_stok = \App\Models\Master_item::join('master_tokos','master_items.tokos_id','=','master_tokos.id_tokos')->where('stok_items',0)->orderBy('nama_items','asc')->get())
 								@else
-									@php($ambil_notifikasi_stok = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')->where('stok_items',0)->where('id_tokos',Auth::user()->tokos_id)->orderBy('nama_items','asc')->get())
+									@php($ambil_notifikasi_stok = \App\Models\Master_item::join('master_tokos','master_items.tokos_id','=','master_tokos.id_tokos')->where('stok_items',0)->where('id_tokos',Auth::user()->tokos_id)->orderBy('nama_items','asc')->get())
 								@endif
 							
 								@foreach($ambil_notifikasi_stok as $notifikasi_stok)

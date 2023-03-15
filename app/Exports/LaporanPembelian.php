@@ -38,7 +38,7 @@ class LaporanPembelian implements FromView, ShouldQueue
         {
             $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*,
                                                                                                     transaksi_pembelians.tanggal_pembelians AS tanggal_pembelians')
-                                                                                        ->join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                        ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                         ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                         ->join('users','users_id','=','users.id')
                                                                                         ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
@@ -65,7 +65,7 @@ class LaporanPembelian implements FromView, ShouldQueue
         {
             $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*,
                                                                                                     transaksi_pembelians.tanggal_pembelians AS tanggal_pembelians')
-                                                                                        ->join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                        ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                         ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                         ->join('users','users_id','=','users.id')
                                                                                         ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')

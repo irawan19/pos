@@ -21,7 +21,7 @@ class PembayaranController extends AdminCoreController
                 $data['lihat_tokos']        = \App\Models\Master_toko::orderBy('nama_tokos')
                                                                         ->get();
                 $hasil_toko                 = '';
-                $data['lihat_pembayarans']  = \App\Models\Master_pembayaran::leftjoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                $data['lihat_pembayarans']  = \App\Models\Master_pembayaran::leftjoin('master_tokos','master_pembayarans.tokos_id','=','master_tokos.id_tokos')
                                                                             ->paginate(10);
             }
             else
@@ -30,8 +30,9 @@ class PembayaranController extends AdminCoreController
                                                                         ->orderBy('nama_tokos')
                                                                         ->get();
                 $hasil_toko                 = Auth::user()->tokos_id;
-                $data['lihat_pembayarans']      = \App\Models\Master_pembayaran::leftjoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
-                                                                                ->where('tokos_id',$hasil_toko)
+                $data['lihat_pembayarans']      = \App\Models\Master_pembayaran::leftjoin('master_tokos','master_pembayarans.tokos_id','=','master_tokos.id_tokos')
+                                                                                ->where('id_tokos',$hasil_toko)
+                                                                                ->orWhere('id_tokos',null)
                                                                                 ->paginate(10);
             }
             $data['hasil_toko']             = $hasil_toko;
@@ -62,20 +63,16 @@ class PembayaranController extends AdminCoreController
                                                                         ->get();
                 if($hasil_toko != '')
                 {
-                    $data['lihat_pembayarans']          = \App\Models\Master_pembayaran::leftjoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                    $data['lihat_pembayarans']          = \App\Models\Master_pembayaran::leftjoin('master_tokos','master_pembayarans.tokos_id','=','master_tokos.id_tokos')
+                                                                                        ->where('tokos_id',$hasil_toko)
                                                                                         ->where('nama_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('tokos_id',$hasil_toko)
-                                                                                        ->orWhere('akun_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('tokos_id',$hasil_toko)
-                                                                                        ->orWhere('no_rekening_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('tokos_id',$hasil_toko)
-                                                                                        ->orWhere('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('tokos_id',$hasil_toko)
+                                                                                        ->orWhere('tokos_id',null)
+                                                                                        ->where('nama_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
                                                                                         ->paginate(10);
                 }
                 else
                 {
-                    $data['lihat_pembayarans']          = \App\Models\Master_pembayaran::leftjoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                    $data['lihat_pembayarans']          = \App\Models\Master_pembayaran::leftjoin('master_tokos','master_pembayarans.tokos_id','=','master_tokos.id_tokos')
                                                                                         ->where('nama_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
                                                                                         ->orWhere('akun_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
                                                                                         ->orWhere('no_rekening_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
@@ -88,15 +85,11 @@ class PembayaranController extends AdminCoreController
                 $data['lihat_tokos']        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
                                                                         ->orderBy('nama_tokos')
                                                                         ->get();
-                $data['lihat_pembayarans']          = \App\Models\Master_pembayaran::leftjoin('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                $data['lihat_pembayarans']          = \App\Models\Master_pembayaran::leftjoin('master_tokos','master_pembayarans.tokos_id','=','master_tokos.id_tokos')
+                                                                                    ->where('tokos_id',$hasil_toko)
                                                                                     ->where('nama_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                    ->where('tokos_id',$hasil_toko)
-                                                                                    ->orWhere('akun_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                    ->where('tokos_id',$hasil_toko)
-                                                                                    ->orWhere('no_rekening_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                    ->where('tokos_id',$hasil_toko)
-                                                                                    ->orWhere('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->orWhere('tokos_id',null)
+                                                                                    ->where('nama_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
                                                                                     ->paginate(10);
             }
             session(['halaman'              => $url_sekarang]);

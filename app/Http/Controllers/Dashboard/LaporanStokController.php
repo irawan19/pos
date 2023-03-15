@@ -26,7 +26,7 @@ class LaporanStokController extends AdminCoreController
                 $data['lihat_tokos']        = \App\Models\Master_toko::orderBy('nama_tokos')
                                                                         ->get();
                 $hasil_toko                 = '';
-                $data['lihat_laporan_stoks']        = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                $data['lihat_laporan_stoks']        = \App\Models\Master_item::join('master_tokos','master_items.tokos_id','=','master_tokos.id_tokos')
                                                                     ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                     ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
                                                                     ->get();
@@ -37,10 +37,10 @@ class LaporanStokController extends AdminCoreController
                                                                         ->orderBy('nama_tokos')
                                                                         ->get();
                 $hasil_toko                 = Auth::user()->tokos_id;
-                $data['lihat_laporan_stoks']        = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                $data['lihat_laporan_stoks']        = \App\Models\Master_item::join('master_tokos','master_items.tokos_id','=','master_tokos.id_tokos')
                                                                     ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                     ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
-                                                                    ->where('tokos_id',$hasil_toko)
+                                                                    ->where('id_tokos',$hasil_toko)
                                                                     ->get();
             }
             $data['hasil_toko']             = $hasil_toko;
@@ -79,16 +79,16 @@ class LaporanStokController extends AdminCoreController
                                                                         ->get();
                 if($hasil_toko != '')
                 {
-                    $data['lihat_laporan_stoks']            = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                    $data['lihat_laporan_stoks']            = \App\Models\Master_item::join('master_tokos','master_items.tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                                     ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
-                                                                                    ->where('tokos_id',$hasil_toko)
+                                                                                    ->where('id_tokos',$hasil_toko)
                                                                                     ->where('nama_laporan_stoks', 'LIKE', '%'.$hasil_kata.'%')
                                                                                     ->get();
                 }
                 else
                 {
-                    $data['lihat_laporan_stoks']            = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                    $data['lihat_laporan_stoks']            = \App\Models\Master_item::join('master_tokos','master_items.tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                                     ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
                                                                                     ->where('nama_laporan_stoks', 'LIKE', '%'.$hasil_kata.'%')
@@ -100,17 +100,17 @@ class LaporanStokController extends AdminCoreController
                 $data['lihat_tokos']        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
                                                                         ->orderBy('nama_tokos')
                                                                         ->get();
-                $data['lihat_laporan_stoks']            = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                $data['lihat_laporan_stoks']            = \App\Models\Master_item::join('master_tokos','master_items.tokos_id','=','master_tokos.id_tokos')
                                                                         ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                         ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
                                                                         ->where('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
-                                                                        ->where('tokos_id',$hasil_toko)
+                                                                        ->where('id_tokos',$hasil_toko)
                                                                         ->orWhere('nama_kategori_items', 'LIKE', '%'.$hasil_kata.'%')
-                                                                        ->where('tokos_id',$hasil_toko)
+                                                                        ->where('id_tokos',$hasil_toko)
                                                                         ->orWhere('nama_satuans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                        ->where('tokos_id',$hasil_toko)
+                                                                        ->where('id_tokos',$hasil_toko)
                                                                         ->orWhere('nama_satuans', 'LIKE', '%'.$hasil_kata.'%')
-                                                                        ->where('tokos_id',$hasil_toko)
+                                                                        ->where('id_tokos',$hasil_toko)
                                                                         ->get();
             }
             session(['halaman'              => $url_sekarang]);
@@ -149,7 +149,7 @@ class LaporanStokController extends AdminCoreController
             $data['tanggal_mulai']                      = $tanggal_mulai;
             $data['tanggal_selesai']                    = $tanggal_selesai;
             $data['hasil_tanggal']                      = $hasil_tanggal;
-            $data['baca_items']                         = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+            $data['baca_items']                         = \App\Models\Master_item::join('master_tokos','master_items.tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                                     ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
                                                                                     ->where('id_items',$id_items)
@@ -205,7 +205,7 @@ class LaporanStokController extends AdminCoreController
             $data['tanggal_selesai']                    = $tanggal_selesai;
             $data['hasil_tanggal']                      = $hasil_tanggal;
 
-            $data['baca_items']                         = \App\Models\Master_item::join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+            $data['baca_items']                         = \App\Models\Master_item::join('master_tokos','master_items.tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                                     ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
                                                                                     ->where('id_items',$id_items)

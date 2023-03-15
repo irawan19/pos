@@ -70,7 +70,7 @@ class LaporanKeuanganController extends AdminCoreController
                                                                                                         users.name AS nama_admin,
                                                                                                         total_pembelians AS total_transaksi')
                                                                                                 ->join('users','transaksi_pembelians.users_id','=','users.id')
-                                                                                                ->join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                                ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                                 ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
                                                                                                 ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                                 ->where('transaksi_pembelians.tokos_id',$hasil_toko)
@@ -86,7 +86,7 @@ class LaporanKeuanganController extends AdminCoreController
                                                                                             ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                             ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                             ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
-                                                                                            ->where('transaksi_pembelians.tokos_id',$hasil_toko)
+                                                                                            ->where('transaksi_penjualans.tokos_id',$hasil_toko)
                                                                                             ->union($transaksi_pembelian)
                                                                                             ->orderBy('tanggal_transaksi')
                                                                                             ->get();
@@ -329,7 +329,7 @@ class LaporanKeuanganController extends AdminCoreController
                 {
                     $data['baca_laporan_penjualans']    = \App\Models\Transaksi_penjualan::selectRaw('*,
                                                                                                     transaksi_penjualans.tanggal_penjualans AS tanggal_penjualans')
-                                                                                        ->join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                        ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                         ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                         ->join('users','users_id','=','users.id')
                                                                                         ->leftJoin('master_customers','customers_id','=','master_customers.id_customers')
@@ -353,7 +353,7 @@ class LaporanKeuanganController extends AdminCoreController
                 {
                     $data['baca_laporan_pembelians']    = \App\Models\Transaksi_pembelian::selectRaw('*,
                                                                                                     transaksi_pembelians.tanggal_pembelians AS tanggal_pembelians')
-                                                                                        ->join('master_tokos','tokos_id','=','master_tokos.id_tokos')
+                                                                                        ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                         ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                         ->join('users','users_id','=','users.id')
                                                                                         ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
