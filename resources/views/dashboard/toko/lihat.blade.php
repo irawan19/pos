@@ -55,12 +55,12 @@
 										            </div>
 											    </td>
 								    		@endif
+								    		<td class="nowrap">{{$no}}</td>
 								    		<td class="nowrap">
                                                 <a data-fancybox="gallery" href="{{URL::asset('storage/'.$tokos->logo_tokos)}}">
                                                     <img src="{{ URL::asset('storage/'.$tokos->logo_tokos) }}" width="108">
                                                 </a>
                                             </td>
-								    		<td class="nowrap">{{$no}}</td>
 								    		<td class="nowrap">{{$tokos->nama_tokos}}</td>
 								    		<td>{{$tokos->alamat_tokos}}</td>
 								    	</tr>

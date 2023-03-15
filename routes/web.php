@@ -56,6 +56,10 @@ use App\Http\Controllers\Dashboard\KonfigurasiAplikasiController as DashboardKon
 
 Route::get('/', [Beranda::class, 'index']);
 Route::post('/kirimpesan', [Beranda::class, 'kirimpesan']);
+Route::get('/storage-link', function() {
+    Artisan::call('storage:link'); 
+    return 'The links have been created.';
+});
 
 Route::middleware([
     'auth:sanctum',
