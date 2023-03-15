@@ -123,6 +123,26 @@ class KasirController extends AdminCoreController
             ];
             $this->validate($request, $aturan, $error_pesan);
 
+            if(!empty($request->items_id))
+            {
+                foreach($request->items_id as $key => $id_items)
+                {
+                    if($request->jumlah_penjualan_details[$id_items] != 0)
+                    {
+                        $ambil_items = \App\Models\Master_item::where('id_items',$id_items)->first();
+                        if ($ambil_items->stok_items - $request->jumlah_penjualan_details[$id_items])
+                        {
+                            $setelah_simpan_stok = [
+                                'iditems'   => $id_items,
+                                'alert'     => 'error',
+                                'text'      => 'Stok tidak mencukupi'
+                            ];
+                            return redirect()->back()->with('setelah_simpan_stok',$setelah_simpan_stok)->withInput($request->all());
+                        }
+                    }
+                }
+            }
+
             $customers_id = null;
             if(!empty($request->customers_id))
             {

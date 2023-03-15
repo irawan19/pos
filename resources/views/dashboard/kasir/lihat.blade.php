@@ -89,6 +89,11 @@
 										</div>
 										<div class="col-sm-5">
 											<input id="jumlah_penjualan_details{{$items_id}}" onkeyup="kalkulasiJumlah({{$items_id}})" type="text" style="text-align: right" class="form-control jumlah_penjualan_details" name="jumlah_penjualan_details[{{$items_id}}]" value="{{Request::old('jumlah_penjualan_details.'.$items_id) == '' ? 1 : Request::old('jumlah_penjualan_details.'.$items_id)}}">
+											@if (Session::get('setelah_simpan_stok.alert') == 'error')
+												@if(Session::get('setelah_simpan_stok.iditems') == $ambil_items->id_items)
+													{{General::pesanErrorForm(Session::get('setelah_simpan_stok.text'))}}
+												@endif
+											@endif
 										</div>
 										<div class="col-sm-5">
 											<input id="harga_penjualan_details{{$items_id}}" onkeyup="kalkulasiHarga({{$items_id}})" type="text" style="text-align: right;" class="form-control harga_penjualan_details" name="harga_penjualan_details[{{$items_id}}]" value="{{Request::old('harga_penjualan_details.'.$items_id) == '' ? $ambil_items->harga_items : Request::old('harga_penjualan_details.'.$items_id)}}">

@@ -194,6 +194,7 @@ class PenjualanController extends AdminCoreController
                 if($id_penjualans == 0)
                 {
                     $data['lihat_items']    = \App\Models\Master_item::where('tokos_id',$id_tokos)
+                                                                    ->where('stok_items','>',0)
                                                                     ->orderBy('nama_items')
                                                                     ->get();
                     $data['id_penjualans']  = $id_penjualans;
@@ -284,6 +285,29 @@ class PenjualanController extends AdminCoreController
                 'pembayarans_id.required'           => 'Form Pembayaran Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
+
+            if(!empty($request->id_items))
+            {
+                $validasi_stok = 0;
+                foreach($request->id_items as $key => $id_items)
+                {
+                    if($request->jumlah_penjualan_details[$key] != 0)
+                    {
+                        $ambil_items = \App\Models\Master_item::where('id_items',$id_items)->first();
+                        if ($ambil_items->stok_items - $request->jumlah_penjualan_details[$key])
+                            $validasi_stok += 1;
+                    }
+                }
+
+                if($validasi_stok > 0)
+                {
+                    $setelah_simpan = [
+                        'alert'     => 'error',
+                        'text'      => 'Ada stok item yang tidak mencukupi'
+                    ];
+                    return redirect()->back()->with('setelah_simpan',$setelah_simpan)->withInput($request->all());
+                }
+            }
             
             $total_item = 0;
             foreach($request->id_items as $key => $id_items)
@@ -517,6 +541,32 @@ class PenjualanController extends AdminCoreController
                     'pembayarans_id.required'           => 'Form Pembayaran Harus Diisi.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
+
+                if(!empty($request->id_items))
+                {
+                    $validasi_stok = 0;
+                    foreach($request->id_items as $key => $id_items)
+                    {
+                        if($request->jumlah_penjualan_details[$key] != 0)
+                        {
+                            $ambil_items                = \App\Models\Master_item::where('id_items',$id_items)->first();
+                            $ambil_penjualan_details    = \App\Models\Transaksi_penjualan_detail::where('penjualans_id',$id_penjualans)
+                                                                                                ->where('items_id',$id_items)
+                                                                                                ->first();
+                            if (($ambil_items->stok_items + $ambil_penjualan_details->jumlah_penjualan_details) - $request->jumlah_penjualan_details[$key])
+                                $validasi_stok += 1;
+                        }
+                    }
+
+                    if($validasi_stok > 0)
+                    {
+                        $setelah_simpan = [
+                            'alert'     => 'error',
+                            'text'      => 'Ada stok item yang tidak mencukupi'
+                        ];
+                        return redirect()->back()->with('setelah_simpan',$setelah_simpan)->withInput($request->all());
+                    }
+                }
             
                 $total_item = 0;
                 foreach($request->id_items as $key => $id_items)
