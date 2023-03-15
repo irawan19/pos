@@ -83,14 +83,14 @@
 									@php($ambil_items = \App\Models\Master_item::where('id_items',$items_id)->first())
 
 									<div id="list{{$items_id}}" class="row">
-										<div class="col-sm-4">
+										<div class="col-sm-12">
 											<p style="font-weight: bold; font-size: 14px; margin-top: 5px">{{$ambil_items->nama_items}}</p>
 											<input id="items_id{{$items_id}}" class="items_id" type="hidden" name="items_id[]" value="{{$items_id}}">
 										</div>
-										<div class="col-sm-2">
+										<div class="col-sm-5">
 											<input id="jumlah_penjualan_details{{$items_id}}" onkeyup="kalkulasiJumlah({{$items_id}})" type="text" style="text-align: right" class="form-control jumlah_penjualan_details" name="jumlah_penjualan_details[{{$items_id}}]" value="{{Request::old('jumlah_penjualan_details.'.$items_id) == '' ? 1 : Request::old('jumlah_penjualan_details.'.$items_id)}}">
 										</div>
-										<div class="col-sm-4">
+										<div class="col-sm-5">
 											<input id="harga_penjualan_details{{$items_id}}" onkeyup="kalkulasiHarga({{$items_id}})" type="text" style="text-align: right;" class="form-control harga_penjualan_details" name="harga_penjualan_details[{{$items_id}}]" value="{{Request::old('harga_penjualan_details.'.$items_id) == '' ? $ambil_items->harga_items : Request::old('harga_penjualan_details.'.$items_id)}}">
 										</div>
 										<div class="col-sm-2">
@@ -216,14 +216,14 @@
 		function tambahItemList(iditem,namaitem,hargaitem)
 		{
 			tambahDetailPemesanan   = jQuery('<div id="list'+iditem+'" class="row listitemdetailpemesanans">'+
-												'<div class="col-sm-4">'+
+												'<div class="col-sm-12">'+
 													'<p style="font-weight: bold; font-size: 14px; margin-top: 5px">'+namaitem+'</p>'+
 													'<input id="items_id'+iditem+'" class="items_id" type="hidden" name="items_id[]" value="'+iditem+'">'+
 												'</div>'+
-												'<div class="col-sm-2">'+
+												'<div class="col-sm-5">'+
 													'<input id="jumlah_penjualan_details'+iditem+'" onkeyup="kalkulasiJumlah(\''+iditem+'\')" type="text" style="text-align: right" class="form-control jumlah_penjualan_details" name="jumlah_penjualan_details['+iditem+']" value="1">'+
 												'</div>'+
-												'<div class="col-sm-4">'+
+												'<div class="col-sm-5">'+
 													'<input id="harga_penjualan_details'+iditem+'" onkeyup="kalkulasiHarga(\''+iditem+'\')" type="text" style="text-align: right;" class="form-control harga_penjualan_details" name="harga_penjualan_details['+iditem+']" value="'+hargaitem+'">'+
 												'</div>'+
 												'<div class="col-sm-2">'+
