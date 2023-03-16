@@ -327,6 +327,14 @@
 							            "Sa"
 							        ],
 				    },
+					ranges: {
+						'Hari Ini': [moment(), moment()],
+						'Kemaren': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+						'7 Hari Terakhir': [moment().subtract(6, 'days'), moment()],
+						'1 Bulan Terakhir': [moment().subtract(29, 'days'), moment()],
+						'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
+						'Akhir Bulan': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+						},
 	       		    "showDropdowns": true,
 	       		    timePicker: false,
 	       		    format      : 'DD MMM YYYY'
