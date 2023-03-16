@@ -60,11 +60,12 @@ class SatuanController extends AdminCoreController
         if(General::hakAkses($link_satuan,'tambah') == 'true')
         {
             $aturan = [
-                'nama_satuans'                              => 'required',
+                'nama_satuans'                              => 'required|unique:master_satuans',
             ];
 
             $error_pesan = [
                 'nama_satuans.required'                     => 'Form Nama Harus Diisi.',
+                'nama_satuans.unique'                       => 'Nama Sudah Terdaftar.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
@@ -125,11 +126,12 @@ class SatuanController extends AdminCoreController
             if(!empty($cek_satuans))
             {
                 $aturan = [
-                    'nama_satuans'                          => 'required',
+                    'nama_satuans'                          => 'required|unique:master_satuans,nama_satuans,'.$id_satuans.',id_satuans',
                 ];
         
                 $error_pesan = [
                     'nama_satuans.required'                 => 'Form Nama Harus Diisi.',
+                    'nama_satuans.unique'                   => 'Nama Sudah Terdaftar.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
         

@@ -60,11 +60,11 @@ class KategoriItemController extends AdminCoreController
         if(General::hakAkses($link_kategori_item,'tambah') == 'true')
         {
             $aturan = [
-                'nama_kategori_items'                              => 'required',
+                'nama_kategori_items'                              => 'required|unique:master_kategori_items',
             ];
 
             $error_pesan = [
-                'nama_kategori_items.required'                     => 'Form Nama Harus Diisi.',
+                'nama_kategori_items.required'                     => 'Form Nama Harus Diisi.',c
             ];
             $this->validate($request, $aturan, $error_pesan);
 
@@ -125,11 +125,12 @@ class KategoriItemController extends AdminCoreController
             if(!empty($cek_kategori_items))
             {
                 $aturan = [
-                    'nama_kategori_items'                          => 'required',
+                    'nama_kategori_items'                          => 'required|unique:master_kategori_items,nama_kategori_items,'.$id_kategori_items.',id_kategori_items',
                 ];
         
                 $error_pesan = [
-                    'nama_kategori_items.required'                 => 'Form Nama Harus Diisi.',
+                    'nama_kategori_items.required'                  => 'Form Nama Harus Diisi.',
+                    'nama_kategori_items.unique'                    => 'Nama Sudah Terdaftar.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
         
