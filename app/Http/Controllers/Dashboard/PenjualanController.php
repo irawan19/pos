@@ -725,8 +725,18 @@ class PenjualanController extends AdminCoreController
             $cek_penjualans = \App\Models\Transaksi_penjualan::where('id_penjualans',$id_penjualans)->first();
             if(!empty($cek_penjualans))
             {
-                \App\Models\Transaksi_penjualan_detail::where('penjualans_id',$id_penjualans)
-                                                        ->delete();
+                $ambil_pemesanan_details = \App\Models\Transaksi_penjualan_detail::where('penjualans_id',$id_penjualans)->get();
+                foreach($ambil_pemesanan_details as $pemesanan_details)
+                {
+                    $ambil_items = \App\Models\Master_item::where('id_items',$pemesanan_details->items_id)->first();
+                    $update_items_data = [
+                        'stok_items'    => $ambil_items->stok_items + $pemesanan_details->jumlah_penjualan_details
+                    ];
+                    \App\Models\Master_item::where('id_items',$ambil_items->id_items)->update($update_items_data);
+                    \App\Models\Transaksi_penjualan_detail::where('penjualans_id',$id_penjualans)
+                                                            ->where('items_id',$ambil_items->id_items)
+                                                            ->delete();
+                }
                 \App\Models\Transaksi_penjualan::where('id_penjualans',$id_penjualans)
                                         ->delete();
                 return response()->json(["sukses" => "sukses"], 200);

@@ -701,8 +701,18 @@ class PembelianController extends AdminCoreController
             $cek_pembelians = \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)->first();
             if(!empty($cek_pembelians))
             {
-                \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)
-                                                        ->delete();
+                $ambil_pembelian_details = \App\Models\Transaksi_pembelian::where('pembelians_id',$id_pembelians)->get();
+                foreach($ambil_pembelian_details as $pembelian_details)
+                {
+                    $ambil_items = \App\Models\Master_item::where('id_items',$pemesanan_details->items_id)->first();
+                    $update_items_data = [
+                        'stok_items'    => $ambil_items->stok_items - $pemesanan_details->jumlah_pembelian_details
+                    ];
+                    \App\Models\Master_item::where('id_items',$ambil_items->id_items)->update($update_items_data);
+                    \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)
+                                                            ->where('items_id',$ambil_items->id_items)
+                                                            ->delete();
+                }
                 \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)
                                         ->delete();
                 return response()->json(["sukses" => "sukses"], 200);
