@@ -32,9 +32,9 @@ class KonfigurasiProfilController extends AdminCoreController
             $this->validate($request, $aturan, $error_pesan);
 
             $cek_foto_user       = \App\Models\User::where('id',$id_users)->first();
-            if($cek_foto_user != null)
+            if(!empty($cek_foto_user))
             {
-                $foto_user_lama        = $cek_admins->profile_photo_path;
+                $foto_user_lama        = $cek_foto_user->profile_photo_path;
                 if (Storage::disk('public')->exists($foto_user_lama))
                     Storage::disk('public')->delete($foto_user_lama);
             }

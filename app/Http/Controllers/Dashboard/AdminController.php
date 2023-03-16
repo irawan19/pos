@@ -125,14 +125,14 @@ class AdminController extends AdminCoreController
                     'userfile_foto_user'    => 'required|mimes:png,jpg,jpeg',
                     'level_sistems_id'      => 'required',
                     'username'              => 'required|unique:users',
-                    'nama'                  => 'required',
+                    'name'                  => 'required',
                     'email'                 => 'required|unique:users',
                     'password'              => 'required|string|min:6|confirmed',
                 ];
                 $error_pesan = [
                     'userfile_foto_user.required'   => 'Form Foto Harus Dipilih.',
                     'level_sistems_id.required'     => 'Form Level Sistem Harus Dipilih.',
-                    'nama.required'                 => 'Form Nama Harus Diisi.',
+                    'name.required'                 => 'Form Nama Harus Diisi.',
                     'username.required'             => 'Form Username Harus Diisi.',
                     'email.required'                => 'Form Email Harus Diisi.',
                     'email.unique'                  => 'Email Sudah Terdaftar, Silahkan Gunakan Email Lain.',
@@ -171,7 +171,7 @@ class AdminController extends AdminCoreController
                 ];
                 $error_pesan = [
                     'level_sistems_id.required'     => 'Form Level Sistem Harus Dipilih.',
-                    'nama.required'                 => 'Form Nama Harus Diisi.',
+                    'name.required'                 => 'Form Nama Harus Diisi.',
                     'username.required'             => 'Form Username Harus Diisi.',
                     'email.required'                => 'Form Email Harus Diisi.',
                     'email.unique'                  => 'Email Sudah Terdaftar, Silahkan Gunakan Email Lain.',
@@ -338,14 +338,14 @@ class AdminController extends AdminCoreController
                     {
                         $aturan = [
                             'level_sistems_id'      => 'required',
-                            'nama'                  => 'required',
+                            'name'                  => 'required',
                             'username'              => 'required|unique:users,username,'.$id_admins.',id',
                             'email'                 => 'required|unique:users,email,'.$id_admins.',id',
                             'password'              => 'required|string|min:6|confirmed',
                         ];
                         $error_pesan = [
                             'level_sistems_id.required'     => 'Form Level Sistem Harus Dipilih.',
-                            'nama.required'                 => 'Form Nama Harus Diisi.',
+                            'name.required'                 => 'Form Nama Harus Diisi.',
                             'username.required'             => 'Form Username Harus Diisi.',
                             'email.required'                => 'Form Email Harus Diisi.',
                             'email.unique'                  => 'Email Sudah Terdaftar, Silahkan Gunakan Email Lain.',
@@ -417,12 +417,12 @@ class AdminController extends AdminCoreController
                         $aturan = [
                             'level_sistems_id'      => 'required',
                             'username'              => 'required|unique:users,username,'.$id_admins.',id',
-                            'nama'                  => 'required',
+                            'name'                  => 'required',
                             'email'                 => 'required|unique:users,email,'.$id_admins.',id',
                         ];
                         $error_pesan = [
                             'level_sistems_id.required'     => 'Form Level Sistem Harus Dipilih.',
-                            'nama.required'                 => 'Form Nama Harus Diisi.',
+                            'name.required'                 => 'Form Nama Harus Diisi.',
                             'username.required'             => 'Form Username Harus Diisi.',
                             'email.required'                => 'Form Email Harus Diisi.',
                             'email.unique'                  => 'Email Sudah Terdaftar, Silahkan Gunakan Email Lain.',
@@ -436,7 +436,7 @@ class AdminController extends AdminCoreController
                 	    $data = [
                             'tokos_id'              => $tokos_id,
                             'username'              => $request->username,
-                	        'nama' 			     	=> $request->nama,
+                	        'name' 			     	=> $request->name,
                 	        'email'			     	=> $request->email,
                 	        'updated_at'	     	=> date('Y-m-d H:i:s'),
                             'level_sistems_id'    	=> $request->level_sistems_id,

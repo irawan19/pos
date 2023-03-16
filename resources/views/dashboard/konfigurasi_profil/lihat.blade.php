@@ -37,7 +37,7 @@
 						</div>
 						<div class="form-group">
 							<label class="form-col-form-label" for="name">Nama <b style="color:red">*</b></label>
-							<input class="form-control {{ General::validForm($errors->first('name')) }}" id="name" type="text" name="name" value="{{Request::old('name') == '' ? Auth::user()->nama : Request::old('name')}}">
+							<input class="form-control {{ General::validForm($errors->first('name')) }}" id="name" type="text" name="name" value="{{Request::old('name') == '' ? Auth::user()->name : Request::old('name')}}">
 							{{General::pesanErrorForm($errors->first('name'))}}
 						</div>
 					</div>
