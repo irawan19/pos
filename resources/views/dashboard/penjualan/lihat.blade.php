@@ -81,7 +81,9 @@
 											      	<div class="dropdown">
 														<button class="btn btn-sm bg-gradient-success mb-0 dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih</button>
 										            	<div class="dropdown-menu" aria-labelledby="dropdownMenu2" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
-										            		{{General::baca($link_penjualan,'dashboard/penjualan/baca/'.$penjualans->id_penjualans)}}
+															{{General::cetakList($link_penjualan,'dashboard/penjualan/cetak/'.$penjualans->id_penjualans)}}
+										            		<div class="dropdown-divider"></div>
+															{{General::baca($link_penjualan,'dashboard/penjualan/baca/'.$penjualans->id_penjualans)}}
 										            		<div class="dropdown-divider"></div>
 										            		{{General::edit($link_penjualan,'dashboard/penjualan/edit/'.$penjualans->id_penjualans)}}
 										            		<div class="dropdown-divider"></div>

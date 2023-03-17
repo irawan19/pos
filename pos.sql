@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2023 at 06:02 AM
+-- Generation Time: Mar 17, 2023 at 04:08 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.9
 
@@ -127,7 +127,8 @@ INSERT INTO `master_akses` (`id_akses`, `level_sistems_id`, `fiturs_id`, `create
 (68, 1, 68, '2023-03-12 19:00:53', NULL, NULL),
 (69, 1, 69, '2023-03-12 19:00:53', NULL, NULL),
 (70, 1, 70, '2023-03-12 19:00:53', NULL, NULL),
-(71, 1, 71, '2023-03-12 19:00:53', NULL, NULL);
+(71, 1, 71, '2023-03-12 19:00:53', NULL, NULL),
+(72, 1, 72, '2023-03-17 16:08:04', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -235,7 +236,8 @@ INSERT INTO `master_fiturs` (`id_fiturs`, `menus_id`, `nama_fiturs`, `created_at
 (68, 21, 'lihat', '2023-03-12 18:53:51', NULL, NULL),
 (69, 21, 'tambah', '2023-03-12 18:53:51', NULL, NULL),
 (70, 21, 'edit', '2023-03-12 18:53:51', NULL, NULL),
-(71, 21, 'hapus', '2023-03-12 18:53:51', NULL, NULL);
+(71, 21, 'hapus', '2023-03-12 18:53:51', NULL, NULL),
+(72, 17, 'cetak', '2023-03-17 16:07:41', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -952,7 +954,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `master_akses`
 --
 ALTER TABLE `master_akses`
-  MODIFY `id_akses` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id_akses` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `master_customers`
@@ -964,7 +966,7 @@ ALTER TABLE `master_customers`
 -- AUTO_INCREMENT for table `master_fiturs`
 --
 ALTER TABLE `master_fiturs`
-  MODIFY `id_fiturs` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id_fiturs` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `master_items`

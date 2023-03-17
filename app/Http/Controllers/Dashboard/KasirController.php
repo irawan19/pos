@@ -169,7 +169,7 @@ class KasirController extends AdminCoreController
 
                     $customers_data = [
                         'tokos_id'          => $request->tokos_id,
-                        'nama_customers'    => $request->nama_customers,
+                        'nama_customers'    => $request->customers_id,
                         'telepon_customers' => $telepon_customers,
                     ];
                     $customers_id = \App\Models\Master_customer::insertGetId($customers_data);

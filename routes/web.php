@@ -193,6 +193,7 @@ Route::middleware([
                 Route::get('/listcustomer/{id}', [DashboardPenjualan::class, 'listcustomer']);
                 Route::get('/teleponcustomer/{id}', [DashboardPenjualan::class, 'teleponcustomer']);
                 Route::get('/listpembayaran/{id}', [DashboardPenjualan::class, 'listpembayaran']);
+                Route::get('/cetak/{id}', [DashboardPenjualan::class, 'cetak']);
             });
 
             //Pembelian

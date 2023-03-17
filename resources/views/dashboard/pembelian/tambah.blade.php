@@ -38,7 +38,11 @@
                             	    <option value="{{Request::old('suppliers_id')}}">
                             	        @php($ambil_suppliers = \App\Models\Master_supplier::where('id_suppliers',intval(Request::old('suppliers_id')))
                             	                                                				->first())
-                            	        {{$ambil_suppliers->nama_suppliers}}
+										@if(!empty($ambil_suppliers))
+	                            	        {{$ambil_suppliers->nama_suppliers}}
+										@else
+											{{Request::old('suppliers_id')}}
+										@endif
                             	    </option>
                             	@endif
 							</select>

@@ -353,7 +353,7 @@ class PenjualanController extends AdminCoreController
 
                     $customers_data = [
                         'tokos_id'          => $request->tokos_id,
-                        'nama_customers'    => $request->nama_customers,
+                        'nama_customers'    => $request->customers_id,
                         'telepon_customers' => $telepon_customers,
                     ];
                     $customers_id = \App\Models\Master_customer::insertGetId($customers_data);
@@ -612,7 +612,7 @@ class PenjualanController extends AdminCoreController
 
                         $customers_data = [
                             'tokos_id'          => $request->tokos_id,
-                            'nama_customers'    => $request->nama_customers,
+                            'nama_customers'    => $request->customers_id,
                             'telepon_customers' => $telepon_customers,
                         ];
                         $customers_id = \App\Models\Master_customer::insertGetId($customers_data);
@@ -740,6 +740,37 @@ class PenjualanController extends AdminCoreController
                 \App\Models\Transaksi_penjualan::where('id_penjualans',$id_penjualans)
                                         ->delete();
                 return response()->json(["sukses" => "sukses"], 200);
+            }
+            else
+                return redirect('dashboard/penjualan');
+        }
+        else
+            return redirect('dashboard/penjualan');
+    }
+
+    public function cetak($id_penjualans=0)
+    {
+        $link_penjualan = 'penjualan';
+        if(General::hakAkses($link_penjualan,'hapus') == 'true')
+        {
+            $cek_penjualans = \App\Models\Transaksi_penjualan::where('id_penjualans',$id_penjualans)->count();
+            if($cek_penjualans != 0)
+            {
+                $data['cetak_konfigurasi_aplikasis']    = \App\Models\Master_konfigurasi_aplikasi::where('id_konfigurasi_aplikasis',1)->first();
+                $data['cetak_penjualans']               = \App\Models\Transaksi_penjualan::join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
+                                                                                ->join('users','users_id','=','users.id')
+                                                                                ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
+                                                                                ->leftjoin('master_customers','customers_id','=','master_customers.id_customers')
+                                                                                ->where('id_penjualans',$id_penjualans)
+                                                                                ->first();
+                $data['cetak_penjualan_details']        = \App\Models\Transaksi_penjualan_detail::join('master_items','items_id','=','master_items.id_items')
+                                                                                        ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
+                                                                                        ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
+                                                                                        ->where('penjualans_id',$id_penjualans)
+                                                                                        ->orderBy('nama_kategori_items')
+                                                                                        ->orderBy('nama_items')
+                                                                                        ->get();
+                return view('dashboard.penjualan.cetak',$data);
             }
             else
                 return redirect('dashboard/penjualan');

@@ -346,7 +346,7 @@ class PembelianController extends AdminCoreController
 
                     $suppliers_data = [
                         'tokos_id'          => $request->tokos_id,
-                        'nama_suppliers'    => $request->nama_suppliers,
+                        'nama_suppliers'    => $request->suppliers_id,
                         'telepon_suppliers' => $telepon_suppliers,
                     ];
                     $suppliers_id = \App\Models\Master_supplier::insertGetId($suppliers_data);
@@ -583,7 +583,7 @@ class PembelianController extends AdminCoreController
 
                         $suppliers_data = [
                             'tokos_id'          => $request->tokos_id,
-                            'nama_suppliers'    => $request->nama_suppliers,
+                            'nama_suppliers'    => $request->suppliers_id,
                             'telepon_suppliers' => $telepon_suppliers,
                         ];
                         $suppliers_id = \App\Models\Master_supplier::insertGetId($suppliers_data);

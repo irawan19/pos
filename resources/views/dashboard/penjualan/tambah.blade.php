@@ -33,7 +33,11 @@
                             	    <option value="{{Request::old('customers_id')}}">
                             	        @php($ambil_customers = \App\Models\Master_customer::where('id_customers',intval(Request::old('customers_id')))
                             	                                                				->first())
-                            	        {{$ambil_customers->nama_customers}}
+										@if(!empty($ambil_customers))
+                            	        	{{$ambil_customers->nama_customers}}
+										@else
+											{{Request::old('customers_id')}}
+										@endif
                             	    </option>
                             	@endif
 							</select>
