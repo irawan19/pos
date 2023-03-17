@@ -7,6 +7,9 @@
             size: A4;
 			margin: 0;
         }
+		html, body {
+			color: black white;
+		}
     }
     table
     {
@@ -25,7 +28,7 @@
 </style>
 <div class="page">
 	<div style="text-align: center">
-		<p style="font-size: 10px;font-weight: bold; margin-bottom: -10px">{{$cetak_penjualans->nama_tokos}}</p>
+		<p style="font-size: 10px;font-weight: bold; margin-bottom: 0px">{{$cetak_penjualans->nama_tokos}}</p>
 		<p style="font-size: 8px;">{!! nl2br($cetak_penjualans->alamat_tokos) !!}</p>
 	</div>
 	<hr/>
