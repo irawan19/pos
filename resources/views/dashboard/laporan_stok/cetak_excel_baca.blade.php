@@ -51,7 +51,7 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td>Saldo Awal</td>
+			<td>Stok Awal</td>
 	    	<td align="right">
 				@php($saldo_awal = $baca_items->stok_awal_items)
 				{{$saldo_awal}}

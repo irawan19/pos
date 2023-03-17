@@ -294,7 +294,7 @@ class PenjualanController extends AdminCoreController
                     if($request->jumlah_penjualan_details[$key] != 0)
                     {
                         $ambil_items = \App\Models\Master_item::where('id_items',$id_items)->first();
-                        if ($ambil_items->stok_items - $request->jumlah_penjualan_details[$key])
+                        if ($request->jumlah_penjualan_details[$key] > $ambil_items->stok_items)
                             $validasi_stok += 1;
                     }
                 }
@@ -353,7 +353,7 @@ class PenjualanController extends AdminCoreController
 
                     $customers_data = [
                         'tokos_id'          => $request->tokos_id,
-                        'nama_customers'    => $request->customers_id,
+                        'nama_customers'    => $request->nama_customers,
                         'telepon_customers' => $telepon_customers,
                     ];
                     $customers_id = \App\Models\Master_customer::insertGetId($customers_data);
@@ -553,7 +553,7 @@ class PenjualanController extends AdminCoreController
                             $ambil_penjualan_details    = \App\Models\Transaksi_penjualan_detail::where('penjualans_id',$id_penjualans)
                                                                                                 ->where('items_id',$id_items)
                                                                                                 ->first();
-                            if (($ambil_items->stok_items + $ambil_penjualan_details->jumlah_penjualan_details) - $request->jumlah_penjualan_details[$key])
+                            if ($request->jumlah_penjualan_details[$key] > ($ambil_items->stok_items + $ambil_penjualan_details->jumlah_penjualan_details))
                                 $validasi_stok += 1;
                         }
                     }
@@ -612,7 +612,7 @@ class PenjualanController extends AdminCoreController
 
                         $customers_data = [
                             'tokos_id'          => $request->tokos_id,
-                            'nama_customers'    => $request->customers_id,
+                            'nama_customers'    => $request->nama_customers,
                             'telepon_customers' => $telepon_customers,
                         ];
                         $customers_id = \App\Models\Master_customer::insertGetId($customers_data);

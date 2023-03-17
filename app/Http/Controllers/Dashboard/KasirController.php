@@ -130,7 +130,7 @@ class KasirController extends AdminCoreController
                     if($request->jumlah_penjualan_details[$id_items] != 0)
                     {
                         $ambil_items = \App\Models\Master_item::where('id_items',$id_items)->first();
-                        if ($ambil_items->stok_items - $request->jumlah_penjualan_details[$id_items])
+                        if ($request->jumlah_penjualan_details[$id_items] > $ambil_items->stok_items)
                         {
                             $setelah_simpan_stok = [
                                 'iditems'   => $id_items,
@@ -169,7 +169,7 @@ class KasirController extends AdminCoreController
 
                     $customers_data = [
                         'tokos_id'          => $request->tokos_id,
-                        'nama_customers'    => $request->customers_id,
+                        'nama_customers'    => $request->nama_customers,
                         'telepon_customers' => $telepon_customers,
                     ];
                     $customers_id = \App\Models\Master_customer::insertGetId($customers_data);
