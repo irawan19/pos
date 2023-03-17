@@ -4,7 +4,8 @@
     {
         @page
         {
-            size: portrait;
+            size: A4;
+			margin: 0;
         }
     }
     table
