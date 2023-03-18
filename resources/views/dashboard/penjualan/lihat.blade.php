@@ -66,7 +66,6 @@
 				    				<th class="nowrap" width="50px">Tanggal</th>
 				    				<th class="nowrap" width="50px">Toko</th>
 				    				<th class="nowrap">No Penjualan</th>
-				    				<th class="nowrap">Referensi Nota</th>
 				    				<th class="nowrap">Customer</th>
 				    				<th class="nowrap">Admin</th>
 				    				<th class="nowrap">Total</th>
@@ -95,7 +94,6 @@
 								    		<td class="nowrap">{{General::ubahDBKeTanggalwaktu($penjualans->tanggal_penjualans)}}</td>
 								    		<td class="nowrap">{{$penjualans->nama_tokos}}</td>
 								    		<td class="nowrap">{{$penjualans->no_penjualans}}</td>
-								    		<td class="nowrap">{{$penjualans->no_referensi_nota_penjualans}}</td>
 								    		<td class="nowrap">{{$penjualans->nama_customers}}</td>
 								    		<td class="nowrap">{{$penjualans->name}}</td>
 								    		<td class="nowrap right-align">{{General::ubahDBKeHarga($penjualans->total_penjualans)}}</td>
@@ -104,8 +102,7 @@
 								@else
 									<tr>
 										@if(General::totalHakAkses($link_penjualan) != 0)
-											<td colspan="8" class="center-align">Tidak ada data ditampilkan</td>
-											<td style="display:none"></td>
+											<td colspan="7" class="center-align">Tidak ada data ditampilkan</td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
@@ -113,8 +110,7 @@
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="7" class="center-align">Tidak ada data ditampilkan</td>
-											<td style="display:none"></td>
+											<td colspan="6" class="center-align">Tidak ada data ditampilkan</td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
