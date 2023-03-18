@@ -9,6 +9,7 @@
         }
 		html, body {
 			color: black white;
+			font-family: 'Times New Roman';
 		}
     }
     table
