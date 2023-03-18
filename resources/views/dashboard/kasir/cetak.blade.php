@@ -8,7 +8,7 @@
 			margin: 0;
         }
 		html, body {
-			color: black white;
+			color: black;
 			font-family: 'Roboto', sans-serif;
 			margin: 0px;
 			padding: 0px;
