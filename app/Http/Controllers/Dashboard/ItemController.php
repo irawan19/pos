@@ -276,6 +276,7 @@ class ItemController extends AdminCoreController
             $cek_items = \App\Models\Master_item::where('id_items',$id_items)->count();
             if($cek_items != 0)
             {
+                $data['link_item']  = $link_item;
                 $data['baca_items'] = \App\Models\Master_item::join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                 ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
                                                                 ->join('master_tokos','master_items.tokos_id','=','master_tokos.id_tokos')

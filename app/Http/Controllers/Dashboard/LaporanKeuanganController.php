@@ -194,15 +194,12 @@ class LaporanKeuanganController extends AdminCoreController
                                                                                                     ->where('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
                                                                                                     ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
                                                                                                     ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
-                                                                                                    ->where('id_tokos',$hasil_toko)
                                                                                                     ->orWhere('no_pembelians', 'LIKE', '%'.$hasil_kata.'%')
                                                                                                     ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
                                                                                                     ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
-                                                                                                    ->where('id_tokos',$hasil_toko)
                                                                                                     ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
                                                                                                     ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
                                                                                                     ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
-                                                                                                    ->where('id_tokos',$hasil_toko)
                                                                                                     ->orderBy('transaksi_pembelians.tanggal_pembelians','asc');
                     $transaksi_penjualan                        = \App\Models\Transaksi_penjualan::selectRaw('id_penjualans AS id_transaksi,
                                                                                                             no_penjualans AS no_transaksi,
@@ -216,15 +213,12 @@ class LaporanKeuanganController extends AdminCoreController
                                                                                                 ->where('nama_tokos', 'LIKE', '%'.$hasil_kata.'%')
                                                                                                 ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                                 ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
-                                                                                                ->where('id_tokos',$hasil_toko)
                                                                                                 ->orWhere('no_penjualans', 'LIKE', '%'.$hasil_kata.'%')
                                                                                                 ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                                 ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
-                                                                                                ->where('id_tokos',$hasil_toko)
                                                                                                 ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
                                                                                                 ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
                                                                                                 ->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
-                                                                                                ->where('id_tokos',$hasil_toko)
                                                                                                 ->union($transaksi_pembelian)
                                                                                                 ->orderBy('tanggal_transaksi')
                                                                                                 ->get();

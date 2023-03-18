@@ -5,7 +5,14 @@
 		<div class="col-sm-6 col-center mb-4">
 			<div class="card">
 				<div class="card-header">
-					<strong>Baca Item</strong>
+					<div class="row">
+						<div class="col-md-6">
+							<strong>Baca Item</strong>
+						</div>
+						<div class="col-md-6 right-align">
+							{{General::cetakBarcode($link_item,'dashboard/item/cetakbarcode/'.$baca_items->id_items)}}
+						</div>
+					</div>
 				</div>
 				<div class="card-body">
                     <div class="center-align">
