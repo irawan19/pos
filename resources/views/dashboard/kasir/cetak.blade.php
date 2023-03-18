@@ -9,7 +9,9 @@
         }
 		html, body {
 			color: black white;
-			font-family: 'Times New Roman';
+			font-family: 'Roboto', sans-serif;
+			margin: 0px;
+			padding: 0px;
 		}
     }
     table
