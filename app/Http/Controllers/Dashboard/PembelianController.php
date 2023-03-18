@@ -74,12 +74,16 @@ class PembelianController extends AdminCoreController
             $url_sekarang                       = $request->fullUrl();
             $hasil_kata                         = $request->cari_kata;
             $data['hasil_kata']                 = $hasil_kata;
-            $tanggal_mulai                      = date('Y-m-01');
-            $tanggal_selesai                    = date('Y-m-j', strtotime("last day of this month"));
-            $hasil_tanggal                      = General::ubahDBKeTanggal($tanggal_mulai).' sampai '.General::ubahDBKeTanggal($tanggal_selesai);
-            $data['tanggal_mulai']              = $tanggal_mulai;
-            $data['tanggal_selesai']            = $tanggal_selesai;
-            $data['hasil_tanggal']              = $hasil_tanggal;
+
+            $ambil_tanggal                              = $request->cari_tanggal;
+            $pecah_tanggal                              = explode(' sampai ',$ambil_tanggal);
+            $tanggal_mulai                              = General::ubahTanggalKeDB($pecah_tanggal[0]);
+            $tanggal_selesai                            = General::ubahTanggalKeDB($pecah_tanggal[1]);
+            $hasil_tanggal                              = General::ubahDBKeTanggal($tanggal_mulai).' sampai '.General::ubahDBKeTanggal($tanggal_selesai);
+            $data['tanggal_mulai']                      = $tanggal_mulai;
+            $data['tanggal_selesai']                    = $tanggal_selesai;
+            $data['hasil_tanggal']                      = $hasil_tanggal;
+
             $hasil_toko                 = $request->cari_toko;
             if(Auth::user()->tokos_id == null)
             {
@@ -116,19 +120,15 @@ class PembelianController extends AdminCoreController
                                                                                         ->join('users','users_id','=','users.id')
                                                                                         ->leftJoin('master_suppliers','suppliers_id','=','master_suppliers.id_suppliers')
                                                                                         ->where('no_pembelians', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('id_tokos',$hasil_toko)
                                                                                         ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                         ->orWhere('referensi_no_nota_pembelians', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('id_tokos',$hasil_toko)
                                                                                         ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                         ->orWhere('nama_suppliers', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('id_tokos',$hasil_toko)
                                                                                         ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                         ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->where('id_tokos',$hasil_toko)
                                                                                         ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
                                                                                         ->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
                                                                                         ->paginate(10);

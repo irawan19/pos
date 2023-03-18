@@ -34,7 +34,7 @@
 	<hr/>
 	<table width="100%">
 		<tr>
-			<th style="text-align: left" width="100px">Tanggal</th>
+			<th style="text-align: left" width="30px">Tanggal</th>
 			<th width="1px">:</th>
 			<td>{{General::ubahDBKeTanggalwaktu($cetak_penjualans->tanggal_penjualans)}}</td>
 		</tr>
@@ -52,11 +52,11 @@
 	<hr/>
 	<table width="100%">
 		<tr>
-			<th>No</th>
-			<th>Nama</th>
-			<th>Qty</th>
-			<th>Harga</th>
-			<th>Jumlah</th>
+			<th align="left">No</th>
+			<th align="left">Nama</th>
+			<th align="left">Qty</th>
+			<th align="left">Harga</th>
+			<th align="left">Jumlah</th>
 		</tr>
 		@php($no = 1)
 		@foreach($cetak_penjualan_details as $penjualan_details)

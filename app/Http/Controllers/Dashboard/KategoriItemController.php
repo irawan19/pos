@@ -64,7 +64,8 @@ class KategoriItemController extends AdminCoreController
             ];
 
             $error_pesan = [
-                'nama_kategori_items.required'                     => 'Form Nama Harus Diisi.',c
+                'nama_kategori_items.required'                     => 'Form Nama Harus Diisi.',
+                'nama_kategori_items.unique'                        => 'Nama Sudah Terdaftar.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
