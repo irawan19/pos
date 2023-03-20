@@ -17,7 +17,7 @@
 							</li>
 						@endif
 					@endif
-					@if(Request::segment(2) == '' || Request::segment(2) == 'dashboard')
+					@if(Request::segment(2) == '' || Request::segment(2) == 'dashboard' || Request::segment(2) == 'cari')
 						<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
 					@elseif(Request::segment(2) == 'konfigurasi_akun')
 						<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Konfigurasi Akun</li>
@@ -30,7 +30,7 @@
 					@endif
 				</ol>
 
-				@if(Request::segment(2) == '' || Request::segment(2) == 'dashboard')
+				@if(Request::segment(2) == '' || Request::segment(2) == 'dashboard' || Request::segment(2) == 'cari')
 					<h6 class="font-weight-bolder mb-0">Dashboard</h6>
 				@elseif(Request::segment(2) == 'konfigurasi_akun')
 					<h6 class="font-weight-bolder mb-0">Konfigurasi Akun</h6>

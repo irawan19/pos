@@ -1,8 +1,27 @@
 @extends('dashboard.layouts.app')
 @section('content')
 
+	<style>
+		.ui-datepicker-calendar {
+			display: none;
+		}
+	</style>
+
 	<div class="row">
-      	<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+		<div class="col-xl-12 mb-4">
+			<div class="card-body">
+				<form method="GET" action="{{ URL('dashboard/cari') }}">
+					@csrf
+					<div class="input-group">
+						<input class="form-control getDateMonthYear" readonly id="input2-group2" type="text" name="cari_bulan" value="{{$hasil_bulan}}">
+						<button class="btn btn-primary" type="submit"> Cari</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- Customer -->
+      	<div class="col-xl-3 col-sm-6 mb-4">
         	<div class="card">
           		<div class="card-body p-3">
            	 		<div class="row">
@@ -24,7 +43,8 @@
           		</div>
         	</div>
       	</div>
-      	<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+		<!-- Supplier -->
+      	<div class="col-xl-3 col-sm-6 mb-4">
 			<div class="card">
 			  	<div class="card-body p-3">
 			    	<div class="row">
@@ -46,22 +66,101 @@
 			  	</div>
 			</div>
       	</div>
-      	<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+		<!-- Penjualan -->
+      	<div class="col-xl-3 col-sm-6 mb-4">
 			<div class="card">
 				<div class="card-body p-3">
 					<div class="row">
+						<div class="col-8">
+							<div class="numbers">
+								<p class="text-sm mb-0 text-capitalize font-weight-bold">Penjualan</p>
+								<h5 class="font-weight-bolder mb-0">
+									@if(!empty($total_jumlah_penjualan))
+										@php($ambil_total_jumlah_penjualan = $total_jumlah_penjualan->total_jumlah_penjualan)
+									@else
+										@php($ambil_total_jumlah_penjualan = 0)
+									@endif
+									{{General::konversiNilai($ambil_total_jumlah_penjualan)}}
+									<span class="text-danger text-sm font-weight-bolder">{{General::konversiNilaiString($ambil_total_jumlah_penjualan)}}</span>
+								</h5>
+							</div>
+						</div>
+						<div class="col-4 text-end">
+							<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+							<i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+      	</div>
+		<!-- Pembelian -->
+		<div class="col-xl-3 col-sm-6 mb-4">
+			<div class="card">
+			<div class="card-body p-3">
+				<div class="row">
 					<div class="col-8">
 						<div class="numbers">
-						<p class="text-sm mb-0 text-capitalize font-weight-bold">Penjualan</p>
-						<h5 class="font-weight-bolder mb-0">
-                            @if(!empty($total_penjualan))
-                                @php($ambil_total_penjualan = $total_penjualan->total_penjualan)
-                            @else
-                                @php($ambil_total_penjualan = 0)
-                            @endif
-							{{General::konversiNilai($ambil_total_penjualan)}}
-							<span class="text-danger text-sm font-weight-bolder">{{General::konversiNilaiString($ambil_total_penjualan)}}</span>
-						</h5>
+						<p class="text-sm mb-0 text-capitalize font-weight-bold">Pembelian</p>
+							<h5 class="font-weight-bolder mb-0">
+								@if(!empty($total_jumlah_pembelian))
+									@php($ambil_total_jumlah_pembelian = $total_jumlah_pembelian->total_jumlah_pembelian)
+								@else
+									@php($ambil_total_jumlah_pembelian = 0)
+								@endif
+								{{General::konversiNilai($ambil_total_jumlah_pembelian)}}
+								<span class="text-success text-sm font-weight-bolder">{{General::konversiNilaiString($ambil_total_jumlah_pembelian)}}</span>
+							</h5>
+						</div>
+					</div>
+					<div class="col-4 text-end">
+						<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+						<i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- Toko -->
+      	<div class="col-xl-3 col-sm-6 mb-4">
+			<div class="card">
+			  	<div class="card-body p-3">
+			    	<div class="row">
+			      		<div class="col-8">
+							<div class="numbers">
+							<p class="text-sm mb-0 text-capitalize font-weight-bold">Toko</p>
+							<h5 class="font-weight-bolder mb-0">
+								{{General::konversiNilai($total_toko)}}
+								<span class="text-success text-sm font-weight-bolder">{{General::konversiNilaiString($total_toko)}}</span>
+							</h5>
+							</div>
+			      		</div>
+						<div class="col-4 text-end">
+							<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+								<i class="ni ni-shop text-lg opacity-10" aria-hidden="true"></i>
+							</div>
+						</div>
+			    	</div>
+			  	</div>
+			</div>
+      	</div>
+		<!-- Total Penjualan -->
+		<div class="col-xl-3 col-sm-6 mb-4">
+			<div class="card">
+			<div class="card-body p-3">
+				<div class="row">
+					<div class="col-8">
+						<div class="numbers">
+						<p class="text-sm mb-0 text-capitalize font-weight-bold">Total Penjualan</p>
+							<h5 class="font-weight-bolder mb-0">
+								@if(!empty($total_penjualan))
+									@php($ambil_total_penjualan = $total_penjualan->total_penjualan)
+								@else
+									@php($ambil_total_penjualan = 0)
+								@endif
+								{{General::ubahDBKeHarga($ambil_total_penjualan)}}
+							</h5>
 						</div>
 					</div>
 					<div class="col-4 text-end">
@@ -69,33 +168,56 @@
 						<i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
 						</div>
 					</div>
-					</div>
 				</div>
 			</div>
-      	</div>
-		<div class="col-xl-3 col-sm-6">
+			</div>
+		</div>
+		<!-- Total Pembelian -->
+		<div class="col-xl-3 col-sm-6 mb-4">
 			<div class="card">
 			<div class="card-body p-3">
 				<div class="row">
-				<div class="col-8">
-					<div class="numbers">
-					<p class="text-sm mb-0 text-capitalize font-weight-bold">Pembelian</p>
-					<h5 class="font-weight-bolder mb-0">
-                        @if(!empty($total_pembelian))
-                            @php($ambil_total_pembelian = $total_pembelian->total_pembelian)
-                        @else
-                            @php($ambil_total_pembelian = 0)
-                        @endif
-						{{General::konversiNilai($ambil_total_pembelian)}}
-						<span class="text-success text-sm font-weight-bolder">{{General::konversiNilaiString($ambil_total_pembelian)}}</span>
-					</h5>
+					<div class="col-8">
+						<div class="numbers">
+						<p class="text-sm mb-0 text-capitalize font-weight-bold">Total Pembelian</p>
+							<h5 class="font-weight-bolder mb-0">
+								@if(!empty($total_pembelian))
+									@php($ambil_total_pembelian = $total_pembelian->total_pembelian)
+								@else
+									@php($ambil_total_pembelian = 0)
+								@endif
+								{{General::ubahDBKeHarga($ambil_total_pembelian)}}
+							</h5>
+						</div>
+					</div>
+					<div class="col-4 text-end">
+						<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+						<i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+						</div>
 					</div>
 				</div>
-				<div class="col-4 text-end">
-					<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-					<i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+			</div>
+			</div>
+		</div>
+		<!-- Net Profit -->
+		<div class="col-xl-3 col-sm-6 mb-4">
+			<div class="card">
+			<div class="card-body p-3">
+				<div class="row">
+					<div class="col-8">
+						<div class="numbers">
+							<p class="text-sm mb-0 text-capitalize font-weight-bold">Net Profit</p>
+							<h5 class="font-weight-bolder mb-0">
+								@php($net_profit = $total_penjualan->total_penjualan - $total_pembelian->total_pembelian)
+								{{General::ubahDBKeHarga($net_profit)}}
+							</h5>
+						</div>
 					</div>
-				</div>
+					<div class="col-4 text-end">
+						<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+						<i class="ni ni-briefcase-24 text-lg opacity-10" aria-hidden="true"></i>
+						</div>
+					</div>
 				</div>
 			</div>
 			</div>

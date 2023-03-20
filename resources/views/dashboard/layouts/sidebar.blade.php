@@ -12,7 +12,7 @@
 	  	<ul class="navbar-nav">
 			@php($active_dashboard 						= '')
 			@php($active_icon_dashboard 				= '')
-			@if(Request::segment(2) == '' || Request::segment(2) == 'dashboard')
+			@if(Request::segment(2) == '' || Request::segment(2) == 'dashboard' || Request::segment(2) == 'cari')
 				@php($active_dashboard 					= 'active')
 				@php($active_icon_dashboard 			= 'class=activeicon')
 			@endif

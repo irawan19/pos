@@ -69,6 +69,7 @@ Route::middleware([
     Route::group(['prefix' => 'dashboard'], function (){
         //Dashboard
         Route::get('/', [Dashboard::class, 'index'])->name('dashboard');
+        Route::get('/cari', [Dashboard::class, 'cari']);
         Route::get('/pesan', [Dashboard::class, 'pesan']);
         Route::get('/pesan/cari', [Dashboard::class, 'caripesan']);
         Route::get('/pesan/baca/{id}', [Dashboard::class, 'bacapesan']);

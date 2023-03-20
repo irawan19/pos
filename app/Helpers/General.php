@@ -685,13 +685,13 @@ class General
 			return date('t', $akhir_bulan);
 		}
 
-		public static function ubahDBKeBulan($tanggal = '')
+		public static function ubahDBKeBulan($ambil_bulan = '')
 		{
 			$bulan_data 	= array('', 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des');
 			$bulan 		= '';
-			if ($tanggal != '00') {
+			if ($ambil_bulan != '00') {
 				for ($x = 1; $x <= 12; $x++) {
-					if (intval($tanggal) == $x) {
+					if (intval($ambil_bulan) == $x) {
 						$bulan = $x;
 						break;
 					}

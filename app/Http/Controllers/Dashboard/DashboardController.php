@@ -31,18 +31,156 @@ class DashboardController extends AdminCoreController
         return redirect('login');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $tanggal_hari_ini                       = date('Y-m-d');
-        $data['lihat_konfigurasi_aplikasi']    = \App\Models\Master_konfigurasi_aplikasi::where('id_konfigurasi_aplikasis',1)->first();
-        $data['total_customer']                 = \App\Models\Master_customer::count();
-        $data['total_supplier']                 = \App\Models\Master_supplier::count();
-        $data['total_penjualan']                = \App\Models\Transaksi_penjualan::selectRaw('COUNT(total_penjualans) AS total_penjualan')
-                                                                                ->whereRaw('DATE(created_at) = "'.$tanggal_hari_ini.'"')
-                                                                                ->first();
-        $data['total_pembelian']                = \App\Models\Transaksi_pembelian::selectRaw('COUNT(total_pembelians) AS total_pembelian')
-                                                                                ->whereRaw('DATE(created_at) = "'.$tanggal_hari_ini.'"')
-                                                                                ->first();
+        $url_sekarang                           = $request->fullUrl();
+        $data['lihat_konfigurasi_aplikasi']     = \App\Models\Master_konfigurasi_aplikasi::where('id_konfigurasi_aplikasis',1)->first();
+        $bulan                                  = date('m');
+        $tahun                                  = date('Y');
+        $data['hasil_bulan']                    = General::ubahDBKeBulan($bulan).' '.$tahun;
+        if(Auth::user()->tokos_id == '')
+        {
+            $data['total_customer']                 = \App\Models\Master_customer::whereRaw('MONTH(master_customers.created_at) >= "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(master_customers.created_at) >= "'.$tahun.'"')
+                                                                                    ->count();
+            $data['total_supplier']                 = \App\Models\Master_supplier::whereRaw('MONTH(master_suppliers.created_at) >= "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(master_suppliers.created_at) >= "'.$tahun.'"')
+                                                                                    ->count();
+            $data['total_jumlah_penjualan']         = \App\Models\Transaksi_penjualan::selectRaw('COUNT(total_penjualans) AS total_jumlah_penjualan')
+                                                                                    ->whereRaw('MONTH(transaksi_penjualans.tanggal_penjualans) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_penjualans.tanggal_penjualans) = "'.$tahun.'"')
+                                                                                    ->first();
+            $data['total_jumlah_pembelian']         = \App\Models\Transaksi_pembelian::selectRaw('COUNT(total_pembelians) AS total_jumlah_pembelian')
+                                                                                    ->whereRaw('MONTH(transaksi_pembelians.tanggal_pembelians) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_pembelians.tanggal_pembelians) = "'.$tahun.'"')
+                                                                                    ->first();
+            $data['total_toko']                     = \App\Models\Master_toko::whereRaw('MONTH(master_tokos.created_at) >= "'.$bulan.'"')
+                                                                            ->whereRaw('YEAR(master_tokos.created_at) >= "'.$tahun.'"')
+                                                                            ->count();
+            $data['total_penjualan']                = \App\Models\Transaksi_penjualan::selectRaw('SUM(total_penjualans) AS total_penjualan')
+                                                                                    ->whereRaw('MONTH(transaksi_penjualans.tanggal_penjualans) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_penjualans.tanggal_penjualans) = "'.$tahun.'"')
+                                                                                    ->first();
+            $data['total_pembelian']                = \App\Models\Transaksi_pembelian::selectRaw('SUM(total_pembelians) AS total_pembelian')
+                                                                                    ->whereRaw('MONTH(transaksi_pembelians.tanggal_pembelians) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_pembelians.tanggal_pembelians) = "'.$tahun.'"')
+                                                                                    ->first();
+        }
+        else
+        {
+            $data['total_customer']                 = \App\Models\Master_customer::whereRaw('MONTH(master_customers.created_at) >= "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(master_customers.created_at) >= "'.$tahun.'"')
+                                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                                    ->count();
+            $data['total_supplier']                 = \App\Models\Master_supplier::whereRaw('MONTH(master_suppliers.created_at) >= "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(master_suppliers.created_at) >= "'.$tahun.'"')
+                                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                                    ->count();
+            $data['total_jumlah_penjualan']         = \App\Models\Transaksi_penjualan::selectRaw('COUNT(total_penjualans) AS total_jumlah_penjualan')
+                                                                                    ->whereRaw('MONTH(transaksi_penjualans.tanggal_penjualans) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_penjualans.tanggal_penjualans) = "'.$tahun.'"')
+                                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                                    ->first();
+            $data['total_jumlah_pembelian']         = \App\Models\Transaksi_pembelian::selectRaw('COUNT(total_pembelians) AS total_jumlah_pembelian')
+                                                                                    ->whereRaw('MONTH(transaksi_pembelians.tanggal_pembelians) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_pembelians.tanggal_pembelians) = "'.$tahun.'"')
+                                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                                    ->first();
+            $data['total_toko']                     = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                                ->whereRaw('MONTH(master_tokos.created_at) >= "'.$bulan.'"')
+                                                                                ->whereRaw('YEAR(master_tokos.created_at) >= "'.$tahun.'"')
+                                                                                ->count();
+            $data['total_penjualan']                = \App\Models\Transaksi_penjualan::selectRaw('SUM(total_penjualans) AS total_penjualan')
+                                                                                    ->whereRaw('MONTH(transaksi_penjualans.tanggal_penjualans) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_penjualans.tanggal_penjualans) = "'.$tahun.'"')
+                                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                                    ->first();
+            $data['total_pembelian']                = \App\Models\Transaksi_pembelian::selectRaw('SUM(total_pembelians) AS total_pembelian')
+                                                                                    ->whereRaw('MONTH(transaksi_pembelians.tanggal_pembelians) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_pembelians.tanggal_pembelians) = "'.$tahun.'"')
+                                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                                    ->first();
+        }
+        session()->forget('halaman');
+        session()->forget('hasil_bulan');
+        session(['halaman'              => $url_sekarang]);
+        return view('dashboard.dashboard.lihat',$data);
+    }
+
+    public function cari(Request $request)
+    {
+        $url_sekarang                           = $request->fullUrl();
+        $data['lihat_konfigurasi_aplikasi']     = \App\Models\Master_konfigurasi_aplikasi::where('id_konfigurasi_aplikasis',1)->first();
+        $hasil_bulan                            = $request->cari_bulan;
+        $pecah_bulan                            = explode(' ',$hasil_bulan);
+        $bulan                                  = $pecah_bulan[0];
+        $tahun                                  = $pecah_bulan[1];
+        $data['hasil_bulan']                    = $hasil_bulan;
+        if(Auth::user()->tokos_id == '')
+        {
+            $data['total_customer']                 = \App\Models\Master_customer::whereRaw('MONTH(master_customers.created_at) >= "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(master_customers.created_at) >= "'.$tahun.'"')
+                                                                                    ->count();
+            $data['total_supplier']                 = \App\Models\Master_supplier::whereRaw('MONTH(master_suppliers.created_at) >= "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(master_suppliers.created_at) >= "'.$tahun.'"')
+                                                                                    ->count();
+            $data['total_jumlah_penjualan']         = \App\Models\Transaksi_penjualan::selectRaw('COUNT(total_penjualans) AS total_jumlah_penjualan')
+                                                                                    ->whereRaw('MONTH(transaksi_penjualans.tanggal_penjualans) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_penjualans.tanggal_penjualans) = "'.$tahun.'"')
+                                                                                    ->first();
+            $data['total_jumlah_pembelian']         = \App\Models\Transaksi_pembelian::selectRaw('COUNT(total_pembelians) AS total_jumlah_pembelian')
+                                                                                    ->whereRaw('MONTH(transaksi_pembelians.tanggal_pembelians) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_pembelians.tanggal_pembelians) = "'.$tahun.'"')
+                                                                                    ->first();
+            $data['total_toko']                     = \App\Models\Master_toko::whereRaw('MONTH(master_tokos.created_at) >= "'.$bulan.'"')
+                                                                                ->whereRaw('YEAR(master_tokos.created_at) >= "'.$tahun.'"')
+                                                                                ->count();
+            $data['total_penjualan']                = \App\Models\Transaksi_penjualan::selectRaw('SUM(total_penjualans) AS total_penjualan')
+                                                                                    ->whereRaw('MONTH(transaksi_penjualans.tanggal_penjualans) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_penjualans.tanggal_penjualans) = "'.$tahun.'"')
+                                                                                    ->first();
+            $data['total_pembelian']                = \App\Models\Transaksi_pembelian::selectRaw('SUM(total_pembelians) AS total_pembelian')
+                                                                                    ->whereRaw('MONTH(transaksi_pembelians.tanggal_pembelians) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_pembelians.tanggal_pembelians) = "'.$tahun.'"')
+                                                                                    ->first();
+        }
+        else
+        {
+            $data['total_customer']                 = \App\Models\Master_customer::whereRaw('MONTH(master_customers.created_at) >= "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(master_customers.created_at) >= "'.$tahun.'"')
+                                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                                    ->count();
+            $data['total_supplier']                 = \App\Models\Master_supplier::whereRaw('MONTH(master_suppliers.created_at) >= "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(master_suppliers.created_at) >= "'.$tahun.'"')
+                                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                                    ->count();
+            $data['total_jumlah_penjualan']         = \App\Models\Transaksi_penjualan::selectRaw('COUNT(total_penjualans) AS total_jumlah_penjualan')
+                                                                                    ->whereRaw('MONTH(transaksi_penjualans.tanggal_penjualans) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_penjualans.tanggal_penjualans) = "'.$tahun.'"')
+                                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                                    ->first();
+            $data['total_jumlah_pembelian']         = \App\Models\Transaksi_pembelian::selectRaw('COUNT(total_pembelians) AS total_jumlah_pembelian')
+                                                                                    ->whereRaw('MONTH(transaksi_pembelians.tanggal_pembelians) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_pembelians.tanggal_pembelians) = "'.$tahun.'"')
+                                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                                    ->first();
+            $data['total_toko']                     = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
+                                                                                ->whereRaw('MONTH(master_tokos.created_at) >= "'.$bulan.'"')
+                                                                                ->whereRaw('YEAR(master_tokos.created_at) >= "'.$tahun.'"')
+                                                                                ->count();
+            $data['total_penjualan']                = \App\Models\Transaksi_penjualan::selectRaw('SUM(total_penjualans) AS total_penjualan')
+                                                                                    ->whereRaw('MONTH(transaksi_penjualans.tanggal_penjualans) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_penjualans.tanggal_penjualans) = "'.$tahun.'"')
+                                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                                    ->first();
+            $data['total_pembelian']                = \App\Models\Transaksi_pembelian::selectRaw('SUM(total_pembelians) AS total_pembelian')
+                                                                                    ->whereRaw('MONTH(transaksi_pembelians.tanggal_pembelians) = "'.$bulan.'"')
+                                                                                    ->whereRaw('YEAR(transaksi_pembelians.tanggal_pembelians) = "'.$tahun.'"')
+                                                                                    ->where('tokos_id',Auth::user()->tokos_id)
+                                                                                    ->first();
+        }
+        session(['halaman'                      => $url_sekarang]);
+        session(['hasil_bulan'		            => $hasil_bulan]);
         return view('dashboard.dashboard.lihat',$data);
     }
 
