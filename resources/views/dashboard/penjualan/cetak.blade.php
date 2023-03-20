@@ -25,9 +25,6 @@
     .page:first-child {
         page-break-before: avoid;
     }
-    .nowraptable{
-		white-space: nowrap;
-	}
 </style>
 <div class="page">
 	<div style="text-align: center">
@@ -112,4 +109,12 @@
 		</tr>
 	</table>
 </div>
-<script type="text/javascript">window.onload=function(){window.print();setTimeout(function(){window.close(window.location = "{{URL('/dashboard/penjualan')}}");}, 1);}</script>
+<script type="text/javascript">
+	window.onload=function(){
+		window.print();
+		setTimeout(function(){
+			window.close(window.location = "{{URL('/dashboard/penjualan')}}");
+		}, 1);
+		return false;
+	}
+</script>

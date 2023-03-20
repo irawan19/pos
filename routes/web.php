@@ -35,6 +35,7 @@ use App\Http\Controllers\Dashboard\LaporanPenjualanController as DashboardLapora
 use App\Http\Controllers\Dashboard\LaporanPembelianController as DashboardLaporanPembelian;
 use App\Http\Controllers\Dashboard\LaporanStokController as DashboardLaporanStok;
 use App\Http\Controllers\Dashboard\LaporanKeuanganController as DashboardLaporanKeuangan;
+use App\Http\Controllers\Dashboard\LaporanKeuntunganBersihController as DashboardLaporanKeuntunganBersih;
 
 //Konfigurasi Aplikasi
 use App\Http\Controllers\Dashboard\MenuController as DashboardMenu;
@@ -246,6 +247,14 @@ Route::middleware([
                 Route::get('/cari', [DashboardLaporanKeuangan::class, 'cari']);
                 Route::get('/baca/{id}/{jenis_transaksi}', [DashboardLaporanKeuangan::class, 'baca']);
                 Route::get('/cetakexcel', [DashboardLaporanKeuangan::class, 'cetakexcel']);
+            });
+
+            //Laporan Keuntungan Bersih
+            Route::group(['prefix' => 'laporan_keuntungan_bersih'], function() {
+                Route::get('/', [DashboardLaporanKeuntunganBersih::class, 'index']);
+                Route::get('/cari', [DashboardLaporanKeuntunganBersih::class, 'cari']);
+                Route::get('/baca/{id}/{jenis_transaksi}', [DashboardLaporanKeuntunganBersih::class, 'baca']);
+                Route::get('/cetakexcel', [DashboardLaporanKeuntunganBersih::class, 'cetakexcel']);
             });
 
         //Konfigurasi Aplikasi
