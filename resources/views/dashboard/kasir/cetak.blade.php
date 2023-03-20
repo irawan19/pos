@@ -9,7 +9,7 @@
         }
 		html, body {
 			color: black;
-			font-family: 'Roboto', sans-serif;
+			font-family: 'Roboto';
 			margin: 0px;
 			padding: 0px;
 		}
@@ -45,6 +45,16 @@
 			<th style="text-align: left">No.</th>
 			<th>:</th>
 			<td>{{$cetak_penjualans->no_penjualans}}</td>
+		</tr>
+		<tr>
+			<th style="text-align: left">Customer</th>
+			<th>:</th>
+			<td>{{$cetak_penjualans->nama_customers}}</td>
+		</tr>
+		<tr>
+			<th style="text-align: left">Telepon</th>
+			<th>:</th>
+			<td>{{$cetak_penjualans->telepon_customers}}</td>
 		</tr>
 		<tr>
 			<th style="text-align: left">Kasir</th>

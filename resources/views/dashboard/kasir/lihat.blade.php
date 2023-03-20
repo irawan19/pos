@@ -12,11 +12,6 @@
 			<div class="listitem"></div>
 		</div>
 		<div class="col-xl-3 col-md-6 col-sm-6 mb-4">
-			<div class="card mb-4">
-				<div class="card-body">
-					<div id="reader" width="100%" height="100px"></div>
-				</div>
-			</div>
 			<form action="{{ URL('dashboard/kasir/proses') }}" method="POST">
 				{{ csrf_field() }}
 				<div class="card">
@@ -198,6 +193,13 @@
 					</div>
 				</div>
 			</form>
+
+			
+			<div class="card mb-4">
+				<div class="card-body">
+					<div id="reader" width="100%" height="100px"></div>
+				</div>
+			</div>
 		</div>
     </div>
 
@@ -294,6 +296,8 @@
 				hitungKembalian		= pembayaran - kalkulasiTotal;
 				$('.kembalian_penjualans').val(hitungKembalian.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
 			}
+			const rollSound = new Audio("{{URL::asset('storage/scanner/beep.mp3')}}");
+			rollSound.play();
 		}
 
 		function kalkulasiJumlah(iditem)

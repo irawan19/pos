@@ -80,6 +80,7 @@
 						    			<th width="5px"></th>
 						    		@endif
 				    				<th class="nowrap" width="50px">No</th>
+				    				<th class="nowrap">Toko</th>
 				    				<th class="nowrap">Kategori</th>
 				    				<th class="nowrap">Kode</th>
 				    				<th class="nowrap">Nama</th>
@@ -109,6 +110,7 @@
 											    </td>
 								    		@endif
 								    		<td class="nowrap">{{$no}}</td>
+								    		<td class="nowrap">{{$items->nama_tokos}}</td>
 								    		<td class="nowrap">{{$items->nama_kategori_items}}</td>
 								    		<td class="nowrap">{{$items->kode_items}}</td>
 								    		<td class="nowrap">{{$items->nama_items}}</td>
@@ -131,7 +133,8 @@
 								@else
 									<tr>
 										@if(General::totalHakAkses($link_item) != 0)
-											<td colspan="9" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="10" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
@@ -141,7 +144,8 @@
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="8" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="9" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>

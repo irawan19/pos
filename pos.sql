@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 17, 2023 at 04:08 PM
+-- Generation Time: Mar 20, 2023 at 03:55 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.9
 
@@ -128,7 +128,8 @@ INSERT INTO `master_akses` (`id_akses`, `level_sistems_id`, `fiturs_id`, `create
 (69, 1, 69, '2023-03-12 19:00:53', NULL, NULL),
 (70, 1, 70, '2023-03-12 19:00:53', NULL, NULL),
 (71, 1, 71, '2023-03-12 19:00:53', NULL, NULL),
-(72, 1, 72, '2023-03-17 16:08:04', NULL, NULL);
+(72, 1, 72, '2023-03-17 16:08:04', NULL, NULL),
+(73, 1, 73, '2023-03-20 03:55:39', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -237,7 +238,8 @@ INSERT INTO `master_fiturs` (`id_fiturs`, `menus_id`, `nama_fiturs`, `created_at
 (69, 21, 'tambah', '2023-03-12 18:53:51', NULL, NULL),
 (70, 21, 'edit', '2023-03-12 18:53:51', NULL, NULL),
 (71, 21, 'hapus', '2023-03-12 18:53:51', NULL, NULL),
-(72, 17, 'cetak', '2023-03-17 16:07:41', NULL, NULL);
+(72, 17, 'cetak', '2023-03-17 16:07:41', NULL, NULL),
+(73, 10, 'cetak', '2023-03-20 03:55:06', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -582,7 +584,8 @@ CREATE TABLE `sessions` (
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
 ('7eNdWgmYiE0esrhBTLL1yGdbR8adXfYt5pPNNzNg', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoidkdyTGgxeWdvUmFmMVhQSWNGdXZTTkdHdDJXSk9BS0ZsTWJWVEp5aSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM4OiJodHRwOi8vMTI3LjAuMC4xOjgwMDEvZGFzaGJvYXJkL3NhdHVhbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkMWQxcDRjTldhZ1lJTFlqQXg5dmthLjFvbmo2ZmcvOWM2RUZzYWhDczY0aU9xRkJNblZNTGUiO3M6NzoiaGFsYW1hbiI7czozODoiaHR0cDovLzEyNy4wLjAuMTo4MDAxL2Rhc2hib2FyZC9zYXR1YW4iO30=', 1678647947),
 ('arkLzsYI5ofuaTkP8mTV4fUA3cKZGLD9assttDFo', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaExnN3BVTllIWUVnUFNUSThBbXFkdFlJQVd5czRUcWVNYUUxZHMwUSI7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkMWQxcDRjTldhZ1lJTFlqQXg5dmthLjFvbmo2ZmcvOWM2RUZzYWhDczY0aU9xRkJNblZNTGUiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjI3OiJodHRwOi8vMTI3LjAuMC4xOjgwMDEvbG9naW4iO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1678644489),
-('J4QUJ3vShp1B4vGAoyqCFrNOn0kXidRO7e5Elr5Q', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZTNOWjFXaTZqUkJQdG5zNXRCdWVJeDRBWU43Uk9vSzNXaGpra1VlZSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjA6Imh0dHA6Ly9sb2NhbGhvc3QvcG9zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1678649866);
+('J4QUJ3vShp1B4vGAoyqCFrNOn0kXidRO7e5Elr5Q', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZTNOWjFXaTZqUkJQdG5zNXRCdWVJeDRBWU43Uk9vSzNXaGpra1VlZSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjA6Imh0dHA6Ly9sb2NhbGhvc3QvcG9zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1678649866),
+('RwNnbLQgzUXCczFhoGZtbHHSQrPILq4aGPhhuADZ', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoibEUyY2J1eFIyR2laZk1HN1pJWlo3OFgzQVg4N3N0ZkZDekpKMk5EZyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjUxOiJodHRwOi8vMTI3LjAuMC4xOjgwMDEvZGFzaGJvYXJkL2xldmVsX3Npc3RlbS9iYWNhLzEiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJDFkMXA0Y05XYWdZSUxZakF4OXZrYS4xb25qNmZnLzljNkVGc2FoQ3M2NGlPcUZCTW5WTUxlIjtzOjc6ImhhbGFtYW4iO3M6NDQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMS9kYXNoYm9hcmQvbGV2ZWxfc2lzdGVtIjt9', 1679284439);
 
 -- --------------------------------------------------------
 
@@ -954,7 +957,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `master_akses`
 --
 ALTER TABLE `master_akses`
-  MODIFY `id_akses` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id_akses` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `master_customers`
@@ -966,7 +969,7 @@ ALTER TABLE `master_customers`
 -- AUTO_INCREMENT for table `master_fiturs`
 --
 ALTER TABLE `master_fiturs`
-  MODIFY `id_fiturs` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id_fiturs` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `master_items`
