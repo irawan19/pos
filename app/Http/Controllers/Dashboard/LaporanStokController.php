@@ -49,7 +49,6 @@ class LaporanStokController extends AdminCoreController
             $data['hasil_kategori_item']   = '';
             session()->forget('halaman');
             session()->forget('hasil_toko');
-            session()->forget('hasil_kategori_item');
             session()->forget('hasil_kata');
             session(['halaman'              => $url_sekarang]);
         	return view('dashboard.laporan_stok.lihat', $data);
@@ -69,10 +68,6 @@ class LaporanStokController extends AdminCoreController
             $data['hasil_kata']             = $hasil_kata;
             $hasil_toko                     = $request->cari_toko;
             $data['hasil_toko']             = $hasil_toko;
-            $data['lihat_kategori_items']   = \App\Models\Master_kategori_item::orderBy('nama_kategori_items')
-                                                                                ->get();
-            $hasil_kategori_item            = $request->hasil_kategori_item;
-            $data['hasil_kategori_item']    = $request->cari_kategori_item;
             if(Auth::user()->tokos_id == null)
             {
                 $data['lihat_tokos']        = \App\Models\Master_toko::orderBy('nama_tokos')
@@ -115,7 +110,6 @@ class LaporanStokController extends AdminCoreController
             }
             session(['halaman'              => $url_sekarang]);
             session(['hasil_toko'		    => $hasil_toko]);
-            session(['hasil_kategori_item'	=> $hasil_kategori_item]);
             session(['hasil_kata'		    => $hasil_kata]);
             return view('dashboard.laporan_stok.lihat', $data);
         }

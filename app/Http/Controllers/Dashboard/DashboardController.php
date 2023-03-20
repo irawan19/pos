@@ -38,7 +38,7 @@ class DashboardController extends AdminCoreController
         $bulan                                  = date('m');
         $tahun                                  = date('Y');
         $data['hasil_bulan']                    = General::ubahDBKeBulan($bulan).' '.$tahun;
-        if(Auth::user()->tokos_id == '')
+        if(Auth::user()->tokos_id == null)
         {
             $data['total_customer']                 = \App\Models\Master_customer::whereRaw('MONTH(master_customers.created_at) >= "'.$bulan.'"')
                                                                                     ->whereRaw('YEAR(master_customers.created_at) >= "'.$tahun.'"')
@@ -116,7 +116,7 @@ class DashboardController extends AdminCoreController
         $bulan                                  = $pecah_bulan[0];
         $tahun                                  = $pecah_bulan[1];
         $data['hasil_bulan']                    = $hasil_bulan;
-        if(Auth::user()->tokos_id == '')
+        if(Auth::user()->tokos_id == null)
         {
             $data['total_customer']                 = \App\Models\Master_customer::whereRaw('MONTH(master_customers.created_at) >= "'.$bulan.'"')
                                                                                     ->whereRaw('YEAR(master_customers.created_at) >= "'.$tahun.'"')

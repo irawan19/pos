@@ -253,7 +253,7 @@ Route::middleware([
             Route::group(['prefix' => 'laporan_keuntungan_bersih'], function() {
                 Route::get('/', [DashboardLaporanKeuntunganBersih::class, 'index']);
                 Route::get('/cari', [DashboardLaporanKeuntunganBersih::class, 'cari']);
-                Route::get('/baca/{id}/{jenis_transaksi}', [DashboardLaporanKeuntunganBersih::class, 'baca']);
+                Route::get('/baca/{id}', [DashboardLaporanKeuntunganBersih::class, 'baca']);
                 Route::get('/cetakexcel', [DashboardLaporanKeuntunganBersih::class, 'cetakexcel']);
             });
 

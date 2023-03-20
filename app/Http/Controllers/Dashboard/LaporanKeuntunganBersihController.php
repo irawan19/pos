@@ -17,10 +17,16 @@ class LaporanKeuntunganBersihController extends AdminCoreController
         $link_laporan_keuntungan_bersih = 'laporan_keuntungan_bersih';
         if(General::hakAkses($link_laporan_keuntungan_bersih,'lihat') == 'true')
         {
-            $url_sekarang                   = $request->fullUrl();
-            $data['link_laporan_keuntungan_bersih']      = $link_laporan_keuntungan_bersih;
-            $data['hasil_kata']             = '';
-
+            $url_sekarang                               = $request->fullUrl();
+            $data['link_laporan_keuntungan_bersih']     = $link_laporan_keuntungan_bersih;
+            $data['hasil_kata']                         = '';
+            $tanggal_mulai                              = date('Y-m-01');
+            $tanggal_selesai                            = date('Y-m-j', strtotime("last day of this month"));
+            $hasil_tanggal                              = General::ubahDBKeTanggal($tanggal_mulai).' sampai '.General::ubahDBKeTanggal($tanggal_selesai);
+            $data['tanggal_mulai']                      = $tanggal_mulai;
+            $data['tanggal_selesai']                    = $tanggal_selesai;
+            $data['hasil_tanggal']                      = $hasil_tanggal;
+            $hasil_toko                                 = $request->cari_toko;
             if(Auth::user()->tokos_id == null)
             {
                 $data['lihat_tokos']        = \App\Models\Master_toko::orderBy('nama_tokos')
@@ -49,7 +55,6 @@ class LaporanKeuntunganBersihController extends AdminCoreController
             $data['hasil_kategori_item']   = '';
             session()->forget('halaman');
             session()->forget('hasil_toko');
-            session()->forget('hasil_kategori_item');
             session()->forget('hasil_kata');
             session(['halaman'              => $url_sekarang]);
         	return view('dashboard.laporan_keuntungan_bersih.lihat', $data);
@@ -69,10 +74,6 @@ class LaporanKeuntunganBersihController extends AdminCoreController
             $data['hasil_kata']             = $hasil_kata;
             $hasil_toko                     = $request->cari_toko;
             $data['hasil_toko']             = $hasil_toko;
-            $data['lihat_kategori_items']   = \App\Models\Master_kategori_item::orderBy('nama_kategori_items')
-                                                                                ->get();
-            $hasil_kategori_item            = $request->hasil_kategori_item;
-            $data['hasil_kategori_item']    = $request->cari_kategori_item;
             if(Auth::user()->tokos_id == null)
             {
                 $data['lihat_tokos']        = \App\Models\Master_toko::orderBy('nama_tokos')
@@ -115,7 +116,6 @@ class LaporanKeuntunganBersihController extends AdminCoreController
             }
             session(['halaman'              => $url_sekarang]);
             session(['hasil_toko'		    => $hasil_toko]);
-            session(['hasil_kategori_item'	=> $hasil_kategori_item]);
             session(['hasil_kata'		    => $hasil_kata]);
             return view('dashboard.laporan_keuntungan_bersih.lihat', $data);
         }
