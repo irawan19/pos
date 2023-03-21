@@ -255,6 +255,7 @@ Route::middleware([
                 Route::get('/cari', [DashboardLaporanKeuntunganBersih::class, 'cari']);
                 Route::get('/baca/{id}', [DashboardLaporanKeuntunganBersih::class, 'baca']);
                 Route::get('/cetakexcel', [DashboardLaporanKeuntunganBersih::class, 'cetakexcel']);
+                Route::get('/baca/{id}/cetakexcel', [DashboardLaporanKeuntunganBersih::class, 'cetakexcelbaca']);
             });
 
         //Konfigurasi Aplikasi

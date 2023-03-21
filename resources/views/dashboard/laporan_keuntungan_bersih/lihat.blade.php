@@ -91,9 +91,12 @@
 								    		<td class="nowrap">{{$laporan_keuntungan_bersihs->nama_kategori_items}}</td>
 								    		<td class="nowrap">{{$laporan_keuntungan_bersihs->kode_items}}</td>
 								    		<td class="nowrap">{{$laporan_keuntungan_bersihs->nama_items}}</td>
-											@php($ambil_penjualan = \App\Models\Transaksi_penjualan_detail::selectRaw('SUM(total_penjualan_details) AS total_penjualan_details')
+											@php($ambil_penjualan = \App\Models\Transaksi_penjualan_detail::selectRaw('SUM(
+																															total_penjualan_details + (total_penjualan_details * pajak_penjualans/100) - (total_penjualan_details * diskon_penjualans/100)
+																														) AS total_penjualan_details')
 																											->join('transaksi_penjualans','penjualans_id','=','transaksi_penjualans.id_penjualans')
-																											->where('tokos_id',$laporan_keuntungan_bersihs->id_tokos)
+																											->where('transaksi_penjualans.tokos_id',$laporan_keuntungan_bersihs->id_tokos)
+																											->where('transaksi_penjualan_details.items_id',$laporan_keuntungan_bersihs->id_items)
 																											->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
 																											->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
 																											->first())
@@ -103,9 +106,12 @@
 												@php($total_penjualan = 0)
 											@endif
 											<td class="nowrap right-align">{{General::ubahDBKeHarga($total_penjualan)}}</td>
-								    		@php($ambil_pembelian = \App\Models\Transaksi_pembelian_detail::selectRaw('SUM(total_pembelian_details) AS total_pembelian_details')
+								    		@php($ambil_pembelian = \App\Models\Transaksi_pembelian_detail::selectRaw('SUM(
+																															total_pembelian_details + (total_pembelian_details * pajak_pembelians/100) - (total_pembelian_details * diskon_pembelians/100)
+																														) AS total_pembelian_details')
 																											->join('transaksi_pembelians','pembelians_id','=','transaksi_pembelians.id_pembelians')
-																											->where('tokos_id',$laporan_keuntungan_bersihs->id_tokos)
+																											->where('transaksi_pembelians.tokos_id',$laporan_keuntungan_bersihs->id_tokos)
+																											->where('transaksi_pembelian_details.items_id',$laporan_keuntungan_bersihs->id_items)
 																											->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
 																											->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
 																											->first())

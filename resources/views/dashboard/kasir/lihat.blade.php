@@ -193,9 +193,8 @@
 					</div>
 				</div>
 			</form>
-
 			
-			<div class="card mb-4">
+			<div class="card mt-4">
 				<div class="card-body">
 					<div id="reader" width="100%" height="100px"></div>
 				</div>

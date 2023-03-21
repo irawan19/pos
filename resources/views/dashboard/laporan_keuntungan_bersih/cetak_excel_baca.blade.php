@@ -18,7 +18,7 @@
 </table>
 <table border="1px">
 	<tr>
-		<th width="100px">Toko</th>
+		<th width="150px">Toko</th>
 		<th width="1px">:</th>
 		<td>{{$baca_items->nama_tokos}}</td>
 	</tr>
@@ -28,7 +28,7 @@
 		<td>{{$baca_items->nama_kategori_items}}</td>
 	</tr>
 	<tr>
-		<th>Produk</th>
+		<th>Item</th>
 		<th>:</th>
 		<td>{{$baca_items->nama_items}}</td>
 	</tr>
@@ -37,63 +37,147 @@
 		<th>:</th>
 		<td>{{$baca_items->nama_satuans}}</td>
 	</tr>
+	<tr>
+		<th>Keuntungan Bersih</th>
+		<th>:</th>
+		<td>
+			@if(!empty($total_pembelians))
+				@php($total_all_pembelians = $total_pembelians->total_all_pembelians)
+			@else
+				@php($total_all_pembelians = 0)
+			@endif
+
+			@if(!empty($total_penjualans))
+				@php($total_all_penjualans = $total_penjualans->total_all_penjualans)
+			@else
+				@php($total_all_penjualans = 0)
+			@endif
+
+			{{General::ubahDBKeHarga($total_all_penjualans - $total_all_pembelians)}}
+		</td>
+	</tr>
 </table>
+<!-- Pembelian -->
+<hr style="border:2px solid #202739"/>
+<h5>Pembelian</h5>
+<hr style="border:2px solid #202739"/>
 <table border="1px">
 	<thead>
 		<tr>
-            <th>Tanggal</th>
-            <th>No</th>
-            <th>Admin</th>
-            <th>Masuk</th>
-            <th>Keluar</th>
-            <th>Sub Total</th>
+			<th>Tanggal</th>
+			<th>No</th>
+			<th>Admin</th>
+			<th>Jumlah</th>
+			<th>Harga</th>
+			<th>Sub Total</th>
+			<th>Diskon</th>
+			<th>Pajak</th>
+			<th>Total</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-			<td>Stok Awal</td>
-	    	<td align="right">
-				@php($saldo_awal = $baca_items->stok_awal_items)
-				{{$saldo_awal}}
-			</td>
-	    	<td align="right">0</td>
-			<td align="right">
-				{{$saldo_awal}}
-			</td>
-		</tr>
-    @php($sub_total 		= 0)
-	@php($total_stok_masuk 	= 0)
-	@php($total_stok_keluar = 0)
-	@php($total 			= 0)
-	@foreach($baca_laporan_stoks as $laporan_stoks)
-		<tr>
-			<td>{{General::ubahDBKeTanggalwaktu($laporan_stoks->tanggal_transaksi)}}</td>
-			<td>{{$laporan_stoks->no_transaksi}}</td>
-			<td>{{$laporan_stoks->nama_admin}}</td>
-			<td align="right">
-				@if($laporan_stoks->jenis_transaksi == 'masuk')
-					@php($jumlah_stok_masuk = $laporan_stoks->total_transaksi)
-				@else
-					@php($jumlah_stok_masuk = 0)
-				@endif
-				{{$jumlah_stok_masuk}}
-			</td>
-			<td align="right">
-				@if($laporan_stoks->jenis_transaksi == 'keluar')
-					@php($jumlah_stok_keluar = $laporan_stoks->total_transaksi)
-				@else
-					@php($jumlah_stok_keluar = 0)
-				@endif
-				{{$jumlah_stok_keluar}}
-			</td>
-			<td align="right">
-				@php($sub_total += $saldo_awal + $jumlah_stok_masuk - $jumlah_stok_keluar)
-				{{$sub_total}}
-			</td>
-		</tr>
-		@php($total_stok_masuk 	+= $jumlah_stok_masuk)
-		@php($total_stok_keluar += $jumlah_stok_keluar)
-		@php($total 			= $sub_total)
-	@endforeach
+		@php($kalkulasi_total_pembelians = 0)
+		@if(!$transaksi_pembelian->isEmpty())
+			@foreach($transaksi_pembelian as $pembelian)
+				@php($sub_total_pembelian_details 	= $pembelian->total_pembelian_details)
+				@php($pajak_pembelian_details 		= ($sub_total_pembelian_details * $pembelian->pajak_pembelians/100))
+				@php($diskon_pembelian_details 		= ($sub_total_pembelian_details * $pembelian->diskon_pembelians/100))
+				@php($total_pembelian_details 		= $sub_total_pembelian_details + $pajak_pembelian_details - $diskon_pembelian_details)
+				<tr>
+					<td>{{General::ubahDBKeTanggalwaktu($pembelian->tanggal_pembelians)}}</td>
+					<td>{{$pembelian->no_pembelians}}</td>
+					<td>{{$pembelian->name}}</td>
+					<td class="right-align">{{$pembelian->jumlah_pembelian_details}}</td>
+					<td class="right-align">{{General::ubahDBKeHarga($pembelian->harga_pembelian_details)}}</td>
+					<td class="right-align">{{General::ubahDBKeHarga($sub_total_pembelian_details)}}</td>
+					<td class="right-align">{{General::ubahDBKeHarga($diskon_pembelian_details)}} ({{$pembelian->diskon_pembelians}}%)</td>
+					<td class="right-align">{{General::ubahDBKeHarga($pajak_pembelian_details)}} ({{$pembelian->pajak_pembelians}}%)</td>
+					<td class="right-align">{{General::ubahDBKeHarga($total_pembelian_details)}}</td>
+				</tr>
+				@php($kalkulasi_total_pembelians += $total_pembelian_details)
+			@endforeach
+		@else
+			<tr>
+				<td colspan="9" class="center-align">Tidak ada data ditampilkan</td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+			</tr>
+		@endif
 	</tbody>
+	<tfoot>
+		<tr>
+			<th colspan="8" class="center-align">Total Pembelian {{General::ubahDBKeTanggal($tanggal_mulai).' sampai '.General::ubahDBKeTanggal($tanggal_mulai)}}</th>
+			<th class="right-align">
+				{{General::ubahDBKeHarga($kalkulasi_total_pembelians)}}
+			</th>
+		</tr>
+	</tfoot>
+</table>
+<!-- Penjualan -->
+<hr style="border:2px solid #202739"/>
+<h5>Penjualan</h5>
+<hr style="border:2px solid #202739"/>
+<table border="1px">
+	<thead>
+		<tr>
+			<th>Tanggal</th>
+			<th>No</th>
+			<th>Admin</th>
+			<th>Jumlah</th>
+			<th>Harga</th>
+			<th>Sub Total</th>
+			<th>Diskon</th>
+			<th>Pajak</th>
+			<th>Total</th>
+		</tr>
+	</thead>
+	<tbody>
+		@php($kalkulasi_total_penjualans = 0)
+		@if(!$transaksi_penjualan->isEmpty())
+			@foreach($transaksi_penjualan as $penjualan)
+				@php($sub_total_penjualan_details 	= $penjualan->total_penjualan_details)
+				@php($pajak_penjualan_details 		= ($sub_total_penjualan_details * $penjualan->pajak_penjualans/100))
+				@php($diskon_penjualan_details 		= ($sub_total_penjualan_details * $penjualan->diskon_penjualans/100))
+				@php($total_penjualan_details 		= $sub_total_penjualan_details + $pajak_penjualan_details - $diskon_penjualan_details)
+				<tr>
+					<td>{{General::ubahDBkeTanggalwaktu($penjualan->tanggal_penjualans)}}</td>
+					<td>{{$penjualan->no_penjualans}}</td>
+					<td>{{$penjualan->name}}</td>
+					<td class="right-align">{{$penjualan->jumlah_penjualan_details}}</td>
+					<td class="right-align">{{General::ubahDBKeHarga($penjualan->harga_penjualan_details)}}</td>
+					<td class="right-align">{{General::ubahDBKeHarga($sub_total_penjualan_details)}}</td>
+					<td class="right-align">{{General::ubahDBKeHarga($diskon_penjualan_details)}} ({{$penjualan->diskon_penjualans}}%)</td>
+					<td class="right-align">{{General::ubahDBKeHarga($pajak_penjualan_details)}} ({{$penjualan->pajak_penjualans}}%)</td>
+					<td class="right-align">{{General::ubahDBKeHarga($total_penjualan_details)}}</td>
+				</tr>
+				@php($kalkulasi_total_penjualans += $total_penjualan_details)
+			@endforeach
+		@else
+			<tr>
+				<td colspan="9" class="center-align">Tidak ada data ditampilkan</td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+			</tr>
+		@endif
+	</tbody>
+	<tfoot>
+		<tr>
+			<th colspan="8" class="center-align">Total Penjualan {{General::ubahDBKeTanggal($tanggal_mulai).' sampai '.General::ubahDBKeTanggal($tanggal_mulai)}}</th>
+			<th class="right-align">
+				{{General::ubahDBKeHarga($kalkulasi_total_penjualans)}}
+			</th>
+		</tr>
+	</tfoot>
 </table>

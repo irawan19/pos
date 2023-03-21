@@ -1,6 +1,7 @@
 <table>
 	<tr>
-		<td colspan="7" style="font-weight: bold; text-align: center">Laporan Keuntungan Bersih</td>
+		<td colspan="8" style="font-weight: bold; text-align: center">Laporan Keuntungan Bersih</td>
+		<td style="display:none"></td>
 		<td style="display:none"></td>
 		<td style="display:none"></td>
 		<td style="display:none"></td>
@@ -9,7 +10,8 @@
 		<td style="display:none"></td>
 	</tr>
 	<tr>
-		<td colspan="7" style="font-weight: bold; text-align: center">{{General::ubahDBKeTanggal($tanggal_mulai).' '.General::ubahDBKeTanggal($tanggal_selesai)}}</td>
+		<td colspan="8" style="font-weight: bold; text-align: center">{{General::ubahDBKeTanggal($tanggal_mulai).' sampai '.General::ubahDBKeTanggal($tanggal_selesai)}}</td>
+		<td style="display:none"></td>
 		<td style="display:none"></td>
 		<td style="display:none"></td>
 		<td style="display:none"></td>
@@ -36,8 +38,8 @@
 		@php($total_all_pembelians = 0)
 		@php($total_all_keuntungans = 0)
         @php($no = 1)
-		@if(!$lihat_laporan_stoks->isEmpty())
-			@foreach($lihat_laporan_stoks as $laporan_stoks)
+		@if(!$lihat_laporan_keuntungan_bersihs->isEmpty())
+			@foreach($lihat_laporan_keuntungan_bersihs as $laporan_keuntungan_bersihs)
 				<tr>
 					<td>{{$no}}</td>
 					<td>{{$laporan_keuntungan_bersihs->nama_tokos}}</td>
@@ -46,7 +48,8 @@
 					<td>{{$laporan_keuntungan_bersihs->nama_items}}</td>
 					@php($ambil_penjualan = \App\Models\Transaksi_penjualan_detail::selectRaw('SUM(total_penjualan_details) AS total_penjualan_details')
 																					->join('transaksi_penjualans','penjualans_id','=','transaksi_penjualans.id_penjualans')
-																					->where('tokos_id',$laporan_keuntungan_bersihs->id_tokos)
+																					->where('transaksi_penjualans.tokos_id',$laporan_keuntungan_bersihs->id_tokos)
+																					->where('transaksi_penjualan_details.items_id',$laporan_keuntungan_bersihs->id_items)
 																					->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) >= "'.$tanggal_mulai.'"')
 																					->whereRaw('DATE(transaksi_penjualans.tanggal_penjualans) <= "'.$tanggal_selesai.'"')
 																					->first())
@@ -58,7 +61,8 @@
 					<td class="right-align">{{General::ubahDBKeHarga($total_penjualan)}}</td>
 					@php($ambil_pembelian = \App\Models\Transaksi_pembelian_detail::selectRaw('SUM(total_pembelian_details) AS total_pembelian_details')
 																					->join('transaksi_pembelians','pembelians_id','=','transaksi_pembelians.id_pembelians')
-																					->where('tokos_id',$laporan_keuntungan_bersihs->id_tokos)
+																					->where('transaksi_pembelians.tokos_id',$laporan_keuntungan_bersihs->id_tokos)
+																					->where('transaksi_pembelian_details.items_id',$laporan_keuntungan_bersihs->id_items)
 																					->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) >= "'.$tanggal_mulai.'"')
 																					->whereRaw('DATE(transaksi_pembelians.tanggal_pembelians) <= "'.$tanggal_selesai.'"')
 																					->first())
@@ -74,12 +78,11 @@
 				@php($total_all_penjualans += $total_penjualan)
 				@php($total_all_penjualans += $total_pembelian)
 				@php($total_all_keuntungans += $total_keuntungan)
-				</tr>
                 @php($no++)
 			@endforeach
 		@else
 			<tr>
-				<td colspan="9" align="center">Tidak ada data ditampilkan</td>
+				<td colspan="8" align="center">Tidak ada data ditampilkan</td>
 				<td style="display:none"></td>
 				<td style="display:none"></td>
 				<td style="display:none"></td>
@@ -93,7 +96,7 @@
 	</tbody>
   	<tfoot>
   	    <tr>
-  	        <th colspan="6" class="center-align">Total {{General::ubahDBKeTanggal($tanggal_mulai).' sampai '.General::ubahDBKeTanggal($tanggal_selesai)}}</th>
+  	        <th colspan="5" class="center-align">Total {{General::ubahDBKeTanggal($tanggal_mulai).' sampai '.General::ubahDBKeTanggal($tanggal_selesai)}}</th>
   	        <th class="right-align">{{General::ubahDBKeHarga($total_all_penjualans)}}</th>
   	        <th class="right-align">{{General::ubahDBKeHarga($total_all_pembelians)}}</th>
   	        <th class="right-align">{{General::ubahDBKeHarga($total_all_keuntungans)}}</th>
