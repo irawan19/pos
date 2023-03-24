@@ -109,12 +109,3 @@
 		</tr>
 	</table>
 </div>
-<script type="text/javascript">
-	window.onload=function(){
-		window.print();
-		setTimeout(function(){
-			window.close(window.location = "{{URL('/dashboard/kasir')}}");
-		}, 1);
-		return false;
-	}
-</script>

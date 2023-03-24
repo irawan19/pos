@@ -1,3 +1,4 @@
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 <style>
     table {border-collapse: collapse;}
     @media print 
@@ -109,12 +110,3 @@
 		</tr>
 	</table>
 </div>
-<script type="text/javascript">
-	window.onload=function(){
-		window.print();
-		setTimeout(function(){
-			window.close(window.location = "{{URL('/dashboard/penjualan')}}");
-		}, 1);
-		return false;
-	}
-</script>
