@@ -305,7 +305,7 @@ class General
 		public static function cetaklist($link_menus = '', $link = '')
 		{
 			if (General::hakAkses($link_menus, 'cetak') == 'true') {
-				echo 	'<a class="dropdown-item" href="' . URL($link) . '" style="color:green">
+				echo 	'<a target="_blank" class="dropdown-item" href="' . URL($link) . '" style="color:green">
 							<i class="fas fa-folder-open" aria-hidden="true"></i>&nbsp;&nbsp;Cetak
 						</a>';
 			}
