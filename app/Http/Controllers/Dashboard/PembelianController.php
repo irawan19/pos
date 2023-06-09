@@ -506,6 +506,7 @@ class PembelianController extends AdminCoreController
                                                                         ->orderBy('nama_suppliers')
                                                                         ->get();
                 $data['edit_pembayarans'] = \App\Models\Master_pembayaran::where('tokos_id',$cek_pembelians->tokos_id)
+                                                                        ->orWhere('tokos_id',null)
                                                                             ->orderBy('nama_pembayarans')
                                                                             ->get();
                 $data['edit_pembelians']           = $cek_pembelians;
