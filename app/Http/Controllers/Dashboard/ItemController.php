@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use General;
 use Auth;
 use Storage;
+use Illuminate\Validation\Rule;
 
 class ItemController extends AdminCoreController
 {
@@ -203,7 +204,7 @@ class ItemController extends AdminCoreController
                 'satuans_id'                            => 'required',
                 'userfile_foto_item'                    => 'required|mimes:jpg,jpeg,png',
                 'nama_items'                            => 'required',
-                'kode_items'                            => 'required|unique:master_items',
+                'kode_items'                            => ['required',Rule::unique('master_items')->whereNull('deleted_at')],
                 'harga_items'                           => 'required',
                 'stok_items'                            => 'required',
             ];
@@ -339,7 +340,7 @@ class ItemController extends AdminCoreController
                         'satuans_id'                            => 'required',
                         'userfile_foto_item'                    => 'required|mimes:jpg,jpeg,png',
                         'nama_items'                            => 'required',
-                        'kode_items'                            => 'required|unique:master_items,kode_items,'.$id_items.',id_items',
+                        'kode_items'                            => ['required',Rule::unique('master_items','kode_items', $id_items, 'id_items')->whereNull('deleted_at')],
                         'harga_items'                           => 'required',
                     ];
         
