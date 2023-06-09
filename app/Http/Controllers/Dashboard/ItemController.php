@@ -206,7 +206,7 @@ class ItemController extends AdminCoreController
                 'nama_items'                            => 'required',
                 'kode_items'                            => ['required',Rule::unique('master_items')->whereNull('deleted_at')],
                 'harga_items'                           => 'required',
-                'stok_items'                            => 'required',
+                'stok_items'                            => 'required|numeric|min:1',
             ];
 
             $error_pesan = [
@@ -218,7 +218,7 @@ class ItemController extends AdminCoreController
                 'kode_items.required'                   => 'Form Kode Harus Diisi.',
                 'kode_items.unique'                     => 'Kode Sudah Terdaftar.',
                 'harga_items.required'                  => 'Form Harga Harus Diisi.',
-                'stok_items.required'                   => 'Fkorm Stok Harus Diisi.',
+                'stok_items.required'                   => 'Form Stok Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
