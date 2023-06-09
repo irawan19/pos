@@ -623,12 +623,12 @@ class PembelianController extends AdminCoreController
                 \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)
                                                 ->update($pembelians_data);
 
-                $ambil_pemesanan_details = \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)->get();
-                foreach($ambil_pemesanan_details as $pemesanan_details)
+                $pembelian_details = \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)->get();
+                foreach($pembelian_details as $pembelian_details)
                 {
-                    $ambil_items = \App\Models\Master_item::where('id_items',$pemesanan_details->items_id)->first();
+                    $ambil_items = \App\Models\Master_item::where('id_items',$pembelian_details->items_id)->first();
                     $update_items_data = [
-                        'stok_items'    => $ambil_items->stok_items - $pemesanan_details->jumlah_pembelian_details
+                        'stok_items'    => $ambil_items->stok_items - $pembelian_details->jumlah_pembelian_details
                     ];
                     \App\Models\Master_item::where('id_items',$ambil_items->id_items)->update($update_items_data);
                     \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)
@@ -702,12 +702,12 @@ class PembelianController extends AdminCoreController
             $cek_pembelians = \App\Models\Transaksi_pembelian::where('id_pembelians',$id_pembelians)->first();
             if(!empty($cek_pembelians))
             {
-                $ambil_pembelian_details = \App\Models\Transaksi_pembelian::where('pembelians_id',$id_pembelians)->get();
+                $ambil_pembelian_details = \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)->get();
                 foreach($ambil_pembelian_details as $pembelian_details)
                 {
-                    $ambil_items = \App\Models\Master_item::where('id_items',$pemesanan_details->items_id)->first();
+                    $ambil_items = \App\Models\Master_item::where('id_items',$pembelian_details->items_id)->first();
                     $update_items_data = [
-                        'stok_items'    => $ambil_items->stok_items - $pemesanan_details->jumlah_pembelian_details
+                        'stok_items'    => $ambil_items->stok_items - $pembelian_details->jumlah_pembelian_details
                     ];
                     \App\Models\Master_item::where('id_items',$ambil_items->id_items)->update($update_items_data);
                     \App\Models\Transaksi_pembelian_detail::where('pembelians_id',$id_pembelians)

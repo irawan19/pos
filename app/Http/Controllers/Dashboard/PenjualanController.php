@@ -648,12 +648,12 @@ class PenjualanController extends AdminCoreController
                 \App\Models\Transaksi_penjualan::where('id_penjualans',$id_penjualans)
                                                 ->update($penjualans_data);
 
-                $ambil_pemesanan_details = \App\Models\Transaksi_penjualan_detail::where('penjualans_id',$id_penjualans)->get();
-                foreach($ambil_pemesanan_details as $pemesanan_details)
+                $ambil_penjualan_details = \App\Models\Transaksi_penjualan_detail::where('penjualans_id',$id_penjualans)->get();
+                foreach($ambil_penjualan_details as $penjualan_details)
                 {
-                    $ambil_items = \App\Models\Master_item::where('id_items',$pemesanan_details->items_id)->first();
+                    $ambil_items = \App\Models\Master_item::where('id_items',$penjualan_details->items_id)->first();
                     $update_items_data = [
-                        'stok_items'    => $ambil_items->stok_items + $pemesanan_details->jumlah_penjualan_details
+                        'stok_items'    => $ambil_items->stok_items + $penjualan_details->jumlah_penjualan_details
                     ];
                     \App\Models\Master_item::where('id_items',$ambil_items->id_items)->update($update_items_data);
                     \App\Models\Transaksi_penjualan_detail::where('penjualans_id',$id_penjualans)
@@ -727,12 +727,12 @@ class PenjualanController extends AdminCoreController
             $cek_penjualans = \App\Models\Transaksi_penjualan::where('id_penjualans',$id_penjualans)->first();
             if(!empty($cek_penjualans))
             {
-                $ambil_pemesanan_details = \App\Models\Transaksi_penjualan_detail::where('penjualans_id',$id_penjualans)->get();
-                foreach($ambil_pemesanan_details as $pemesanan_details)
+                $ambil_penjualan_details = \App\Models\Transaksi_penjualan_detail::where('penjualans_id',$id_penjualans)->get();
+                foreach($ambil_penjualan_details as $penjualan_details)
                 {
-                    $ambil_items = \App\Models\Master_item::where('id_items',$pemesanan_details->items_id)->first();
+                    $ambil_items = \App\Models\Master_item::where('id_items',$penjualan_details->items_id)->first();
                     $update_items_data = [
-                        'stok_items'    => $ambil_items->stok_items + $pemesanan_details->jumlah_penjualan_details
+                        'stok_items'    => $ambil_items->stok_items + $penjualan_details->jumlah_penjualan_details
                     ];
                     \App\Models\Master_item::where('id_items',$ambil_items->id_items)->update($update_items_data);
                     \App\Models\Transaksi_penjualan_detail::where('penjualans_id',$id_penjualans)
