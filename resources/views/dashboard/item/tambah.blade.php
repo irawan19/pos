@@ -70,9 +70,9 @@
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<label class="form-col-form-label" for="deskrispi_items">Deskripsi </label>
-									<textarea class="form-control {{ General::validForm($errors->first('deskrispi_items')) }}" id="deskrispi_items" name="deskrispi_items" rows="5">{{Request::old('deskrispi_items')}}</textarea>
-									{{General::pesanErrorForm($errors->first('deskrispi_items'))}}
+									<label class="form-col-form-label" for="deskripsi_items">Deskripsi </label>
+									<textarea class="form-control {{ General::validForm($errors->first('deskripsi_items')) }}" id="deskripsi_items" name="deskripsi_items" rows="5">{{Request::old('deskripsi_items')}}</textarea>
+									{{General::pesanErrorForm($errors->first('deskripsi_items'))}}
 								</div>
 							</div>
 						</div>
