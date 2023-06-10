@@ -110,32 +110,6 @@ class General
 
 			return $format_pembelians_new;
 		}
-
-		public static function noKeuangan()
-		{
-			$ambil_keuangans = \App\Models\Transaksi_keuangan::select('no_keuangans')
-															->whereRaw('MONTH(created_at) = "'.date('m').'"')
-															->whereRaw('YEAR(created_at) = "'.date('Y').'"')
-															->orderByRaw('CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(no_keuangans,"-",2),"-",-1) AS SIGNED) desc')
-															->first();
-			if(!empty($ambil_keuangans))
-			{
-				$no_keuangans 				= $ambil_keuangans->no_keuangans;
-				$explode_no 				= explode('-', $no_keuangans);
-				if(!empty($explode_no[1]))
-				{
-					$no_keuangans_new 			= (int)$explode_no[1] + 1;
-					$format_no_keuangans_new 	= sprintf('%04d', $no_keuangans_new);
-					$format_keuangans_new 		= 'KU-'.$format_no_keuangans_new.'-'.date('m').'-'.date('Y');
-				}
-				else
-					$format_keuangans_new 	= 'KU-0001-'.date('m').'-'.date('Y');
-			}
-			else
-				$format_keuangans_new 	= 'KU-0001-'.date('m').'-'.date('Y');
-
-			return $format_keuangans_new;
-		}
 	//Auto Generate Penomoran
 
     //Notifikasi
