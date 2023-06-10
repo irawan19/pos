@@ -225,7 +225,7 @@ class LevelSistemController extends AdminCoreController
                     \App\Models\User::where('level_sistems_id',$id_level_sistems)
                                     ->update($users_data);
 
-                    DB::select(DB::raw("DELETE t1.*, t2.* FROM master_level_sistems t1 LEFT JOIN master_akses t2 ON t2.level_sistems_id=t1.id_level_sistems WHERE id_level_sistems='$id_level_sistems'"));
+                    DB::raw("DELETE t1.*, t2.* FROM master_level_sistems t1 LEFT JOIN master_akses t2 ON t2.level_sistems_id=t1.id_level_sistems WHERE id_level_sistems='$id_level_sistems'");
 
                     return response()->json(["sukses" => "sukses"], 200);
                 }
