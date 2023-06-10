@@ -204,7 +204,7 @@ class ItemController extends AdminCoreController
                 'satuans_id'                            => 'required',
                 'userfile_foto_item'                    => 'required|mimes:jpg,jpeg,png',
                 'nama_items'                            => 'required',
-                'kode_items'                            => ['required',Rule::unique('master_items')->whereNull('deleted_at')],
+                'kode_items'                            => 'required|unique:master_items,kode_items,NULL,id_items,deleted_at,NULL',
                 'harga_items'                           => 'required',
                 'stok_items'                            => 'required|numeric|min:1',
             ];
@@ -340,7 +340,7 @@ class ItemController extends AdminCoreController
                         'satuans_id'                            => 'required',
                         'userfile_foto_item'                    => 'required|mimes:jpg,jpeg,png',
                         'nama_items'                            => 'required',
-                        'kode_items'                            => ['required',Rule::unique('master_items','kode_items', $id_items, 'id_items')->whereNull('deleted_at')],
+                        'kode_items'                            => 'required|unique:master_items,kode_items,'.$id_items.',id_items,deleted_at,NULL',
                         'harga_items'                           => 'required',
                     ];
         
@@ -387,7 +387,7 @@ class ItemController extends AdminCoreController
                         'kategori_items_id'                     => 'required',
                         'satuans_id'                            => 'required',
                         'nama_items'                            => 'required',
-                        'kode_items'                            => 'required|unique:master_items,kode_items,'.$id_items.',id_items',
+                        'kode_items'                            => 'required|unique:master_items,kode_items,'.$id_items.',id_items,deleted_at,NULL',
                         'harga_items'                           => 'required',
                     ];
         
