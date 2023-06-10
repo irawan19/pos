@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use General;
+use app\Helpers\General;
 use Auth;
 
 class PenjualanController extends AdminCoreController
@@ -382,7 +382,6 @@ class PenjualanController extends AdminCoreController
                 'no_penjualans'                     => General::noPenjualan(),
                 'tanggal_penjualans'                => General::ubahTanggalKeDB($request->tanggal_penjualans),
                 'keterangan_penjualans'             => $keterangan_penjualans,
-                'pembayarans_id'                    => $request->pembayarans_id,
                 'sub_total_penjualans'              => 0,
                 'pajak_penjualans'                  => $pajak_penjualans,
                 'diskon_penjualans'                 => $diskon_penjualans,
@@ -640,7 +639,6 @@ class PenjualanController extends AdminCoreController
                     'users_id'                          => Auth::user()->id,
                     'tanggal_penjualans'                => General::ubahTanggalKeDB($request->tanggal_penjualans),
                     'keterangan_penjualans'             => $keterangan_penjualans,
-                    'pembayarans_id'                    => $request->pembayarans_id,
                     'pajak_penjualans'                  => $pajak_penjualans,
                     'diskon_penjualans'                 => $diskon_penjualans,
                     'updated_at'                        => date('Y-m-d H:i:s'),

@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use General;
+use app\Helpers\General;
 use Auth;
 use Storage;
 
@@ -196,7 +196,6 @@ class KasirController extends AdminCoreController
                 'no_penjualans'                     => General::noPenjualan(),
                 'tanggal_penjualans'                => date('Y-m-d H:i:s'),
                 'keterangan_penjualans'             => $keterangan_penjualans,
-                'pembayarans_id'                    => $request->pembayarans_id,
                 'sub_total_penjualans'              => General::ubahHargaKeDB($request->sub_total_penjualans),
                 'pajak_penjualans'                  => $pajak_penjualans,
                 'diskon_penjualans'                 => $diskon_penjualans,

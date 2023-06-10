@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use General;
+use app\Helpers\General;
 use Auth;
 use App\Exports\LaporanPenjualan;
 use Maatwebsite\Excel\Facades\Excel;

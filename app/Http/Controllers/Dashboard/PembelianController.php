@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use General;
+use app\Helpers\General;
 use Auth;
 
 class PembelianController extends AdminCoreController
@@ -378,7 +378,6 @@ class PembelianController extends AdminCoreController
                 'referensi_no_nota_pembelians'      => $referensi_no_nota_pembelians,
                 'tanggal_pembelians'                => General::ubahTanggalKeDB($request->tanggal_pembelians),
                 'keterangan_pembelians'             => $keterangan_pembelians,
-                'pembayarans_id'                    => $request->pembayarans_id,
                 'sub_total_pembelians'              => 0,
                 'pajak_pembelians'                  => $pajak_pembelians,
                 'diskon_pembelians'                 => $diskon_pembelians,
@@ -615,7 +614,6 @@ class PembelianController extends AdminCoreController
                     'referensi_no_nota_pembelians'      => $referensi_no_nota_pembelians,
                     'tanggal_pembelians'                => General::ubahTanggalKeDB($request->tanggal_pembelians),
                     'keterangan_pembelians'             => $keterangan_pembelians,
-                    'pembayarans_id'                    => $request->pembayarans_id,
                     'pajak_pembelians'                  => $pajak_pembelians,
                     'diskon_pembelians'                 => $diskon_pembelians,
                     'updated_at'                        => date('Y-m-d H:i:s'),

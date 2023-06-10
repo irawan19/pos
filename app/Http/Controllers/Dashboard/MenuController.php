@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use DB;
-use General;
+use app\Helpers\General;
 use Auth;
 
 class MenuController extends AdminCoreController
