@@ -159,6 +159,11 @@
 		tfoot{
 			background-color: #ffdede;
 		}
+		@media (min-width: 768px) {
+			.navbar-vertical.navbar-expand-xs .navbar-collapse {
+				overflow: hidden !important;
+			}
+		}
 	</style>
     <script type="text/javascript">
         jQuery(document).ready(function () {
