@@ -69,8 +69,8 @@ class ItemController extends AdminCoreController
             $data['hasil_toko']             = $hasil_toko;
             $data['lihat_kategori_items']   = \App\Models\Master_kategori_item::orderBy('nama_kategori_items')
                                                                                 ->get();
-            $hasil_kategori_item            = $request->hasil_kategori_item;
-            $data['hasil_kategori_item']    = $request->cari_kategori_item;
+            $hasil_kategori_item            = $request->cari_kategori_item;
+            $data['hasil_kategori_item']    = $hasil_kategori_item;
             if(Auth::user()->tokos_id == null)
             {
                 $data['lihat_tokos']        = \App\Models\Master_toko::orderBy('nama_tokos')
