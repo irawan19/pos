@@ -17,7 +17,7 @@
     table
     {
         border-collapse : collapse;
-        font-size       : 8px;
+        font-size       : 10px;
     }
     .page {
         page-break-before: always;
