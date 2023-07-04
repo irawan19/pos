@@ -74,26 +74,26 @@
 				<td>{{$no}}</td>
 				<td>{{$penjualan_details->nama_items}}</td>
 				<td style="text-align: right">{{$penjualan_details->jumlah_penjualan_details}}</td>
-				<td style="text-align: right">{{General::ubahDBKeHarga($penjualan_details->harga_penjualan_details)}}</td>
-				<td style="text-align: right">{{General::ubahDBKeHarga($penjualan_details->jumlah_penjualan_details * $penjualan_details->harga_penjualan_details)}}</td>
+				<td style="text-align: right">{{General::ubahDBKeHargaTanpaSen($penjualan_details->harga_penjualan_details)}}</td>
+				<td style="text-align: right">{{General::ubahDBKeHargaTanpaSen($penjualan_details->jumlah_penjualan_details * $penjualan_details->harga_penjualan_details)}}</td>
 			</tr>
 			@php($no++)
 		@endforeach
 		<tr>
 			<th style="text-align: right" colspan="4">Sub Total</th>
-			<th style="text-align: right">{{General::ubahDBKeHarga($cetak_penjualans->sub_total_penjualans)}}</th>
+			<th style="text-align: right">{{General::ubahDBKeHargaTanpaSen($cetak_penjualans->sub_total_penjualans)}}</th>
 		</tr>
 		<tr>
 			<th style="text-align: right" colspan="4">Pajak {{$cetak_penjualans->pajak_penjualans}}%</th>
-			<th style="text-align: right">{{General::ubahDBKeHarga(($cetak_penjualans->sub_total_penjualans * $cetak_penjualans->pajak_penjualans/100))}}</th>
+			<th style="text-align: right">{{General::ubahDBKeHargaTanpaSen(($cetak_penjualans->sub_total_penjualans * $cetak_penjualans->pajak_penjualans/100))}}</th>
 		</tr>
 		<tr>
 			<th style="text-align: right" colspan="4">Diskon {{$cetak_penjualans->diskon_penjualans}}%</th>
-			<th style="text-align: right">{{General::ubahDBKeHarga(($cetak_penjualans->sub_total_penjualans * $cetak_penjualans->diskon_penjualans/100))}}</th>
+			<th style="text-align: right">{{General::ubahDBKeHargaTanpaSen(($cetak_penjualans->sub_total_penjualans * $cetak_penjualans->diskon_penjualans/100))}}</th>
 		</tr>
 		<tr>
 			<th style="text-align: right" colspan="4">Total</th>
-			<th style="text-align: right">{{General::ubahDBKeHarga($cetak_penjualans->total_penjualans)}}</th>
+			<th style="text-align: right">{{General::ubahDBKeHargaTanpaSen($cetak_penjualans->total_penjualans)}}</th>
 		</tr>
 	</table>
 	<hr/>

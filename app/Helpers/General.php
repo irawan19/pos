@@ -647,6 +647,12 @@ class General
 			return $db_ke_harga;
 		}
 
+		public static function ubahDBKeHargaTanpaSen($harga = 0)
+		{
+			$db_ke_harga = number_format($harga, 0, ',', '.');
+			return $db_ke_harga;
+		}
+
 		public static function ubahHargaKeDB($harga = 0)
 		{
 			$harga_ke_db = preg_replace("/([^0-9\\.])/i", "", $harga);
