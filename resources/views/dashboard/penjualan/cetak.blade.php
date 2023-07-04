@@ -9,7 +9,7 @@
         }
 		html, body {
 			color: black;
-			font-family: 'Roboto';
+			font-family: 'arial';
 			margin: 0px;
 			padding: 0px;
 		}
