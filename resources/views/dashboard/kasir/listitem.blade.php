@@ -7,7 +7,11 @@
                             <div class="card-header mx-4 p-3 text-center">
                                 <span class="text-xs">{{$items->nama_kategori_items}}</span><br/>
                                 <div class="shadow text-center border-radius-lg">
-                                    <img src="{{URL::asset('storage/'.$items->foto_items)}}" width="100%">
+                                    @if(!empty($items->foto_items))
+                                        <img src="{{URL::asset('storage/'.$items->foto_items)}}" width="100%">
+                                    @else
+                                        <img src="{{URL::asset('template/default.png')}}" width="100%">
+                                    @endif
                                 </div>
                             </div>
                             <div class="card-body pt-0 p-3 text-center">
@@ -24,7 +28,11 @@
                             <div class="card-header mx-4 p-3 text-center" style="background-color:#202739;">
                                 <span class="text-xs">{{$items->nama_kategori_items}}</span><br/>
                                 <div class="shadow text-center border-radius-lg">
-                                    <img src="{{URL::asset('storage/'.$items->foto_items)}}" width="100%">
+                                    @if(!empty($items->foto_items))
+                                        <img src="{{URL::asset('storage/'.$items->foto_items)}}" width="100%">
+                                    @else
+                                        <img src="{{URL::asset('template/default.png')}}" width="100%">
+                                    @endif
                                 </div>
                             </div>
                             <div class="card-body pt-0 p-3 text-center">

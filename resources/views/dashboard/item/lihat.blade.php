@@ -115,9 +115,15 @@
 								    		<td class="nowrap">{{$items->kode_items}}</td>
 								    		<td class="nowrap">{{$items->nama_items}}</td>
 								    		<td class="nowrap">
-                                                <a data-fancybox="gallery" href="{{URL::asset('storage/'.$items->foto_items)}}">
-                                                    <img src="{{ URL::asset('storage/'.$items->foto_items) }}" width="32px">
-                                                </a>
+												@if(!empty($items->foto_items))
+													<a data-fancybox="gallery" href="{{URL::asset('storage/'.$items->foto_items)}}">
+														<img src="{{ URL::asset('storage/'.$items->foto_items) }}" width="32px">
+													</a>
+												@else
+													<a data-fancybox="gallery" href="{{URL::asset('template/default.png')}}">
+														<img src="{{ URL::asset('template/default.png') }}" width="32px">
+													</a>
+												@endif
                                             </td>
 								    		<td class="nowrap right-align">{{General::ubahDBKeHarga($items->harga_items)}}</td>
 								    		<td class="nowrap right-align">{{$items->stok_items}}</td>

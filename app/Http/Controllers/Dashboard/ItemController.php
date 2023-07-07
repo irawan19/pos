@@ -198,53 +198,98 @@ class ItemController extends AdminCoreController
         $link_item = 'item';
         if(General::hakAkses($link_item,'tambah') == 'true')
         {
-            $aturan = [
-                'tokos_id'                              => 'required',
-                'kategori_items_id'                     => 'required',
-                'satuans_id'                            => 'required',
-                'userfile_foto_item'                    => 'required|mimes:jpg,jpeg,png',
-                'nama_items'                            => 'required',
-                'kode_items'                            => 'required|unique:master_items,kode_items,NULL,id_items,deleted_at,NULL',
-                'harga_items'                           => 'required',
-                'stok_items'                            => 'required|numeric|min:1',
-            ];
+            if(!empty($request->file('userfile_foto_item')))
+            {
+                $aturan = [
+                    'tokos_id'                              => 'required',
+                    'kategori_items_id'                     => 'required',
+                    'satuans_id'                            => 'required',
+                    'userfile_foto_item'                    => 'required|mimes:jpg,jpeg,png',
+                    'nama_items'                            => 'required',
+                    'kode_items'                            => 'required|unique:master_items,kode_items,NULL,id_items,deleted_at,NULL',
+                    'harga_items'                           => 'required',
+                    'stok_items'                            => 'required|numeric|min:1',
+                ];
 
-            $error_pesan = [
-                'tokos_id'                              => 'Form Toko Harus Diisi.',
-                'kategori_items_id'                     => 'Form Kategori Item Harus Diisi.',
-                'satuans_id'                            => 'Form Satuan Harus Diisi.',
-                'userfile_foto_item.required'           => 'Form Foto Harus Diisi.',
-                'nama_items.required'                   => 'Form Nama Harus Diisi.',
-                'kode_items.required'                   => 'Form Kode Harus Diisi.',
-                'kode_items.unique'                     => 'Kode Sudah Terdaftar.',
-                'harga_items.required'                  => 'Form Harga Harus Diisi.',
-                'stok_items.required'                   => 'Form Stok Harus Diisi.',
-            ];
-            $this->validate($request, $aturan, $error_pesan);
+                $error_pesan = [
+                    'tokos_id'                              => 'Form Toko Harus Diisi.',
+                    'kategori_items_id'                     => 'Form Kategori Item Harus Diisi.',
+                    'satuans_id'                            => 'Form Satuan Harus Diisi.',
+                    'userfile_foto_item.required'           => 'Form Foto Harus Diisi.',
+                    'nama_items.required'                   => 'Form Nama Harus Diisi.',
+                    'kode_items.required'                   => 'Form Kode Harus Diisi.',
+                    'kode_items.unique'                     => 'Kode Sudah Terdaftar.',
+                    'harga_items.required'                  => 'Form Harga Harus Diisi.',
+                    'stok_items.required'                   => 'Form Stok Harus Diisi.',
+                ];
+                $this->validate($request, $aturan, $error_pesan);
 
-            $nama_foto_item = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_item')->getClientOriginalName())));
-            $path_foto_item = 'item/';
-            Storage::disk('public')->put($path_foto_item.$nama_foto_item, file_get_contents($request->file('userfile_foto_item')));
+                $nama_foto_item = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_item')->getClientOriginalName())));
+                $path_foto_item = 'item/';
+                Storage::disk('public')->put($path_foto_item.$nama_foto_item, file_get_contents($request->file('userfile_foto_item')));
 
-            $deskripsi_items = '';
-            if(!empty($request->deskripsi_items))
-                $deskripsi_items = $request->deskripsi_items;
+                $deskripsi_items = '';
+                if(!empty($request->deskripsi_items))
+                    $deskripsi_items = $request->deskripsi_items;
 
-            $items_data = [
-                'tokos_id'                              => $request->tokos_id,
-                'kategori_items_id'                     => $request->kategori_items_id,
-                'satuans_id'                            => $request->satuans_id,
-                'foto_items'                            => $path_foto_item.$nama_foto_item,
-                'nama_items'                            => $request->nama_items,
-                'kode_items'                            => $request->kode_items,
-                'harga_items'                           => General::ubahHargaKeDB($request->harga_items),
-                'stok_items'                            => $request->stok_items,
-                'stok_awal_items'                       => $request->stok_items,
-                'deskripsi_items'                       => $deskripsi_items,
-                'created_at'                            => date('Y-m-d H:i:s'),
-            ];
-            \App\Models\Master_item::insert($items_data);
+                $items_data = [
+                    'tokos_id'                              => $request->tokos_id,
+                    'kategori_items_id'                     => $request->kategori_items_id,
+                    'satuans_id'                            => $request->satuans_id,
+                    'foto_items'                            => $path_foto_item.$nama_foto_item,
+                    'nama_items'                            => $request->nama_items,
+                    'kode_items'                            => $request->kode_items,
+                    'harga_items'                           => General::ubahHargaKeDB($request->harga_items),
+                    'stok_items'                            => $request->stok_items,
+                    'stok_awal_items'                       => $request->stok_items,
+                    'deskripsi_items'                       => $deskripsi_items,
+                    'created_at'                            => date('Y-m-d H:i:s'),
+                ];
+                \App\Models\Master_item::insert($items_data);
+            }
+            else
+            {
+                $aturan = [
+                    'tokos_id'                              => 'required',
+                    'kategori_items_id'                     => 'required',
+                    'satuans_id'                            => 'required',
+                    'nama_items'                            => 'required',
+                    'kode_items'                            => 'required|unique:master_items,kode_items,NULL,id_items,deleted_at,NULL',
+                    'harga_items'                           => 'required',
+                    'stok_items'                            => 'required|numeric|min:1',
+                ];
 
+                $error_pesan = [
+                    'tokos_id'                              => 'Form Toko Harus Diisi.',
+                    'kategori_items_id'                     => 'Form Kategori Item Harus Diisi.',
+                    'satuans_id'                            => 'Form Satuan Harus Diisi.',
+                    'nama_items.required'                   => 'Form Nama Harus Diisi.',
+                    'kode_items.required'                   => 'Form Kode Harus Diisi.',
+                    'kode_items.unique'                     => 'Kode Sudah Terdaftar.',
+                    'harga_items.required'                  => 'Form Harga Harus Diisi.',
+                    'stok_items.required'                   => 'Form Stok Harus Diisi.',
+                ];
+                $this->validate($request, $aturan, $error_pesan);
+
+                $deskripsi_items = '';
+                if(!empty($request->deskripsi_items))
+                    $deskripsi_items = $request->deskripsi_items;
+
+                $items_data = [
+                    'tokos_id'                              => $request->tokos_id,
+                    'kategori_items_id'                     => $request->kategori_items_id,
+                    'satuans_id'                            => $request->satuans_id,
+                    'foto_items'                            => '',
+                    'nama_items'                            => $request->nama_items,
+                    'kode_items'                            => $request->kode_items,
+                    'harga_items'                           => General::ubahHargaKeDB($request->harga_items),
+                    'stok_items'                            => $request->stok_items,
+                    'stok_awal_items'                       => $request->stok_items,
+                    'deskripsi_items'                       => $deskripsi_items,
+                    'created_at'                            => date('Y-m-d H:i:s'),
+                ];
+                \App\Models\Master_item::insert($items_data);
+            }
             $simpan           = $request->simpan;
             $simpan_kembali   = $request->simpan_kembali;
             if($simpan)
