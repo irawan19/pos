@@ -208,7 +208,7 @@ class ItemController extends AdminCoreController
                     'nama_items'                            => 'required',
                     'kode_items'                            => 'required|unique:master_items,kode_items,NULL,id_items,deleted_at,NULL',
                     'harga_items'                           => 'required',
-                    'stok_items'                            => 'required|numeric|min:1',
+                    'stok_items'                            => 'required|numeric',
                 ];
 
                 $error_pesan = [
@@ -256,7 +256,7 @@ class ItemController extends AdminCoreController
                     'nama_items'                            => 'required',
                     'kode_items'                            => 'required|unique:master_items,kode_items,NULL,id_items,deleted_at,NULL',
                     'harga_items'                           => 'required',
-                    'stok_items'                            => 'required|numeric|min:1',
+                    'stok_items'                            => 'required|numeric',
                 ];
 
                 $error_pesan = [
