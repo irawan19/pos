@@ -22,8 +22,6 @@
     }
     .page {
         page-break-before: always;
-		font-family: thermal !important;
-		text-transform: uppercase;
     }
     .page:first-child {
         page-break-before: avoid;
