@@ -35,6 +35,7 @@
 	<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css" />
 	<link type="text/css" media="screen" rel="stylesheet" href="{{ URL::asset('template/back/vendors/codemirror/css/codemirror.css')}}">
 	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link href="{{URL::asset('template/back/css/fontcustom.css')}}" rel="stylesheet" />
 
 	<meta name="_token" content="{{ csrf_token() }}">
 	<script src="{{URL::asset('template/back/vendors/jquery/js/jquery.min.js')}}"></script>

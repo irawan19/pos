@@ -9,7 +9,8 @@
         }
 		html, body {
 			color: black;
-			font-family: 'arial';
+			font-family: 'thermal';
+			text-transform: uppercase;
 			margin: 0px;
 			padding: 0px;
 		}

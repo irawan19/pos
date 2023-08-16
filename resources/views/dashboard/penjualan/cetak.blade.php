@@ -9,7 +9,8 @@
         }
 		html, body {
 			color: black;
-			font-family: 'arial';
+			font-family: 'thermal';
+			text-transform: uppercase;
 			margin: 0px;
 			padding: 0px;
 		}
@@ -21,6 +22,8 @@
     }
     .page {
         page-break-before: always;
+		font-family: thermal !important;
+		text-transform: uppercase;
     }
     .page:first-child {
         page-break-before: avoid;
