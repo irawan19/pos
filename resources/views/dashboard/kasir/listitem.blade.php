@@ -3,7 +3,7 @@
             @foreach($lihat_items as $items)
                 @if($items->stok_items > 0)
                     <div class="col-xl-2 col-md-6 col-sm-6 mb-4">
-                        <div class="card" style="cursor:pointer" onclick="tambahItemList({{$items->id_items}},{{$items->nama_items}},{{$items->harga_items}})">
+                        <div class="card" style="cursor:pointer" onclick="tambahItemList('{{$items->id_items}}','{{$items->nama_items}}','{{$items->harga_items}}')">
                             <div class="card-header mx-4 p-3 text-center">
                                 <span class="text-xs">{{$items->nama_kategori_items}}</span><br/>
                                 <div class="shadow text-center border-radius-lg">
