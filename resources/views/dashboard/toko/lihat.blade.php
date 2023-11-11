@@ -41,7 +41,8 @@
 				    		<tbody>
 				    			@if(!$lihat_tokos->isEmpty())
 									@php($no = 1)
-		            				@foreach($lihat_tokos as $tokos)
+		            				@foreach($lihat_tokos as $key => $tokos)
+										@php($no = $lihat_tokos->firstItem() + $key) 
 								    	<tr>
 								    		@if(General::totalHakAkses($link_toko) != 0)
 								    			<td class="nowrap">

@@ -68,7 +68,8 @@
 				    		<tbody>
 				    			@if(!$lihat_pembayarans->isEmpty())
 									@php($no = 1)
-		            				@foreach($lihat_pembayarans as $pembayarans)
+		            				@foreach($lihat_pembayarans as $key => $pembayarans)
+										@php($no = $lihat_pembayarans->firstItem() + $key) 
 								    	<tr>
 								    		@if(General::totalHakAkses($link_pembayaran) != 0)
 								    			<td class="nowrap">

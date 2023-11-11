@@ -47,7 +47,7 @@ class KasirController extends AdminCoreController
             else
             {
                 $data['lihat_items'] = \App\Models\Master_item::join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
-                                                        ->where('nama_items', 'LIKE', '%'.$cari.'%')
+                                                        ->where('nama_items', 'LIKE', '%'.rawurldecode($cari).'%')
                                                         ->where('tokos_id',$id_tokos)
                                                         ->orderBy('nama_kategori_items')
                                                         ->orderBy('nama_items')

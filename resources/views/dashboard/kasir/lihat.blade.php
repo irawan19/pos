@@ -373,7 +373,7 @@
 			$('.listitem').load('{{URL("/dashboard/kasir/listitem")}}/'+idtoko);
 
 			$('.btncarikata').on('click', function(){
-				ambilcarikata = $('.carikata').val();
+				ambilcarikata = encodeURIComponent($('.carikata').val());
 				if(ambilcarikata != '')
 				{
 					$('.listitem').load('{{URL("/dashboard/kasir/listitem")}}/'+idtoko+'/'+ambilcarikata);
@@ -381,6 +381,20 @@
 				else
 				{
 					$('.listitem').load('{{URL("/dashboard/kasir/listitem")}}/'+idtoko);
+				}
+			});
+
+			$('.carikata').keypress(function(e) {
+				if (e.which == 13) {
+					ambilcarikata = encodeURIComponent($('.carikata').val());
+					if(ambilcarikata != '')
+					{
+						$('.listitem').load('{{URL("/dashboard/kasir/listitem")}}/'+idtoko+'/'+ambilcarikata);
+					}
+					else
+					{
+						$('.listitem').load('{{URL("/dashboard/kasir/listitem")}}/'+idtoko);
+					}
 				}
 			});
 

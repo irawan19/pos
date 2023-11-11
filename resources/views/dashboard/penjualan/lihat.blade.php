@@ -73,7 +73,8 @@
 				    		</thead>
 				    		<tbody>
 				    			@if(!$lihat_penjualans->isEmpty())
-		            				@foreach($lihat_penjualans as $penjualans)
+		            				@foreach($lihat_penjualans as $key => $penjualans)
+										@php($no = $lihat_penjualans->firstItem() + $key) 
 								    	<tr>
 								    		@if(General::totalHakAkses($link_penjualan) != 0)
 								    			<td class="nowrap">

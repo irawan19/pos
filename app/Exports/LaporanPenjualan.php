@@ -36,8 +36,7 @@ class LaporanPenjualan implements FromView, ShouldQueue
 
         if($hasil_toko != '')
         {
-            $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*,
-                                                                                                    transaksi_penjualans.tanggal_penjualans AS tanggal_penjualans')
+            $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*')
                                                                                         ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                         ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                         ->join('users','users_id','=','users.id')
@@ -63,8 +62,7 @@ class LaporanPenjualan implements FromView, ShouldQueue
         }
         else
         {
-            $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*,
-                                                                                                    transaksi_penjualans.tanggal_penjualans AS tanggal_penjualans')
+            $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*')
                                                                                         ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                         ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                         ->join('users','users_id','=','users.id')

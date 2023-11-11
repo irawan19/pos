@@ -39,7 +39,8 @@
 				    		<tbody>
 				    			@if(!$lihat_kategori_items->isEmpty())
 									@php($no = 1)
-		            				@foreach($lihat_kategori_items as $kategori_items)
+		            				@foreach($lihat_kategori_items as $key => $kategori_items)
+										@php($no = $lihat_kategori_items->firstItem() + $key) 
 								    	<tr>
 								    		@if(General::totalHakAkses($link_kategori_item) != 0)
 								    			<td class="nowrap">

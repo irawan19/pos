@@ -29,8 +29,7 @@ class LaporanPembelianController extends AdminCoreController
                 $data['lihat_tokos']                        = \App\Models\Master_toko::orderBy('nama_tokos')
                                                                                         ->get();
                 $hasil_toko                                 = '';
-                $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*,
-                                                                                                        transaksi_pembelians.tanggal_pembelians AS tanggal_pembelians')
+                $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*')
                                                                                             ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                             ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                             ->join('users','users_id','=','users.id')
@@ -46,8 +45,7 @@ class LaporanPembelianController extends AdminCoreController
                                                                                     ->orderBy('nama_tokos')
                                                                                     ->get();
                 $hasil_toko                                 = Auth::user()->tokos_id;
-                $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*,
-                                                                                                        transaksi_pembelians.tanggal_pembelians AS tanggal_pembelians')
+                $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*')
                                                                                             ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                             ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                             ->join('users','users_id','=','users.id')
@@ -99,8 +97,7 @@ class LaporanPembelianController extends AdminCoreController
                                                                         ->get();
                 if($hasil_toko != '')
                 {
-                    $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*,
-                                                                                                            transaksi_pembelians.tanggal_pembelians AS tanggal_pembelians')
+                    $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*')
                                                                                                 ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                                 ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                                 ->join('users','users_id','=','users.id')
@@ -126,8 +123,7 @@ class LaporanPembelianController extends AdminCoreController
                 }
                 else
                 {
-                    $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*,
-                                                                                                            transaksi_pembelians.tanggal_pembelians AS tanggal_pembelians')
+                    $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*')
                                                                                                 ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                                 ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                                 ->join('users','users_id','=','users.id')
@@ -153,8 +149,7 @@ class LaporanPembelianController extends AdminCoreController
                 $data['lihat_tokos']        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
                                                                         ->orderBy('nama_tokos')
                                                                         ->get();
-                $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*,
-                                                                                                        transaksi_pembelians.tanggal_pembelians AS tanggal_pembelians')
+                $data['lihat_laporan_pembelians']           = \App\Models\Transaksi_pembelian::selectRaw('*')
                                                                                             ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                             ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                             ->join('users','users_id','=','users.id')
@@ -199,8 +194,7 @@ class LaporanPembelianController extends AdminCoreController
                                                             ->count();
             if($cek_pembelians != 0)
             {
-                $data['baca_laporan_pembelians']    = \App\Models\Transaksi_pembelian::selectRaw('*,
-                                                                                                transaksi_pembelians.tanggal_pembelians AS tanggal_pembelians')
+                $data['baca_laporan_pembelians']    = \App\Models\Transaksi_pembelian::selectRaw('*')
                                                                                     ->join('master_tokos','transaksi_pembelians.tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                     ->join('users','users_id','=','users.id')

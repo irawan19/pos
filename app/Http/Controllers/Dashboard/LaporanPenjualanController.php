@@ -30,8 +30,7 @@ class LaporanPenjualanController extends AdminCoreController
                 $data['lihat_tokos']                        = \App\Models\Master_toko::orderBy('nama_tokos')
                                                                                         ->get();
                 $hasil_toko                                 = '';
-                $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*,
-                                                                                                        transaksi_penjualans.tanggal_penjualans AS tanggal_penjualans')
+                $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*')
                                                                                             ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                             ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                             ->join('users','users_id','=','users.id')
@@ -47,8 +46,7 @@ class LaporanPenjualanController extends AdminCoreController
                                                                                     ->orderBy('nama_tokos')
                                                                                     ->get();
                 $hasil_toko                                 = Auth::user()->tokos_id;
-                $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*,
-                                                                                                        transaksi_penjualans.tanggal_penjualans AS tanggal_penjualans')
+                $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*')
                                                                                             ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                             ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                             ->join('users','users_id','=','users.id')
@@ -100,8 +98,7 @@ class LaporanPenjualanController extends AdminCoreController
                                                                         ->get();
                 if($hasil_toko != '')
                 {
-                    $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*,
-                                                                                                            transaksi_penjualans.tanggal_penjualans AS tanggal_penjualans')
+                    $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*')
                                                                                                 ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                                 ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                                 ->join('users','users_id','=','users.id')
@@ -127,8 +124,7 @@ class LaporanPenjualanController extends AdminCoreController
                 }
                 else
                 {
-                    $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*,
-                                                                                                            transaksi_penjualans.tanggal_penjualans AS tanggal_penjualans')
+                    $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*')
                                                                                                 ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                                 ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                                 ->join('users','users_id','=','users.id')
@@ -154,8 +150,7 @@ class LaporanPenjualanController extends AdminCoreController
                 $data['lihat_tokos']        = \App\Models\Master_toko::where('id_tokos',Auth::user()->tokos_id)
                                                                         ->orderBy('nama_tokos')
                                                                         ->get();
-                $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*,
-                                                                                                        transaksi_penjualans.tanggal_penjualans AS tanggal_penjualans')
+                $data['lihat_laporan_penjualans']           = \App\Models\Transaksi_penjualan::selectRaw('*')
                                                                                             ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                             ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                             ->join('users','users_id','=','users.id')
@@ -200,8 +195,7 @@ class LaporanPenjualanController extends AdminCoreController
                                                             ->count();
             if($cek_penjualans != 0)
             {
-                $data['baca_laporan_penjualans']    = \App\Models\Transaksi_penjualan::selectRaw('*,
-                                                                                                transaksi_penjualans.tanggal_penjualans AS tanggal_penjualans')
+                $data['baca_laporan_penjualans']    = \App\Models\Transaksi_penjualan::selectRaw('*')
                                                                                     ->join('master_tokos','transaksi_penjualans.tokos_id','=','master_tokos.id_tokos')
                                                                                     ->join('master_pembayarans','pembayarans_id','=','master_pembayarans.id_pembayarans')
                                                                                     ->join('users','users_id','=','users.id')

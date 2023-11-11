@@ -93,7 +93,8 @@
 				    		<tbody>
 				    			@if(!$lihat_items->isEmpty())
 									@php($no = 1)
-		            				@foreach($lihat_items as $items)
+		            				@foreach($lihat_items as $key =>  $items)
+										@php($no = $lihat_items->firstItem() + $key) 
 								    	<tr>
 								    		@if(General::totalHakAkses($link_item) != 0)
 								    			<td class="nowrap">

@@ -29,18 +29,6 @@
 						<li class="breadcrumb-item text-sm text-dark active" aria-current="page">{{$ambil_sub_menus->nama_menus}}</li>
 					@endif
 				</ol>
-
-				@if(Request::segment(2) == '' || Request::segment(2) == 'dashboard' || Request::segment(2) == 'cari')
-					<h6 class="font-weight-bolder mb-0">Dashboard</h6>
-				@elseif(Request::segment(2) == 'konfigurasi_akun')
-					<h6 class="font-weight-bolder mb-0">Konfigurasi Akun</h6>
-				@elseif(Request::segment(2) == 'konfigurasi_profil')
-					<h6 class="font-weight-bolder mb-0">Konfigurasi Profil</h6>
-				@elseif(Request::segment(2) == 'pesan')
-					<h6 class="font-weight-bolder mb-0">Pesan</h6>
-				@else
-					<h6 class="font-weight-bolder mb-0">{{$ambil_sub_menus->nama_menus}}</h6>
-				@endif
 			@else
 				<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
 					<li class="breadcrumb-item text-sm opacity-5 text-dark" style="margin-right:20px;">

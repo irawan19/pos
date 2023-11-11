@@ -39,7 +39,8 @@
 				    		<tbody>
 				    			@if(!$lihat_satuans->isEmpty())
 									@php($no = 1)
-		            				@foreach($lihat_satuans as $satuans)
+		            				@foreach($lihat_satuans as $key => $satuans)
+										@php($no = $lihat_satuans->firstItem() + $key) 
 								    	<tr>
 								    		@if(General::totalHakAkses($link_satuan) != 0)
 								    			<td class="nowrap">

@@ -546,7 +546,7 @@ class ItemController extends AdminCoreController
                                                                                 ->where('id_tokos',$hasil_toko)
                                                                                 ->where('id_kategori_items',$hasil_kategori_item)
                                                                                 ->where('nama_items', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                ->paginate(10);
+                                                                                ->get();
                     }
                     else
                     {
@@ -555,7 +555,7 @@ class ItemController extends AdminCoreController
                                                                                 ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
                                                                                 ->where('id_tokos',$hasil_toko)
                                                                                 ->where('nama_items', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                ->paginate(10);
+                                                                                ->get();
                     }
                 }
                 else
@@ -567,7 +567,7 @@ class ItemController extends AdminCoreController
                                                                                 ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
                                                                                 ->where('id_kategori_items',$hasil_kategori_item)
                                                                                 ->where('nama_items', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                ->paginate(10);
+                                                                                ->get();
                     }
                     else
                     {
@@ -575,7 +575,7 @@ class ItemController extends AdminCoreController
                                                                                 ->join('master_kategori_items','kategori_items_id','=','master_kategori_items.id_kategori_items')
                                                                                 ->join('master_satuans','satuans_id','=','master_satuans.id_satuans')
                                                                                 ->where('nama_items', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                ->paginate(10);
+                                                                                ->get();
                     }
                 }
             }
@@ -598,7 +598,7 @@ class ItemController extends AdminCoreController
                                                                             ->orWhere('nama_satuans', 'LIKE', '%'.$hasil_kata.'%')
                                                                             ->where('id_kategori_items',$hasil_kategori_item)
                                                                             ->where('id_tokos',$hasil_toko)
-                                                                            ->paginate(10);
+                                                                            ->get();
                 }
                 else
                 {
@@ -613,7 +613,7 @@ class ItemController extends AdminCoreController
                                                                             ->where('id_tokos',$hasil_toko)
                                                                             ->orWhere('nama_satuans', 'LIKE', '%'.$hasil_kata.'%')
                                                                             ->where('id_tokos',$hasil_toko)
-                                                                            ->paginate(10);
+                                                                            ->get();
                 }
             }
             return view('dashboard.item.cetak',$data);

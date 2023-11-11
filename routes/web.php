@@ -32,6 +32,7 @@ use App\Http\Controllers\Dashboard\PembelianController as DashboardPembelian;
 
 //Laporan
 use App\Http\Controllers\Dashboard\LaporanPenjualanController as DashboardLaporanPenjualan;
+use App\Http\Controllers\Dashboard\LaporanPenjualanDetailController as DashboardLaporanPenjualanDetail;
 use App\Http\Controllers\Dashboard\LaporanPembelianController as DashboardLaporanPembelian;
 use App\Http\Controllers\Dashboard\LaporanStokController as DashboardLaporanStok;
 use App\Http\Controllers\Dashboard\LaporanKeuanganController as DashboardLaporanKeuangan;
@@ -221,6 +222,13 @@ Route::middleware([
                 Route::get('/cari', [DashboardLaporanPenjualan::class, 'cari']);
                 Route::get('/baca/{id}', [DashboardLaporanPenjualan::class, 'baca']);
                 Route::get('/cetakexcel', [DashboardLaporanPenjualan::class, 'cetakexcel']);
+            });
+
+            //Penjualan Detail
+            Route::group(['prefix' => 'laporan_penjualan_detail'], function() {
+                Route::get('/', [DashboardLaporanPenjualanDetail::class, 'index']);
+                Route::get('/cari', [DashboardLaporanPenjualanDetail::class, 'cari']);
+                Route::get('/cetak', [DashboardLaporanPenjualanDetail::class, 'cetak']);
             });
 
             //Pembelian

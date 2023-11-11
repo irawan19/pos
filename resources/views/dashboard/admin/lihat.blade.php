@@ -43,7 +43,8 @@
 				    		<tbody>
 				    			@if(!$lihat_admins->isEmpty())
 					    			@php($no = 1)
-		            				@foreach($lihat_admins as $admins)
+		            				@foreach($lihat_admins as $key => $admins)
+										@php($no = $lihat_admins->firstItem() + $key) 
 								    	<tr>
 					    					@if(General::totalHakAkses($link_admin) != 0)
 					    						<td class="nowrap">
