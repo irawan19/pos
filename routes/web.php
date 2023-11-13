@@ -228,7 +228,7 @@ Route::middleware([
             Route::group(['prefix' => 'laporan_penjualan_detail'], function() {
                 Route::get('/', [DashboardLaporanPenjualanDetail::class, 'index']);
                 Route::get('/cari', [DashboardLaporanPenjualanDetail::class, 'cari']);
-                Route::get('/cetak', [DashboardLaporanPenjualanDetail::class, 'cetak']);
+                Route::get('/cetakexcel', [DashboardLaporanPenjualanDetail::class, 'cetak']);
             });
 
             //Pembelian
