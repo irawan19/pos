@@ -198,7 +198,7 @@ class LaporanPenjualanDetailController extends AdminCoreController
 
     public function cetakexcel()
     {
-        $link_laporan_penjualan_detail = 'link_laporan_penjualan_detail';
+        $link_laporan_penjualan_detail = 'laporan_penjualan_detail';
         if(General::hakAkses($link_laporan_penjualan_detail,'cetak') == 'true')
         {
             $tanggal_mulai = date('Y-m-d');
